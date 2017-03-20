@@ -1,33 +1,21 @@
 ﻿@using Microsoft.AspNet.Identity
-
-<a data-toggle="dropdown" class="dropdown-toggle" href="index.html#">
-  <span class="clear">
-    <span class="block m-t-xs">
-      @if (Request.IsAuthenticated)
-      {
-        <strong class="font-bold">@User.Identity.GetUserName()</strong>
-      }
-      else
-      {
-        <strong class="font-bold">请登录</strong>
-      }
-
-    </span>
-    @if (Request.IsAuthenticated)
-    {
-      <span class="text-muted text-xs block">设置<b class="caret"></b></span>
-    }
-  </span>
-</a>
 @if (Request.IsAuthenticated)
 {
-  <ul class="dropdown-menu animated fadeInRight m-t-xs">
-    <li>
-      <a href="contacts.html">账号设置</a>
-    </li>
-    <li class="divider"></li>
-    <li>
-      <a href="login.html">退出</a>
-    </li>
-  </ul>
+    using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+    {
+        @Html.AntiForgeryToken()
+        <ul class="nav navbar-nav navbar-right">
+            <li>
+                @Html.ActionLink("Hello " + User.Identity.GetUserName() + " ! ", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
+            </li>
+            <li><a href="javascript:document.getElementById('logoutForm').submit()">退出</a></li>
+        </ul>
+    }
+}
+else
+{
+    <ul class="nav navbar-nav navbar-right">
+        <li>@Html.ActionLink("注册", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
+        <li>@Html.ActionLink("登录", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
+    </ul>
 }
