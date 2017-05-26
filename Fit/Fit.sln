@@ -8,6 +8,8 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docs", "Docs", "{3A6CF83A-BD8A-4B30-9EDA-5DD0B62AA0C0}"
 	ProjectSection(SolutionItems) = preProject
 		Docs\DB Design.xlsx = Docs\DB Design.xlsx
+		Docs\Detailed Design.docx = Docs\Detailed Design.docx
+		Docs\General Design.docx = Docs\General Design.docx
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fit.IService", "Fit.IService\Fit.IService.csproj", "{C4724DC1-C6E9-463D-9DF7-84261F17E2EE}"
@@ -29,6 +31,11 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fit.FrontWeb", "Fit.FrontWeb\Fit.FrontWeb.csproj", "{08C850B4-C2F0-40B6-ACE1-D31534065304}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fit.FrontWeb.Tests", "Fit.FrontWeb.Tests\Fit.FrontWeb.Tests.csproj", "{0202B6ED-7173-4EB5-B24A-21D189B31CA6}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DBScripts", "DBScripts", "{F5308A89-F0CA-43B6-8BC8-B2DF156B1B1E}"
+	ProjectSection(SolutionItems) = preProject
+		DBScripts\0.1.sql = DBScripts\0.1.sql
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
