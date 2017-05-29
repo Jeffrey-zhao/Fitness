@@ -8,7 +8,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docs", "Docs", "{3A6CF83A-BD8A-4B30-9EDA-5DD0B62AA0C0}"
 	ProjectSection(SolutionItems) = preProject
 		Docs\DB Design.xlsx = Docs\DB Design.xlsx
-		Docs\Detailed Design.docx = Docs\Detailed Design.docx
+		Docs\Detail_健身计划.docx = Docs\Detail_健身计划.docx
 		Docs\General Design.docx = Docs\General Design.docx
 	EndProjectSection
 EndProject
