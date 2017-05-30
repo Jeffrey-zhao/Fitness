@@ -7,29 +7,28 @@ using System.Threading.Tasks;
 using Fit.DTO.RBAC;
 using Fit.Service.Entities.RBAC;
 using Fit.Common;
+using Fit.Service.Repository;
 
 namespace Fit.Service.Services.RBAC
 {
   public class AdminUserService : IAdminUserService
   {
-    private FitDbContext ctx;
-    public AdminUserService()
+    private IRepository<AdminUserEntity> repository;
+
+    public AdminUserService(IRepository<AdminUserEntity> repository)
     {
-      ctx = new FitDbContext();
+      this.repository = repository;
     }
-    //~AdminUserService()
-    //{
-    //  ctx.Dispose();
-    //}
 
     public long AddAdminUser(string name, string phoneNum, string password, string email)
     {
-      var cs = new CommonService<AdminUserEntity>(ctx);
-      bool isPhoneNumExist = cs.GetAll().Any(a => a.PhoneNum == phoneNum);
+      bool isPhoneNumExist = repository.GetAll()
+        .Any(a => a.PhoneNum == phoneNum);
 
       if (isPhoneNumExist)
       {
-        throw new ArgumentException(ExceptionMsg.GetPhoneNumExistMsg(phoneNum));
+        throw new ArgumentException(ExceptionMsg
+          .GetPhoneNumExistMsg(phoneNum));
       }
 
       var entity = new AdminUserEntity
@@ -38,13 +37,11 @@ namespace Fit.Service.Services.RBAC
         PhoneNum = phoneNum,
         Email = email
       };
-
       entity.PasswordSalt = CommonHelper.GenerateCaptchaCode(5);
       entity.PasswordHash = CommonHelper.CalcMD5(entity.PasswordSalt + password);
 
-      ctx.AdminUsers.Add(entity);
-      ctx.SaveChanges();
-      return entity.ID;
+      var id = repository.Add(entity);
+      return id;
     }
 
     public bool CheckLogin(string phoneNum, string password)
@@ -54,17 +51,18 @@ namespace Fit.Service.Services.RBAC
 
     public AdminUserDTO[] GetAll()
     {
-      throw new NotImplementedException();
+      return repository.GetAll().Select(a => ToDTO(a)).ToArray();
     }
 
     public AdminUserDTO GetByPhoneNum(string phoneNum)
     {
-      throw new NotImplementedException();
+      var entity = repository.GetAll().Where(a => a.PhoneNum == phoneNum).FirstOrDefault();
+      return ToDTO(entity);
     }
 
     public void MarkDeleted(long id)
     {
-      throw new NotImplementedException();
+      repository.DeleteById(id);
     }
 
     public void RecordLoginError(long id)
@@ -80,6 +78,21 @@ namespace Fit.Service.Services.RBAC
     public void UpdateAdminUser(long id, string name, string phoneNum, string password, string email)
     {
       throw new NotImplementedException();
+    }
+
+    private AdminUserDTO ToDTO(AdminUserEntity entity)
+    {
+      if (entity == null) throw new ArgumentException(ExceptionMsg.GetObjectNullMsg(entity));
+
+      var dto = new AdminUserDTO
+      {
+        Name = entity.Name,
+        PhoneNum = entity.PhoneNum,
+        Email = entity.Email,
+        LoginErrorTimes = entity.LoginErrorTimes,
+        LastLoginErrorDateTime = entity.LastLoginErrorDateTime
+      };
+      return dto;
     }
   }
 }

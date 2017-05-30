@@ -12,5 +12,10 @@ namespace Fit.Common
     {
       return string.Format("The phonenum has exists: {0}", phoneNum);
     }
+
+    public static string GetObjectNullMsg(object obj)
+    {
+      return string.Format("The object is null: ", nameof(obj));
+    }
   }
 }
