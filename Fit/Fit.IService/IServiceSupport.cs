@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Fit.DTO
+namespace Fit.IService
 {
-    public class Class1
-    {
-    }
+  public interface IServiceSupport
+  {
+  }
 }

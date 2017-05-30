@@ -6,7 +6,11 @@ using System.Threading.Tasks;
 
 namespace Fit.Common
 {
-    public class Class1
+  public class DateTimeHelper
+  {
+    public static DateTime GetNow()
     {
+      return DateTime.Now;
     }
+  }
 }
