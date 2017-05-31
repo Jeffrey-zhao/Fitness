@@ -20,21 +20,19 @@ namespace Fit.Service.Services.RBAC
       this.repository = repository;
     }
 
-    public long AddAdminUser(string name, string phoneNum, string password, string email)
+    public long AddAdminUser(string name, string email, string password)
     {
-      bool isPhoneNumExist = repository.GetAll()
-        .Any(a => a.PhoneNum == phoneNum);
+      bool isEmailExist = repository.GetAll().Where(a => a.Email == email).FirstOrDefault() != null;
 
-      if (isPhoneNumExist)
+      if (isEmailExist)
       {
         throw new ArgumentException(ExceptionMsg
-          .GetPhoneNumExistMsg(phoneNum));
+          .GetEmailExistMsg(email));
       }
 
       var entity = new AdminUserEntity
       {
         Name = name,
-        PhoneNum = phoneNum,
         Email = email
       };
       entity.PasswordSalt = CommonHelper.GenerateCaptchaCode(5);
@@ -44,9 +42,13 @@ namespace Fit.Service.Services.RBAC
       return id;
     }
 
-    public bool CheckLogin(string phoneNum, string password)
+    public bool CheckLogin(string email, string password)
     {
-      throw new NotImplementedException();
+      var entity = repository.GetAll().Where(a => a.Email == email).FirstOrDefault();
+      if (entity == null) return false;
+
+      string hashForCheck = CommonHelper.CalcMD5(entity.PasswordSalt + password);
+      return hashForCheck.Equals(entity.PasswordHash);
     }
 
     public AdminUserDTO[] GetAll()
@@ -54,10 +56,15 @@ namespace Fit.Service.Services.RBAC
       return repository.GetAll().Select(a => ToDTO(a)).ToArray();
     }
 
-    public AdminUserDTO GetByPhoneNum(string phoneNum)
+    public AdminUserDTO GetByEmail(string email)
     {
-      var entity = repository.GetAll().Where(a => a.PhoneNum == phoneNum).FirstOrDefault();
+      var entity = repository.GetAll().Where(a => a.Email == email).FirstOrDefault();
       return ToDTO(entity);
+    }
+
+    public AdminUserDTO GetById(long id)
+    {
+      return ToDTO(repository.GetById(id));
     }
 
     public void MarkDeleted(long id)
@@ -75,7 +82,7 @@ namespace Fit.Service.Services.RBAC
       throw new NotImplementedException();
     }
 
-    public void UpdateAdminUser(long id, string name, string phoneNum, string password, string email)
+    public void UpdateAdminUser(long id, string name, string password, string email)
     {
       throw new NotImplementedException();
     }
@@ -86,6 +93,7 @@ namespace Fit.Service.Services.RBAC
 
       var dto = new AdminUserDTO
       {
+        ID = entity.ID,
         Name = entity.Name,
         PhoneNum = entity.PhoneNum,
         Email = entity.Email,

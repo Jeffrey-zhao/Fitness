@@ -61,6 +61,14 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Fit.Common\Fit.Common.csproj">
+      <Project>{1cb91ea5-128e-420e-b06b-214c2b79c4b5}</Project>
+      <Name>Fit.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Fit.DTO\Fit.DTO.csproj">
+      <Project>{3777ac66-3725-4fbe-a931-43d55bfc2655}</Project>
+      <Name>Fit.DTO</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Fit.Service\Fit.Service.csproj">
       <Project>{41081ef7-c99f-4686-93f8-ee9d2dd447d0}</Project>
       <Name>Fit.Service</Name>

@@ -58,7 +58,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository\AdminUserRepository.cs" />
     <Compile Include="Repository\IRepository.cs" />
-    <Compile Include="Services\CommonService.cs" />
     <Compile Include="Services\RBAC\AdminUserService.cs" />
   </ItemGroup>
   <ItemGroup>

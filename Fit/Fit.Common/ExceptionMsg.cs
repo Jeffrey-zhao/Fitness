@@ -8,9 +8,9 @@ namespace Fit.Common
 {
   public class ExceptionMsg
   {
-    public static string GetPhoneNumExistMsg(string phoneNum)
+    public static string GetEmailExistMsg(string phoneNum)
     {
-      return string.Format("The phonenum has exists: {0}", phoneNum);
+      return string.Format("The email has exists: {0}", phoneNum);
     }
 
     public static string GetObjectNullMsg(object obj)

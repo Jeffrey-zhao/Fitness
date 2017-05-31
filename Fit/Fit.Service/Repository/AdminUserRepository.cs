@@ -26,20 +26,19 @@ namespace Fit.Service.Repository
 
     public void DeleteById(long id)
     {
-      var cs = new CommonService<AdminUserEntity>(ctx);
-      cs.MarkDeleted(id);
+      var entity = GetById(id);
+      entity.IsDeleted = true;
+      ctx.SaveChanges();
     }
 
     public AdminUserEntity GetById(long id)
     {
-      var cs = new CommonService<AdminUserEntity>(ctx);
-      return cs.GetById(id);
+      return GetAll().Where(a => a.ID == id).FirstOrDefault();
     }
 
     public IQueryable<AdminUserEntity> GetAll()
     {
-      var cs = new CommonService<AdminUserEntity>(ctx);
-      return cs.GetAll();
+      return ctx.AdminUsers.Where(a => a.IsDeleted == false);
     }
 
     public void Update(AdminUserEntity entity)

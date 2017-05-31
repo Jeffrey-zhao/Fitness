@@ -8,6 +8,7 @@ namespace Fit.DTO.RBAC
 {
   public class AdminUserDTO
   {
+    public long ID { get; set; }
     public string Name { get; set; }
     public string PhoneNum { get; set; }
     public string Email { get; set; }

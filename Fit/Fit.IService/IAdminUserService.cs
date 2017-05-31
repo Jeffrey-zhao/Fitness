@@ -9,22 +9,22 @@ namespace Fit.IService
 {
   public interface IAdminUserService : IServiceSupport
   {
-    long AddAdminUser(string name, string phoneNum,
-      string password, string email);
+    long AddAdminUser(string name, string email, string password);
 
-    void UpdateAdminUser(long id, string name, string phoneNum,
-      string password, string email);
+    void UpdateAdminUser(long id, string name, string password, string email);
 
     AdminUserDTO[] GetAll();
 
-    AdminUserDTO GetByPhoneNum(string phoneNum);
+    AdminUserDTO GetByEmail(string email);
 
-    bool CheckLogin(string phoneNum, string password);
+    bool CheckLogin(string email, string password);
 
     void MarkDeleted(long id);
 
     void RecordLoginError(long id);
 
     void ResetLoginError(long id);
+
+    AdminUserDTO GetById(long id);
   }
 }
