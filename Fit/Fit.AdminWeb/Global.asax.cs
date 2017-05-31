@@ -7,12 +7,14 @@ using System.Web.Routing;
 
 namespace Fit.AdminWeb
 {
-    public class MvcApplication : System.Web.HttpApplication
+  public class MvcApplication : System.Web.HttpApplication
+  {
+    protected void Application_Start()
     {
-        protected void Application_Start()
-        {
-            AreaRegistration.RegisterAllAreas();
-            RouteConfig.RegisterRoutes(RouteTable.Routes);
-        }
+      log4net.Config.XmlConfigurator.Configure();
+      AreaRegistration.RegisterAllAreas();
+      RouteConfig.RegisterRoutes(RouteTable.Routes);
+      FilterConfig.RegisterConfig(GlobalFilters.Filters);
     }
+  }
 }
