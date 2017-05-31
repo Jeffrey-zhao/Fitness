@@ -11,7 +11,7 @@ namespace Fit.IService
   {
     long AddAdminUser(string name, string email, string password);
 
-    void UpdateAdminUser(long id, string name, string password, string email);
+    void UpdateAdminUser(long id, string name, string password);
 
     AdminUserDTO[] GetAll();
 

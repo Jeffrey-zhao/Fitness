@@ -13,9 +13,10 @@ namespace Fit.Common
       return string.Format("The email has exists: {0}", phoneNum);
     }
 
-    public static string GetObjectNullMsg(object obj)
+    public static string GetObjectNullMsg(string objName)
     {
-      return string.Format("The object is null: ", nameof(obj));
+      return string.Format("The object is null: {0}", objName);
     }
+    
   }
 }

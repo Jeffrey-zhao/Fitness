@@ -6,6 +6,7 @@ using NSubstitute;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -40,6 +41,7 @@ namespace Fit.Service.Tests
 
       Assert.Throws<ArgumentException>(() => adminUser.AddAdminUser("Test1", email, "123"));
     }
+
     [Test]
     public void CheckLogin_CorrectValue_ReturnTrue()
     {
@@ -107,7 +109,7 @@ namespace Fit.Service.Tests
       var fakeEntity = new AdminUserEntity
       {
         Name = "111",
-        PhoneNum = inputedEmail,
+        Email = inputedEmail,
         PasswordSalt = "1234",
         IsDeleted = true
       };
@@ -121,6 +123,7 @@ namespace Fit.Service.Tests
       var result = service.CheckLogin(inputedEmail, inputedEmail);
       Assert.IsFalse(result);
     }
+
     [Test]
     public void GetAll_ReturnArray()
     {
@@ -144,6 +147,7 @@ namespace Fit.Service.Tests
       Assert.AreEqual(loginErrorTime, entity.LoginErrorTimes, "LoginErrorTimes");
       Assert.AreEqual(lastLoginErrorDateTime, entity.LastLoginErrorDateTime, "LastLoginErrorDateTime");
     }
+
     [Test]
     public void GetByEmail_EmailExist_ReturnDTO()
     {
@@ -169,6 +173,7 @@ namespace Fit.Service.Tests
 
       Assert.Throws<ArgumentException>(() => adminUser.GetByEmail("123"));
     }
+
     [Test]
     public void GetById_IdExist_ReturnEntity()
     {
@@ -186,6 +191,15 @@ namespace Fit.Service.Tests
       Assert.AreEqual(entityId, result.ID);
     }
     [Test]
+    public void GetById_IdNotExist_Throw()
+    {
+      var repository = Substitute.For<IRepository<AdminUserEntity>>();
+      var service = new AdminUserService(repository);
+
+      Assert.Throws<ArgumentException>(() => service.GetById(1));
+    }
+
+    [Test]
     public void MarkDeleted_Deleted()
     {
       int entityId = 3;
@@ -196,5 +210,96 @@ namespace Fit.Service.Tests
       repository.Received().DeleteById(entityId);
     }
 
+    [Test]
+    public void RecordLoginError_IdExist_ErrorTimesEqualsOne()
+    {
+      int entityId = 3;
+      string inputedEmail = "123@123.com";
+      var fakeEntity = new AdminUserEntity
+      {
+        ID = entityId,
+        Name = "111",
+        Email = inputedEmail
+      };
+      var data = new List<AdminUserEntity> { fakeEntity }.AsQueryable();
+      var repository = Substitute.For<IRepository<AdminUserEntity>>();
+      repository.GetById(entityId).Returns(fakeEntity);
+      var service = new AdminUserService(repository);
+      var dtNow = DateTimeHelper.GetNow();
+      service.RecordLoginError(entityId);
+
+      Assert.AreEqual(1, fakeEntity.LoginErrorTimes, "LoginErrorTimes=1");
+      Assert.IsTrue(dtNow <= fakeEntity.LastLoginErrorDateTime, "LastLoginErrorDateTime should be record");
+    }
+    [Test]
+    public void RecordLoginError_IdNotExist_Throw()
+    {
+      var repository = Substitute.For<IRepository<AdminUserEntity>>();
+      var service = new AdminUserService(repository);
+
+      Assert.Throws<ArgumentException>(() => service.RecordLoginError(1));
+    }
+
+    [Test]
+    public void ResetLoginError_IdExist_ErrorTimesEqualsZero()
+    {
+      int entityId = 3;
+      string inputedEmail = "123@123.com";
+      var fakeEntity = new AdminUserEntity
+      {
+        ID = entityId,
+        Name = "111",
+        Email = inputedEmail,
+        LoginErrorTimes = 2
+      };
+      var data = new List<AdminUserEntity> { fakeEntity }.AsQueryable();
+      var repository = Substitute.For<IRepository<AdminUserEntity>>();
+      repository.GetById(entityId).Returns(fakeEntity);
+      var service = new AdminUserService(repository);
+      var dtNow = DateTimeHelper.GetNow();
+      service.ResetLoginError(entityId);
+
+      Assert.AreEqual(0, fakeEntity.LoginErrorTimes, "LoginErrorTimes=0");
+    }
+    [Test]
+    public void ResetLoginError_IdNotExist_Throw()
+    {
+      var repository = Substitute.For<IRepository<AdminUserEntity>>();
+      var service = new AdminUserService(repository);
+
+      Assert.Throws<ArgumentException>(() => service.ResetLoginError(1));
+    }
+
+    [Test]
+    public void UpdateAdminUser_IdExist_SucceedLoginAfterUpdated()
+    {
+      var entityId = 1;
+      var fakeEntity = new AdminUserEntity
+      {
+        ID = entityId,
+        Email = "TestEmail",
+        Name = string.Empty,
+        PasswordSalt = "1234"
+      };
+      fakeEntity.PasswordHash = CommonHelper.CalcMD5(fakeEntity.PasswordSalt + "pwd");
+      var repository = Substitute.For<IRepository<AdminUserEntity>>();
+      repository.GetById(entityId).Returns(fakeEntity);
+      repository.GetAll().Returns(new List<AdminUserEntity>() { fakeEntity }.AsQueryable());
+      var service = new AdminUserService(repository);
+
+      service.UpdateAdminUser(entityId, "Updated", "pwd2");
+      var isLogin = service.CheckLogin("TestEmail", "pwd2");
+
+      Assert.IsTrue(isLogin,"Try Login");
+      Assert.AreEqual("Updated", fakeEntity.Name, "name=Updated");
+    }
+    [Test]
+    public void UpdateAdminUser_IdNotExist_Throw()
+    {
+      var repository = Substitute.For<IRepository<AdminUserEntity>>();
+      var service = new AdminUserService(repository);
+
+      Assert.Throws<ArgumentException>(() => service.UpdateAdminUser(1, "Updated", "pwd2"));
+    }
   }
 }

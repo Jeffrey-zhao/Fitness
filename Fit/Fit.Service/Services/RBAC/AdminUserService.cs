@@ -74,22 +74,42 @@ namespace Fit.Service.Services.RBAC
 
     public void RecordLoginError(long id)
     {
-      throw new NotImplementedException();
+      var entity = repository.GetById(id);
+      if (entity == null)
+      {
+        throw new ArgumentException(ExceptionMsg.GetObjectNullMsg("AdminUserEntity"));
+      }
+      entity.LoginErrorTimes++;
+      entity.LastLoginErrorDateTime = DateTimeHelper.GetNow();
+      repository.Update(entity);
     }
 
     public void ResetLoginError(long id)
     {
-      throw new NotImplementedException();
+      var entity = repository.GetById(id);
+      if (entity == null)
+      {
+        throw new ArgumentException(ExceptionMsg.GetObjectNullMsg("AdminUserEntity"));
+      }
+      entity.LoginErrorTimes = 0;
+      repository.Update(entity);
     }
 
-    public void UpdateAdminUser(long id, string name, string password, string email)
+    public void UpdateAdminUser(long id, string name, string password)
     {
-      throw new NotImplementedException();
+      var entity = repository.GetById(id);
+      if (entity == null)
+      {
+        throw new ArgumentException(ExceptionMsg.GetObjectNullMsg("AdminUserEntity"));
+      }
+      entity.Name = name;
+      entity.PasswordHash = CommonHelper.CalcMD5(entity.PasswordSalt + password);
+      repository.Update(entity);
     }
 
     private AdminUserDTO ToDTO(AdminUserEntity entity)
     {
-      if (entity == null) throw new ArgumentException(ExceptionMsg.GetObjectNullMsg(entity));
+      if (entity == null) throw new ArgumentException(ExceptionMsg.GetObjectNullMsg("AdminUserEntity"));
 
       var dto = new AdminUserDTO
       {

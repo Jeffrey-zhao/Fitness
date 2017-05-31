@@ -18,5 +18,27 @@ namespace Fit.Service.Entities.RBAC
 
     public virtual ICollection<RoleEntity> Roles { get; set; }
       = new List<RoleEntity>();
+
+    protected bool Equals1(AdminUserEntity other)
+    {
+      bool isEqual = true;
+      isEqual &= ID == other.ID;
+      isEqual &= Name.Equals(other.Name);
+      isEqual &= Email.Equals(other.Name);
+      return isEqual;
+    }
+
+    public override bool Equals(object obj)
+    {
+      if (ReferenceEquals(null, obj)) return false;
+      if (ReferenceEquals(this, obj)) return true;
+      if (obj.GetType() != this.GetType()) return false;
+      return Equals1((AdminUserEntity)obj);
+    }
+
+    public override int GetHashCode()
+    {
+      return base.GetHashCode();
+    }
   }
 }
