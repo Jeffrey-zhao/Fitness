@@ -126,9 +126,14 @@
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
+    <Content Include="lib\Validform\5.3.2\passwordStrength-min.js" />
+    <Content Include="lib\Validform\5.3.2\Validform.js" />
+    <Content Include="lib\Validform\5.3.2\Validform.min.js" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="App_Start\ExceptionFilter.cs" />
+    <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AdminUserController.cs" />
     <Compile Include="Global.asax.cs">

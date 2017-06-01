@@ -46,8 +46,9 @@ namespace Fit.AdminWeb.Controllers
     {
       var verifyCode = CommonHelper.GenerateCaptchaCode(4);
       TempData[Consts.VERIFY_CODE_KEY] = verifyCode;
-      MemoryStream ms = ImageFactory.GenerateImage(verifyCode, 60, 100, 20, 6);
+      MemoryStream ms = ImageFactory.GenerateImage(verifyCode, 42, 70, 14, 1);
       return File(ms, "image/jpeg");
     }
+
   }
 }

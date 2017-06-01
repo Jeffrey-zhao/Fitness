@@ -1,61 +1,70 @@
-﻿
-@{
+﻿@{
   ViewBag.Title = "Login | Fit";
 }
 
-<div class="middle-box text-center loginscreen animated fadeInDown">
-  <div>
+<body class="gray-bg">
+  <div class="middle-box text-center loginscreen animated fadeInDown">
     <div>
-      <h1 class="logo-name">Fit</h1>
+      <div>
+        <h1 class="logo-name">Fit</h1>
+      </div>
+      <h3>Welcome to Fit</h3>
+      <form class="m-t" role="form" id="formLogin">
+        <div class="form-group">
+          <input type="email" class="form-control" name="email" placeholder="邮箱" required="">
+        </div>
+        <div class="form-group">
+          <input type="password" class="form-control" name="password" placeholder="密码" required="">
+        </div>
+        <div class="form-group">
+          <div class="row">
+            <div class="col-sm-6">
+              <input  datatype="n" class="form-control" name="VerifyCode" type="text" placeholder="验证码" onblur="if(this.value==''){this.value='验证码:'}" onclick="if(this.value=='验证码:'){this.value='';}" value="验证码:" style="width:150px;">
+            </div>
+            <div class="col-sm-6">
+              <img src="#" id="imgVerifyCode" alt="点击获取验证码">
+            </div>
+          </div>
+        </div>
+        <input id="btnLogin" type="button" class="btn btn-primary block full-width m-b" value="登录">
+        <a class="btn btn-sm btn-white btn-block" href="register.html">注册</a>
+      </form>
     </div>
-    <h3>Welcome to Fit</h3>
-    <form class="m-t" role="form" id="formLogin">
-      <div class="form-group">
-        <input type="email" class="form-control" name="email" placeholder="邮箱" required="">
-      </div>
-      <div class="form-group">
-        <input type="password" class="form-control" name="password" placeholder="密码" required="">
-      </div>
-      <div class="form-group">
-        <input class="form-control" name="VerifyCode" type="text" placeholder="验证码" onblur="if(this.value==''){this.value='验证码:'}" onclick="if(this.value=='验证码:'){this.value='';}" value="验证码:" style="width:150px;">
-        <img src="/AdminUser/CreateVerifyCode" id="imgVerifyCode"> <a id="changeImg" href="javascript:;">看不清，换一张</a>
-      </div>
-      <input id="btnLogin" type="button" class="btn btn-primary block full-width m-b" value="登录">
-      <a class="btn btn-sm btn-white btn-block" href="register.html">注册</a>
-    </form>
   </div>
-</div>
-@section FooterScript{
-  <script type="text/javascript" src="~/Scripts/jquery-1.10.2.min.js"></script>
-  <script type="text/javascript">
-    $(function () {
-      $("#changeImg,#imgVerifyCode").click(function () {
-        $("#imgVerifyCode").attr("src", "/AdminUser/CreateVerifyCode?" + Math.random());
-      });
-      $("#imgVerifyCode").click();
-      $("#btnLogin").click(function () {
-        var formData = $("formLogin").serializeArray();
-        $.ajax({
-          type: "post",
-          url: "/AdminUser/Login",
-          data: formData,
-          success: function (res) {
-            if (res.status == "OK") {
-              location.href = "/Home/Index";
-            } else {
+  </body>
+
+  @section FooterScript{
+    <script type="text/javascript" src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script type="text/javascript">
+      $(function () {
+        $("#changeImg,#imgVerifyCode").click(function () {
+          $("#imgVerifyCode").attr("src", "/AdminUser/CreateVerifyCode?" + Math.random());
+        });
+        var validForm = $("#formLogin").Validform({ tiptype: 2 });
+        $("#btnLogin").click(function () {
+          validForm.check(false);
+          var formData = $("#formLogin").serializeArray();
+          $.ajax({
+            type: "post",
+            url: "/AdminUser/Login",
+            data: formData,
+            success: function (res) {
+              if (res.status == "OK") {
+                location.href = "/Home/Index";
+              } else {
+                $("#imgVerifyCode").click();
+                alert(res.msg);
+              }
+            },
+            error: function () {
               $("#imgVerifyCode").click();
-              alert(res.msg);
+              alert("ajax error");
             }
-          },
-          error: function () {
-            $("#imgVerifyCode").click();
-            alert("ajax error");
-          }
+          });
         });
       });
-    });
-  </script>
-}
+    </script>
+  }
 
 
 
