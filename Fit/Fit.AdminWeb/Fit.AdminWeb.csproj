@@ -125,6 +125,7 @@
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
+    <Content Include="Scripts\jquery.form.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="lib\Validform\5.3.2\passwordStrength-min.js" />
     <Content Include="lib\Validform\5.3.2\Validform.js" />

@@ -1,7 +1,6 @@
 ﻿@{
   ViewBag.Title = "Login | Fit";
-}
-
+}>
 <body class="gray-bg">
   <div class="middle-box text-center loginscreen animated fadeInDown">
     <div>
@@ -19,52 +18,84 @@
         <div class="form-group">
           <div class="row">
             <div class="col-sm-6">
-              <input  datatype="n" class="form-control" name="VerifyCode" type="text" placeholder="验证码" onblur="if(this.value==''){this.value='验证码:'}" onclick="if(this.value=='验证码:'){this.value='';}" value="验证码:" style="width:150px;">
+              <input class="form-control" name="VerifyCode" type="text" placeholder="验证码" onblur="if(this.value==''){this.value='验证码:'}" onclick="if(this.value=='验证码:'){this.value='';}" value="验证码:" style="width:150px;">
             </div>
             <div class="col-sm-6">
               <img src="#" id="imgVerifyCode" alt="点击获取验证码">
             </div>
           </div>
         </div>
-        <input id="btnLogin" type="button" class="btn btn-primary block full-width m-b" value="登录">
+        <input id="btnLogin" type="submit" class="btn btn-primary block full-width m-b" value="登录">
         <a class="btn btn-sm btn-white btn-block" href="register.html">注册</a>
       </form>
     </div>
   </div>
-  </body>
 
-  @section FooterScript{
-    <script type="text/javascript" src="~/Scripts/jquery-1.10.2.min.js"></script>
-    <script type="text/javascript">
-      $(function () {
-        $("#changeImg,#imgVerifyCode").click(function () {
-          $("#imgVerifyCode").attr("src", "/AdminUser/CreateVerifyCode?" + Math.random());
-        });
-        var validForm = $("#formLogin").Validform({ tiptype: 2 });
-        $("#btnLogin").click(function () {
-          validForm.check(false);
-          var formData = $("#formLogin").serializeArray();
-          $.ajax({
-            type: "post",
-            url: "/AdminUser/Login",
-            data: formData,
-            success: function (res) {
-              if (res.status == "OK") {
-                location.href = "/Home/Index";
-              } else {
-                $("#imgVerifyCode").click();
-                alert(res.msg);
-              }
-            },
-            error: function () {
+</body>
+
+@section FooterScript{
+  <script type="text/javascript" src="~/Scripts/jquery-1.10.2.min.js"></script>
+  <script type="text/javascript">
+    $(function () {
+      $("#changeImg,#imgVerifyCode").click(function () {
+        $("#imgVerifyCode").attr("src", "/AdminUser/CreateVerifyCode?" + Math.random());
+      });
+      var options = {
+        beforeSubmit: showRequest,  // pre-submit callback
+        success: function (response) {
+          showResponse(response);
+        },
+        // other available options:
+        url: "/SpringTest/testform.do",        // override for form's 'action' attribute
+        type: "post"        // 'get' or 'post', override for form's 'method' attribute
+        //dataType:  null        // 'xml', 'script', or 'json' (expected server response type)
+        //clearForm: true        // clear all form fields after successful submit
+        //resetForm: true        // reset the form after successful submit
+        // $.ajax options can be used here too, for example:
+        //timeout:   3000
+      };
+      // 绑定表单提交事件处理器  
+      $("#formLogin").submit(function () {
+        //提交表单  
+        $(this).ajaxSubmit(options);
+
+        // !!! Important !!!  
+        // 为了防止普通浏览器进行表单提交和产生页面导航（防止页面刷新？）返回false  
+        return false;
+      });
+      // pre-submit callback  
+      function showRequest() {
+        alert("before submit");
+        return true;//返回true才可以进行下一步  
+      }
+      // post-submit callback  
+      function showResponse(response) {
+        alert("submit success" + response);
+      }  
+      $("#s").click(function () {
+        if (!validForm.check(false)) return;
+        var formData = $("#formLogin").serializeArray();
+        $.ajax({
+          type: "post",
+          url: "/AdminUser/Login",
+          data: formData,
+          success: function (res) {
+            if (res.status == "OK") {
+              location.href = "/Home/Index";
+            } else {
               $("#imgVerifyCode").click();
-              alert("ajax error");
+              alert(res.msg);
             }
-          });
+          },
+          error: function () {
+            $("#imgVerifyCode").click();
+            alert("ajax error");
+          }
         });
       });
-    </script>
-  }
+    });
+  </script>
+}
 
 
 

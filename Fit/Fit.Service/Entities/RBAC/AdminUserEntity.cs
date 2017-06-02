@@ -19,7 +19,7 @@ namespace Fit.Service.Entities.RBAC
     public virtual ICollection<RoleEntity> Roles { get; set; }
       = new List<RoleEntity>();
 
-    protected bool Equals1(AdminUserEntity other)
+    protected bool AreEqual(AdminUserEntity other)
     {
       bool isEqual = true;
       isEqual &= ID == other.ID;
@@ -33,7 +33,7 @@ namespace Fit.Service.Entities.RBAC
       if (ReferenceEquals(null, obj)) return false;
       if (ReferenceEquals(this, obj)) return true;
       if (obj.GetType() != this.GetType()) return false;
-      return Equals1((AdminUserEntity)obj);
+      return AreEqual((AdminUserEntity)obj);
     }
 
     public override int GetHashCode()

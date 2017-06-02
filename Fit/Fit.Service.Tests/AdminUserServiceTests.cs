@@ -39,7 +39,8 @@ namespace Fit.Service.Tests
       repository.GetAll().Returns(data);
       var adminUser = new AdminUserService(repository);
 
-      Assert.Throws<ArgumentException>(() => adminUser.AddAdminUser("Test1", email, "123"));
+      Assert.Throws<ArgumentException>(() =>
+      adminUser.AddAdminUser("Test1", email, "123"));
     }
 
     [Test]
@@ -290,7 +291,7 @@ namespace Fit.Service.Tests
       service.UpdateAdminUser(entityId, "Updated", "pwd2");
       var isLogin = service.CheckLogin("TestEmail", "pwd2");
 
-      Assert.IsTrue(isLogin,"Try Login");
+      Assert.IsTrue(isLogin, "Try Login");
       Assert.AreEqual("Updated", fakeEntity.Name, "name=Updated");
     }
     [Test]

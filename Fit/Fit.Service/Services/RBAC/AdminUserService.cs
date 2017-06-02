@@ -15,7 +15,8 @@ namespace Fit.Service.Services.RBAC
   {
     private IRepository<AdminUserEntity> repository;
 
-    public AdminUserService(IRepository<AdminUserEntity> repository)
+    public AdminUserService(
+      IRepository<AdminUserEntity> repository)
     {
       this.repository = repository;
     }
