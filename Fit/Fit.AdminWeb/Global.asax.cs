@@ -16,6 +16,7 @@ namespace Fit.AdminWeb
       AreaRegistration.RegisterAllAreas();
       RouteConfig.RegisterRoutes(RouteTable.Routes);
       FilterConfig.RegisterConfig(GlobalFilters.Filters);
+      AutofacConfig.Config();
     }
   }
 }

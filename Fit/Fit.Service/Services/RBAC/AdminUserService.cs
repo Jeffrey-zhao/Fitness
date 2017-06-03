@@ -68,6 +68,19 @@ namespace Fit.Service.Services.RBAC
       return ToDTO(repository.GetById(id));
     }
 
+    public AdminUserDTO[] GetPagedData(int startIndex, int pageSize)
+    {
+      var adminUsers = repository.GetAll()
+        .OrderByDescending(a => a.CreatedDateTime)
+        .Skip(startIndex)
+        .Take(pageSize);
+      return adminUsers.Select(a => ToDTO(a)).ToArray();
+    }
+
+    public long GetTotalCount()
+    {
+      return GetAll().Count();
+    }
     public void MarkDeleted(long id)
     {
       repository.DeleteById(id);

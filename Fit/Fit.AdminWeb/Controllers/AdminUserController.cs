@@ -13,7 +13,11 @@ namespace Fit.AdminWeb.Controllers
 {
   public class AdminUserController : Controller
   {
-    public IAdminUserService AuSerivice { get; set; }
+    private IAdminUserService auService;
+    public AdminUserController(IAdminUserService service)
+    {
+      auService = service;
+    }
 
     [HttpGet]
     public ActionResult Login()
@@ -31,7 +35,7 @@ namespace Fit.AdminWeb.Controllers
       {
         return MVCHelper.GetJsonResult(AjaxResultEnum.error, "Verify Code Error");
       }
-      bool result = AuSerivice.CheckLogin(model.Email, model.Password);
+      bool result = auService.CheckLogin(model.Email, model.Password);
       if (result)
       {
         return MVCHelper.GetJsonResult(AjaxResultEnum.ok);
@@ -50,5 +54,12 @@ namespace Fit.AdminWeb.Controllers
       return File(ms, "image/jpeg");
     }
 
+    public ActionResult List(int pageIndex = 1)
+    {
+      var adminUsers = auService.GetPagedData((pageIndex - 1) * Consts.PAGE_SIZE_NUM, Consts.PAGE_SIZE_NUM);
+      ViewBag.TotalCount = auService.GetTotalCount();
+      ViewBag.PageIndex = pageIndex;
+      return View(adminUsers);
+    }
   }
 }

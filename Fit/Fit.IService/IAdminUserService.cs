@@ -15,6 +15,10 @@ namespace Fit.IService
 
     AdminUserDTO[] GetAll();
 
+    AdminUserDTO[] GetPagedData(int startIndex, int pageSize);
+
+    long GetTotalCount();
+
     AdminUserDTO GetByEmail(string email);
 
     bool CheckLogin(string email, string password);
