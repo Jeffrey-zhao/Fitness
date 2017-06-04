@@ -1,0 +1,67 @@
+﻿
+@{
+  ViewBag.Title = "AdminUser | Edit";
+}
+
+@model Fit.DTO.RBAC.AdminUserDTO
+
+<div class="row">
+  <div class="col-sm-8">
+    <div class="ibox float-e-margins">
+      <div class="ibox-content">
+        <form class="m-t" role="form" id="formEdit">
+          <input type="hidden" name="ID" value="@Model.ID" />
+          <div class="form-group">
+            <label>名称</label>
+            <input type="text" class="form-control" name="Name" required="" value="@Model.Name">
+          </div>
+          <div class="form-group">
+            <label>电话</label>
+            <input type="text" class="form-control" name="PhoneNum" required="" value="@Model.PhoneNum">
+          </div>
+          <div class="form-group">
+            <label>邮箱</label>
+            <input type="email" class="form-control" name="Email" required="" value="@Model.Email">
+          </div>
+          <div class="form-group">
+            <label>新密码</label>
+            <input type="password" class="form-control" name="PassWord" required="">
+          </div>
+          <div class="form-group">
+            <label>再次输入新密码</label>
+            <input type="password" class="form-control" name="PasswordComfirm" required="">
+          </div>
+          <input id="btnSave" type="submit" class="btn btn-primary block full-width m-b" value="保存">
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+@section FooterScript{
+<script type="text/javascript" src="~/Scripts/jquery-1.10.2.min.js"></script>
+  <script type="text/javascript">
+    var options = {
+      success: function (response) {
+        execResponse(response);
+      },
+      url: "/AdminUser/Edit",
+      type: "post"
+    };
+
+    $("#formEdit").submit(function () {
+      $(this).ajaxSubmit(options);
+      return false;
+    });
+
+    function execResponse(res) {
+      if (res.status == "OK") {
+        location.href = "~/AdminUser/List";
+      } else {
+        alert(res.msg);
+      }
+    }
+  </script>
+}
+
+

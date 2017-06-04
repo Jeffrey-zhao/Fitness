@@ -46,7 +46,7 @@ namespace Fit.Service.Repository
       var updating = GetById(entity.ID);
 
       updating.Name = entity.Name;
-      updating.Email = entity.Name;
+      updating.Email = entity.Email;
       updating.PasswordSalt = entity.PasswordSalt;
       updating.PasswordHash = entity.PasswordHash;
       updating.LoginErrorTimes = entity.LoginErrorTimes;

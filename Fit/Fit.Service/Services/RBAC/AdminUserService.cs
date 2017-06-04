@@ -54,7 +54,7 @@ namespace Fit.Service.Services.RBAC
 
     public AdminUserDTO[] GetAll()
     {
-      return repository.GetAll().Select(a => ToDTO(a)).ToArray();
+      return repository.GetAll().ToList().Select(a => ToDTO(a)).ToArray();
     }
 
     public AdminUserDTO GetByEmail(string email)
@@ -74,7 +74,7 @@ namespace Fit.Service.Services.RBAC
         .OrderByDescending(a => a.CreatedDateTime)
         .Skip(startIndex)
         .Take(pageSize);
-      return adminUsers.Select(a => ToDTO(a)).ToArray();
+      return adminUsers.ToList().Select(a => ToDTO(a)).ToArray();
     }
 
     public long GetTotalCount()
@@ -106,6 +106,22 @@ namespace Fit.Service.Services.RBAC
         throw new ArgumentException(ExceptionMsg.GetObjectNullMsg("AdminUserEntity"));
       }
       entity.LoginErrorTimes = 0;
+      repository.Update(entity);
+    }
+
+    public void Update(AdminUserDTO dto)
+    {
+      var entity = repository.GetById(dto.ID);
+      if (entity == null) throw new ArgumentException(ExceptionMsg.GetObjectNullMsg("AdminUserEntity"));
+
+      entity.ID = dto.ID;
+      entity.Name = dto.Name;
+      entity.PhoneNum = dto.PhoneNum;
+      entity.Email = dto.Email;
+
+      entity.PasswordHash = dto.WillUpdatePwd ?
+        CommonHelper.CalcMD5(entity.PasswordSalt + dto.Password)
+        : entity.PasswordHash;
       repository.Update(entity);
     }
 

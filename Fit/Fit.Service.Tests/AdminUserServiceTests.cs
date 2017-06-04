@@ -1,4 +1,5 @@
 ﻿using Fit.Common;
+using Fit.DTO.RBAC;
 using Fit.Service.Entities.RBAC;
 using Fit.Service.Repository;
 using Fit.Service.Services.RBAC;
@@ -301,6 +302,89 @@ namespace Fit.Service.Tests
       var service = new AdminUserService(repository);
 
       Assert.Throws<ArgumentException>(() => service.UpdateAdminUser(1, "Updated", "pwd2"));
+    }
+
+    [Test]
+    public void Update_IdExist_NameUpdated()
+    {
+      var dto = new AdminUserDTO
+      {
+        ID = 1,
+        Name = "Updated"
+      };
+      var fakeEntity = new AdminUserEntity
+      {
+        ID = 1,
+        Name = string.Empty
+      };
+      var repository = Substitute.For<IRepository<AdminUserEntity>>();
+      repository.GetById(Arg.Any<long>()).Returns(fakeEntity);
+      var service = new AdminUserService(repository);
+      service.Update(dto);
+      var updatedEntity = service.GetById(1);
+
+      Assert.AreEqual(dto.Name, updatedEntity.Name);
+    }
+    [Test]
+    public void Update_IdNotExist_Throw()
+    {
+      var dto = new AdminUserDTO
+      {
+        ID = 1,
+        Name = "Updated"
+      };
+      var repository = Substitute.For<IRepository<AdminUserEntity>>();
+      var service = new AdminUserService(repository);
+
+      Assert.Throws<ArgumentException>(() => service.Update(dto));
+    }
+    [Test]
+    public void Update_WillUpdatePwd_PwdUpdated()
+    {
+      var dto = new AdminUserDTO
+      {
+        ID = 1,
+        Name = "Updated",
+        WillUpdatePwd = true,
+        Password = "123"
+      };
+      var fakeEntity = new AdminUserEntity
+      {
+        ID = 1,
+        Name = string.Empty,
+        PasswordHash="abcd"
+      };
+      var repository = Substitute.For<IRepository<AdminUserEntity>>();
+      repository.GetById(Arg.Any<long>()).Returns(fakeEntity);
+      var service = new AdminUserService(repository);
+      service.Update(dto);
+      var updatedEntity = service.GetById(1);
+      var expectedPwdHash = CommonHelper.CalcMD5(dto.Password);
+      Assert.AreEqual(expectedPwdHash, fakeEntity.PasswordHash);
+    }
+    [Test]
+    public void Update_WillNotUpdatePwd_PwdnotUpdated()
+    {
+      var dto = new AdminUserDTO
+      {
+        ID = 1,
+        Name = "Updated",
+        WillUpdatePwd = false,
+        Password = "123"
+      };
+      var fakeEntity = new AdminUserEntity
+      {
+        ID = 1,
+        Name = string.Empty,
+        PasswordHash = "abcd"
+      };
+      var repository = Substitute.For<IRepository<AdminUserEntity>>();
+      repository.GetById(Arg.Any<long>()).Returns(fakeEntity);
+      var service = new AdminUserService(repository);
+      service.Update(dto);
+      var updatedEntity = service.GetById(1);
+      var expectedPwdHash = CommonHelper.CalcMD5(dto.Password);
+      Assert.AreNotEqual(expectedPwdHash, fakeEntity.PasswordHash);
     }
   }
 }

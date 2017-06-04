@@ -1,6 +1,7 @@
 ﻿using CaptchaGen;
 using Fit.AdminWeb.Models;
 using Fit.Common;
+using Fit.DTO.RBAC;
 using Fit.IService;
 using System;
 using System.Collections.Generic;
@@ -60,6 +61,33 @@ namespace Fit.AdminWeb.Controllers
       ViewBag.TotalCount = auService.GetTotalCount();
       ViewBag.PageIndex = pageIndex;
       return View(adminUsers);
+    }
+
+    [HttpGet]
+    public ActionResult Edit(long id)
+    {
+      var adminUser = auService.GetById(id);
+      return View(adminUser);
+    }
+    [HttpPost]
+    public ActionResult Edit(AdminUserEditModel model)
+    {
+      if (!ModelState.IsValid)
+      {
+        return MVCHelper.GetJsonResult(AjaxResultEnum.error, MVCHelper.GetValidMsg(ModelState));
+      }
+      var dto = new AdminUserDTO
+      {
+        ID=model.ID,
+        Name=model.Name,
+        PhoneNum=model.PhoneNum,
+        Email=model.Email,
+        Password=model.Password,
+        WillUpdatePwd=!string.IsNullOrWhiteSpace(model.Password)
+      };
+
+      auService.Update(dto);
+      return View();
     }
   }
 }

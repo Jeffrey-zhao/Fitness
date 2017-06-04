@@ -13,6 +13,8 @@ namespace Fit.IService
 
     void UpdateAdminUser(long id, string name, string password);
 
+    void Update(AdminUserDTO dto);
+
     AdminUserDTO[] GetAll();
 
     AdminUserDTO[] GetPagedData(int startIndex, int pageSize);
