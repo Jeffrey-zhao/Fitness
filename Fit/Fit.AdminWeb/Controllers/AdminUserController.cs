@@ -20,6 +20,11 @@ namespace Fit.AdminWeb.Controllers
       auService = service;
     }
 
+    public ActionResult Index()
+    {
+      ViewBag.Message = Request.QueryString["testMsg"];
+      return View();
+    }
     [HttpGet]
     public ActionResult Login()
     {
@@ -32,13 +37,15 @@ namespace Fit.AdminWeb.Controllers
       {
         return MVCHelper.GetJsonResult(AjaxResultEnum.error, MVCHelper.GetValidMsg(ModelState));
       }
-      if (!TempData[Consts.VERIFY_CODE_KEY].ToString().Equals(model.VerifyCode))
+      if (TempData[Consts.VERIFY_CODE_KEY] == null
+        || !TempData[Consts.VERIFY_CODE_KEY].ToString().Equals(model.VerifyCode))
       {
         return MVCHelper.GetJsonResult(AjaxResultEnum.error, "Verify Code Error");
       }
       bool result = auService.CheckLogin(model.Email, model.Password);
       if (result)
       {
+        Session[Consts.LOGIN_EMAIL] = model.Email;
         return MVCHelper.GetJsonResult(AjaxResultEnum.ok);
       }
       else
@@ -78,16 +85,37 @@ namespace Fit.AdminWeb.Controllers
       }
       var dto = new AdminUserDTO
       {
-        ID=model.ID,
-        Name=model.Name,
-        PhoneNum=model.PhoneNum,
-        Email=model.Email,
-        Password=model.Password,
-        WillUpdatePwd=!string.IsNullOrWhiteSpace(model.Password)
+        ID = model.ID,
+        Name = model.Name,
+        PhoneNum = model.PhoneNum,
+        Email = model.Email,
+        Password = model.Password,
+        WillUpdatePwd = !string.IsNullOrWhiteSpace(model.Password)
       };
-
       auService.Update(dto);
+      return MVCHelper.GetJsonResult(AjaxResultEnum.ok);
+    }
+
+    [HttpGet]
+    public ActionResult Add()
+    {
       return View();
+    }
+    [HttpPost]
+    public ActionResult Add(AdminUserAddModel model)
+    {
+      if (!ModelState.IsValid)
+      {
+        return MVCHelper.GetJsonResult(AjaxResultEnum.error, MVCHelper.GetValidMsg(ModelState));
+      }
+      auService.AddAdminUser(model.Name, model.PhoneNum, model.Email, model.Password);
+      return MVCHelper.GetJsonResult(AjaxResultEnum.ok);
+    }
+
+    public ActionResult Delete(long id)
+    {
+      auService.MarkDeleted(id);
+      return MVCHelper.GetJsonResult(AjaxResultEnum.ok);
     }
   }
 }

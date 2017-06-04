@@ -21,7 +21,7 @@ namespace Fit.Service.Services.RBAC
       this.repository = repository;
     }
 
-    public long AddAdminUser(string name, string email, string password)
+    public long AddAdminUser(string name, string phoneNum, string email, string password)
     {
       bool isEmailExist = repository.GetAll().Where(a => a.Email == email).FirstOrDefault() != null;
 
@@ -34,6 +34,7 @@ namespace Fit.Service.Services.RBAC
       var entity = new AdminUserEntity
       {
         Name = name,
+        PhoneNum = phoneNum,
         Email = email
       };
       entity.PasswordSalt = CommonHelper.GenerateCaptchaCode(5);

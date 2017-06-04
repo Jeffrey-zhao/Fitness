@@ -2,9 +2,18 @@
   ViewBag.Title = "Home Page";
   ViewBag.Name = "管理员管理";
 }
-
 @model Fit.DTO.RBAC.AdminUserDTO[]
 
+<div class="row wrapper border-bottom white-bg  page-heading">
+  <div class="col-sm-4">
+    <h4>管理员管理</h4>
+  </div>
+  <div class="col-sm-8">
+    <div>
+      <a href="~/AdminUser/Add" class="btn btn-primary">添加</a>
+    </div>
+  </div>
+</div>
 <div class="wrapper wrapper-content animated fadeInRight">
   <div class="row">
     <div class="col-lg-12">
@@ -31,13 +40,12 @@
                       <i class="fa fa-edit"></i>
                     </a>
                     <span>&nbsp;</span>
-                    <a class="close-link" >
+                    <a class="close-link" href="#" onclick="onDelete(@adminUser.ID);return false;">
                       <i class="fa fa-times"></i>
                     </a>
                   </td>
                 </tr>
               }
-
             </tbody>
             <tfoot>
               <tr>
@@ -65,6 +73,25 @@
 <script>
   $(function () {
     $('.footable').footable();
+
+    function onDelete(id) {
+      if (confirm("确定要删除吗？")) {
+        deleteById(id);
+      }
+    };
+    function deleteById(id) {
+      $.ajax({
+        url: "/AdminUser/Delete/" + id;
+        type: "post",
+        success: function (res) {
+          if (res.status == "ok") {
+            location.reload();
+          } else {
+            alert(res.msg);
+          }
+        }
+      });
+    }
   });
 </script>
 

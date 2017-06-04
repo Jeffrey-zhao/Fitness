@@ -9,7 +9,7 @@ namespace Fit.IService
 {
   public interface IAdminUserService : IServiceSupport
   {
-    long AddAdminUser(string name, string email, string password);
+    long AddAdminUser(string name,string phoneNum, string email, string password);
 
     void UpdateAdminUser(long id, string name, string password);
 
