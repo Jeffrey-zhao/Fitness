@@ -10,18 +10,19 @@
       <h3>Welcome to Fit</h3>
       <form class="m-t" role="form" id="formLogin">
         <div class="form-group">
-          <input type="email" class="form-control" name="email" placeholder="邮箱" required="">
+          <input type="email" class="form-control" name="email" placeholder="邮箱" required="" pattern=@Html.Raw("^([0-9a-zA-Z]+)@([0-9a-zA-Z])+.([0-9a-zA-Z])+") title="电子邮件地址">
         </div>
         <div class="form-group">
-          <input type="password" class="form-control" name="password" placeholder="密码" required="">
+          <input type="password" class="form-control" name="password" placeholder="密码" required="" pattern="^[0-9a-zA-Z]{6,}" title="密码必须大于等于6位">
         </div>
         <div class="form-group">
           <div class="row">
             <div class="col-sm-6">
-              <input class="form-control" name="VerifyCode" type="text" placeholder="验证码" onblur="if(this.value==''){this.value='验证码:'}" onclick="if(this.value=='验证码:'){this.value='';}" value="验证码:" style="width:150px;">
+              <input class="form-control" name="VerifyCode" type="text" placeholder="验证码" required="" pattern="^[0-9a-zA-Z]+" title="请输入验证码"
+                     onblur="if(this.value==''){this.value='验证码:'}" onclick="if(this.value=='验证码:'){this.value='';}" value="验证码:" style="width:150px;">
             </div>
             <div class="col-sm-6">
-              <img src="#" id="imgVerifyCode" alt="点击获取验证码">
+              <img src="/AdminUser/CreateVerifyCode" id="imgVerifyCode" alt="点击获取验证码">
             </div>
           </div>
         </div>
@@ -37,62 +38,31 @@
   <script type="text/javascript" src="~/Scripts/jquery-1.10.2.min.js"></script>
   <script type="text/javascript">
     $(function () {
-      $("#changeImg,#imgVerifyCode").click(function () {
+      $("#imgVerifyCode").click(function () {
         $("#imgVerifyCode").attr("src", "/AdminUser/CreateVerifyCode?" + Math.random());
       });
       var options = {
-        beforeSubmit: showRequest,  // pre-submit callback
         success: function (response) {
           showResponse(response);
         },
-        // other available options:
-        url: "/SpringTest/testform.do",        // override for form's 'action' attribute
-        type: "post"        // 'get' or 'post', override for form's 'method' attribute
-        //dataType:  null        // 'xml', 'script', or 'json' (expected server response type)
-        //clearForm: true        // clear all form fields after successful submit
-        //resetForm: true        // reset the form after successful submit
-        // $.ajax options can be used here too, for example:
-        //timeout:   3000
+        url: "/AdminUser/Login",
+        type: "post"
       };
-      // 绑定表单提交事件处理器  
-      $("#formLogin").submit(function () {
-        //提交表单  
-        $(this).ajaxSubmit(options);
 
-        // !!! Important !!!  
-        // 为了防止普通浏览器进行表单提交和产生页面导航（防止页面刷新？）返回false  
+      $("#formLogin").submit(function () {
+
+        $(this).ajaxSubmit(options);
+        // 为了防止普通浏览器进行表单提交和产生页面导航（防止页面刷新？）返回false
         return false;
       });
-      // pre-submit callback  
-      function showRequest() {
-        alert("before submit");
-        return true;//返回true才可以进行下一步  
+      function showResponse(res) {
+        if (res.status == "OK") {
+          location.href = "/Home/Index";
+        } else {
+          $("#imgVerifyCode").click();
+          alert(res.msg);
+        }
       }
-      // post-submit callback  
-      function showResponse(response) {
-        alert("submit success" + response);
-      }  
-      $("#s").click(function () {
-        if (!validForm.check(false)) return;
-        var formData = $("#formLogin").serializeArray();
-        $.ajax({
-          type: "post",
-          url: "/AdminUser/Login",
-          data: formData,
-          success: function (res) {
-            if (res.status == "OK") {
-              location.href = "/Home/Index";
-            } else {
-              $("#imgVerifyCode").click();
-              alert(res.msg);
-            }
-          },
-          error: function () {
-            $("#imgVerifyCode").click();
-            alert("ajax error");
-          }
-        });
-      });
     });
   </script>
 }
