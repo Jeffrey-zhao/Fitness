@@ -36,11 +36,11 @@
                   <td>@adminUser.PhoneNum</td>
                   <td>@adminUser.Email</td>
                   <td>
-                    <a class="close-link" href="~/AdminUser/Edit/@adminUser.ID">
+                    <a href="~/AdminUser/Edit/@adminUser.ID">
                       <i class="fa fa-edit"></i>
                     </a>
                     <span>&nbsp;</span>
-                    <a class="close-link" href="#" onclick="onDelete(@adminUser.ID);return false;">
+                    <a href="javascript:void(0);" onclick='onDelete(@adminUser.ID);return false'>
                       <i class="fa fa-times"></i>
                     </a>
                   </td>
@@ -50,17 +50,11 @@
             <tfoot>
               <tr>
                 <td colspan="10" class="footable-visible">
-                  <ul class="pagination pull-right">
-                    <li class="footable-page-arrow disabled"><a data-page="first" href="#first">«</a></li>
-                    <li class="footable-page-arrow disabled"><a data-page="prev" href="#prev">‹</a></li>
-                    <li class="footable-page active"><a data-page="0" href="#">1</a></li>
-                    <li class="footable-page"><a data-page="1" href="#">2</a></li>
-                    <li class="footable-page"><a data-page="1" href="#">3</a></li>
-                    <li class="footable-page"><a data-page="1" href="#">4</a></li>
-                    <li class="footable-page"><a data-page="1" href="#">5</a></li>
-                    <li class="footable-page-arrow"><a data-page="next" href="#next">›</a></li>
-                    <li class="footable-page-arrow"><a data-page="last" href="#last">»</a></li>
-                  </ul>
+                  @{
+                    Fit.Common.PageHelper.TotalCount = ViewBag.TotalCount;
+                    Fit.Common.PageHelper.CurrentPage = ViewBag.PageIndex;
+                  }
+                  @Html.Raw(Fit.Common.PageHelper.GetHtmlPager());
                 </td>
               </tr>
             </tfoot>
@@ -70,10 +64,12 @@
     </div>
   </div>
 </div>
-<script>
-  $(function () {
-    $('.footable').footable();
 
+@section FooterScript{
+  <script>
+    $(function () {
+      $('.footable').footable();
+    });
     function onDelete(id) {
       if (confirm("确定要删除吗？")) {
         deleteById(id);
@@ -81,7 +77,7 @@
     };
     function deleteById(id) {
       $.ajax({
-        url: "/AdminUser/Delete/" + id;
+        url: "/AdminUser/Delete/" + id,
         type: "post",
         success: function (res) {
           if (res.status == "ok") {
@@ -91,7 +87,8 @@
           }
         }
       });
-    }
-  });
-</script>
+    };
+  </script>
+}
+
 
