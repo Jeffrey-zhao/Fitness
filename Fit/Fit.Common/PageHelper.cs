@@ -90,17 +90,23 @@ namespace Fit.Common
 
       StringBuilder strB = new StringBuilder();
       strB.Append(" <ul class='pagination pull-right'>")
-        .AppendFormat("<li class='footable-page-arrow {0}'><a href='{1}'>«</a></li>", firstPageAttr, firstPageHref)
-        .AppendFormat("<li class='footable-page-arrow {0}'><a href='{1}'>‹</a></li>", prevPageAttr, prevPageHref);
+        .AppendFormat("<li class='footable-page-arrow {0}'><a href='{1}'>«</a></li>"
+          , firstPageAttr, firstPageHref)
+        .AppendFormat("<li class='footable-page-arrow {0}'><a href='{1}'>‹</a></li>"
+          , prevPageAttr, prevPageHref);
       for (int i = startPage; i <= endPage; i++)
       {
         var currPageAttr = string.Empty;
         if (i == CurrentPage) currPageAttr = "active";
-        strB.AppendFormat("<li class='footable-page {0}'><a href='{1}' >{2}</a></li>", currPageAttr, hrefStr + i, i);
+        strB.AppendFormat("<li class='footable-page {0}'><a href='{1}' >{2}</a></li>"
+            , currPageAttr, hrefStr + i, i);
       }
-      strB.AppendFormat("<li class='footable-page-arrow {0}'><a href='{1}'>›</a></li>", nextPageAttr, nextPageHref)
-       .AppendFormat("<li class='footable-page-arrow {0}'><a href='{1}'>»</a></li>", lastPageAttr, lastPageHref)
+      strB.AppendFormat("<li class='footable-page-arrow {0}'><a href='{1}'>›</a></li>"
+            , nextPageAttr, nextPageHref)
+       .AppendFormat("<li class='footable-page-arrow {0}'><a href='{1}'>»</a></li>"
+            , lastPageAttr, lastPageHref)
        .Append("</ul>");
+
       return strB.ToString();
     }
 
