@@ -9,11 +9,17 @@ namespace Fit.IService
 {
   public interface IAdminUserService : IServiceSupport
   {
-    long AddAdminUser(string name, string email, string password);
+    long AddAdminUser(string name,string phoneNum, string email, string password);
 
     void UpdateAdminUser(long id, string name, string password);
 
+    void Update(AdminUserDTO dto);
+
     AdminUserDTO[] GetAll();
+
+    AdminUserDTO[] GetPagedData(int startIndex, int pageSize);
+
+    long GetTotalCount();
 
     AdminUserDTO GetByEmail(string email);
 

@@ -1,6 +1,7 @@
 ﻿using CaptchaGen;
 using Fit.AdminWeb.Models;
 using Fit.Common;
+using Fit.DTO.RBAC;
 using Fit.IService;
 using System;
 using System.Collections.Generic;
@@ -13,8 +14,17 @@ namespace Fit.AdminWeb.Controllers
 {
   public class AdminUserController : Controller
   {
-    public IAdminUserService AuSerivice { get; set; }
+    private IAdminUserService auService;
+    public AdminUserController(IAdminUserService service)
+    {
+      auService = service;
+    }
 
+    public ActionResult Index()
+    {
+      ViewBag.Message = Request.QueryString["testMsg"];
+      return View();
+    }
     [HttpGet]
     public ActionResult Login()
     {
@@ -27,13 +37,15 @@ namespace Fit.AdminWeb.Controllers
       {
         return MVCHelper.GetJsonResult(AjaxResultEnum.error, MVCHelper.GetValidMsg(ModelState));
       }
-      if (!TempData[Consts.VERIFY_CODE_KEY].ToString().Equals(model.VerifyCode))
+      if (TempData[Consts.VERIFY_CODE_KEY] == null
+        || !TempData[Consts.VERIFY_CODE_KEY].ToString().Equals(model.VerifyCode))
       {
         return MVCHelper.GetJsonResult(AjaxResultEnum.error, "Verify Code Error");
       }
-      bool result = AuSerivice.CheckLogin(model.Email, model.Password);
+      bool result = auService.CheckLogin(model.Email, model.Password);
       if (result)
       {
+        Session[Consts.LOGIN_EMAIL] = model.Email;
         return MVCHelper.GetJsonResult(AjaxResultEnum.ok);
       }
       else
@@ -50,5 +62,60 @@ namespace Fit.AdminWeb.Controllers
       return File(ms, "image/jpeg");
     }
 
+    public ActionResult List(int pageIndex = 1)
+    {
+      var adminUsers = auService.GetPagedData((pageIndex - 1) * Consts.PAGE_SIZE_NUM, Consts.PAGE_SIZE_NUM);
+      ViewBag.TotalCount = auService.GetTotalCount();
+      ViewBag.PageIndex = pageIndex;
+      return View(adminUsers);
+    }
+
+    [HttpGet]
+    public ActionResult Edit(long id)
+    {
+      var adminUser = auService.GetById(id);
+      return View(adminUser);
+    }
+    [HttpPost]
+    public ActionResult Edit(AdminUserEditModel model)
+    {
+      if (!ModelState.IsValid)
+      {
+        return MVCHelper.GetJsonResult(AjaxResultEnum.error, MVCHelper.GetValidMsg(ModelState));
+      }
+      var dto = new AdminUserDTO
+      {
+        ID = model.ID,
+        Name = model.Name,
+        PhoneNum = model.PhoneNum,
+        Email = model.Email,
+        Password = model.Password,
+        WillUpdatePwd = !string.IsNullOrWhiteSpace(model.Password)
+      };
+      auService.Update(dto);
+      return MVCHelper.GetJsonResult(AjaxResultEnum.ok);
+    }
+
+    [HttpGet]
+    public ActionResult Add()
+    {
+      return View();
+    }
+    [HttpPost]
+    public ActionResult Add(AdminUserAddModel model)
+    {
+      if (!ModelState.IsValid)
+      {
+        return MVCHelper.GetJsonResult(AjaxResultEnum.error, MVCHelper.GetValidMsg(ModelState));
+      }
+      auService.AddAdminUser(model.Name, model.PhoneNum, model.Email, model.Password);
+      return MVCHelper.GetJsonResult(AjaxResultEnum.ok);
+    }
+
+    public ActionResult Delete(long id)
+    {
+      auService.MarkDeleted(id);
+      return MVCHelper.GetJsonResult(AjaxResultEnum.ok);
+    }
   }
 }

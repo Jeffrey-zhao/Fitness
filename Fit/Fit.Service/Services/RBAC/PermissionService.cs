@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Fit.Common.Tests
+namespace Fit.Service.Services.RBAC
 {
-    public class Class1
-    {
-    }
+ //public class PermissionService:IPermissionService
+ // {
+ // }
 }

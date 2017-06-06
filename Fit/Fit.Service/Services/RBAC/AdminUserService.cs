@@ -21,7 +21,7 @@ namespace Fit.Service.Services.RBAC
       this.repository = repository;
     }
 
-    public long AddAdminUser(string name, string email, string password)
+    public long AddAdminUser(string name, string phoneNum, string email, string password)
     {
       bool isEmailExist = repository.GetAll().Where(a => a.Email == email).FirstOrDefault() != null;
 
@@ -34,6 +34,7 @@ namespace Fit.Service.Services.RBAC
       var entity = new AdminUserEntity
       {
         Name = name,
+        PhoneNum = phoneNum,
         Email = email
       };
       entity.PasswordSalt = CommonHelper.GenerateCaptchaCode(5);
@@ -54,7 +55,7 @@ namespace Fit.Service.Services.RBAC
 
     public AdminUserDTO[] GetAll()
     {
-      return repository.GetAll().Select(a => ToDTO(a)).ToArray();
+      return repository.GetAll().ToList().Select(a => ToDTO(a)).ToArray();
     }
 
     public AdminUserDTO GetByEmail(string email)
@@ -68,6 +69,19 @@ namespace Fit.Service.Services.RBAC
       return ToDTO(repository.GetById(id));
     }
 
+    public AdminUserDTO[] GetPagedData(int startIndex, int pageSize)
+    {
+      var adminUsers = repository.GetAll()
+        .OrderByDescending(a => a.CreatedDateTime)
+        .Skip(startIndex)
+        .Take(pageSize);
+      return adminUsers.ToList().Select(a => ToDTO(a)).ToArray();
+    }
+
+    public long GetTotalCount()
+    {
+      return GetAll().Count();
+    }
     public void MarkDeleted(long id)
     {
       repository.DeleteById(id);
@@ -93,6 +107,22 @@ namespace Fit.Service.Services.RBAC
         throw new ArgumentException(ExceptionMsg.GetObjectNullMsg("AdminUserEntity"));
       }
       entity.LoginErrorTimes = 0;
+      repository.Update(entity);
+    }
+
+    public void Update(AdminUserDTO dto)
+    {
+      var entity = repository.GetById(dto.ID);
+      if (entity == null) throw new ArgumentException(ExceptionMsg.GetObjectNullMsg("AdminUserEntity"));
+
+      entity.ID = dto.ID;
+      entity.Name = dto.Name;
+      entity.PhoneNum = dto.PhoneNum;
+      entity.Email = dto.Email;
+
+      entity.PasswordHash = dto.WillUpdatePwd ?
+        CommonHelper.CalcMD5(entity.PasswordSalt + dto.Password)
+        : entity.PasswordHash;
       repository.Update(entity);
     }
 

@@ -9,5 +9,8 @@ namespace Fit.Common
   public class Consts
   {
     public const string VERIFY_CODE_KEY = "VerifyCode";
+    public const string PAGE_SIZE_NAME = "PageSize";
+    public const int PAGE_SIZE_NUM = 2;
+    public const string LOGIN_EMAIL = "LoginEmail";
   }
 }

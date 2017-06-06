@@ -59,6 +59,7 @@
     <Compile Include="Repository\AdminUserRepository.cs" />
     <Compile Include="Repository\IRepository.cs" />
     <Compile Include="Services\RBAC\AdminUserService.cs" />
+    <Compile Include="Services\RBAC\PermissionService.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Fit.Common\Fit.Common.csproj">
