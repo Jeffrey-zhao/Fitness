@@ -21,6 +21,9 @@ namespace Fit.Service.Services.RBAC
 
     public long Add(PermissionDTO dto)
     {
+      var checkExist = repository.GetAll().Where(a => a.Name == dto.Name).FirstOrDefault();
+      if (checkExist != null) throw new ArgumentException(ExceptionMsg.GetObjExistMsg("Permission",dto.Name));
+
       var entity = new PermissionEntity
       {
         Name = dto.Name,
@@ -54,7 +57,9 @@ namespace Fit.Service.Services.RBAC
 
     public void Update(PermissionDTO dto)
     {
-      throw new NotImplementedException();
+      var entity = repository.GetById(dto.Id);
+      entity.Name = dto.Name;
+      entity.Description = dto.Description;
     }
 
     private PermissionDTO ToDTO(PermissionEntity entity)

@@ -66,6 +66,7 @@
     <Compile Include="AutofacTest\PersonBll.cs" />
     <Compile Include="AutofacTest\Repository.cs" />
     <Compile Include="AutofacTest\Test.cs" />
+    <Compile Include="PermissionTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

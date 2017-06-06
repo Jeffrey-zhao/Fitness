@@ -11,6 +11,7 @@ namespace Fit.Common.Tests
   public class PageHelperTests
   {
     [Test]
+    [Ignore("")]
     public void GetPagerHtml()
     {
       string result, attr;

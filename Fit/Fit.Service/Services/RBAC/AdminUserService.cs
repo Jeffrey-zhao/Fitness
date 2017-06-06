@@ -28,7 +28,7 @@ namespace Fit.Service.Services.RBAC
       if (isEmailExist)
       {
         throw new ArgumentException(ExceptionMsg
-          .GetEmailExistMsg(email));
+          .GetObjExistMsg("email",email));
       }
 
       var entity = new AdminUserEntity
