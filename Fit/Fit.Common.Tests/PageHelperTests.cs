@@ -67,6 +67,16 @@ namespace Fit.Common.Tests
       Assert.AreEqual(attr, string.Format("firstPageAttr:{0},prevPageAttr:{1},nextPageAttr:{2},lastPageAttr:{3}"
             , string.Empty, string.Empty, "disabled", "disabled"), "66");
       PageHelper.Reset();
+
+      PageHelper.CurrentPage = 1;
+      PageHelper.TotalPage = 1;
+      result = PageHelper.ForTestPageRange();
+      attr = PageHelper.FotTestAttr();
+      Assert.AreEqual("1", result, "7");
+      Assert.AreEqual(attr, string.Format("firstPageAttr:{0},prevPageAttr:{1},nextPageAttr:{2},lastPageAttr:{3}"
+            , "disabled", "disabled", "disabled", "disabled"), "77");
+      var html = PageHelper.GetHtmlPager();
+      PageHelper.Reset();
     }
     [Test]
     public void CalcTotalPage()
@@ -74,23 +84,31 @@ namespace Fit.Common.Tests
       PageHelper.TotalCount = 21;
       PageHelper.CurrentPage = 3;
       PageHelper.CalcTotalPage();
-
-      Assert.AreEqual(3, PageHelper.TotalPage, "1");
+      Assert.AreEqual(CalcExpect(PageHelper.TotalCount), PageHelper.TotalPage, "1");
       PageHelper.Reset();
 
       PageHelper.TotalCount = 11;
       PageHelper.CurrentPage = 3;
       PageHelper.CalcTotalPage();
-
-      Assert.AreEqual(2, PageHelper.TotalPage, "2");
+      Assert.AreEqual(CalcExpect(PageHelper.TotalCount), PageHelper.TotalPage, "2");
       PageHelper.Reset();
 
       PageHelper.TotalCount = 7;
       PageHelper.CurrentPage = 3;
       PageHelper.CalcTotalPage();
-
-      Assert.AreEqual(1, PageHelper.TotalPage, "3");
+      Assert.AreEqual(CalcExpect(PageHelper.TotalCount), PageHelper.TotalPage, "3");
       PageHelper.Reset();
+
+      PageHelper.TotalCount = 2;
+      PageHelper.CurrentPage = 1;
+      PageHelper.CalcTotalPage();
+      Assert.AreEqual(CalcExpect(PageHelper.TotalCount), PageHelper.TotalPage, "4");
+      PageHelper.Reset();
+    }
+
+    private int CalcExpect(long count)
+    {
+      return (int)Math.Ceiling(count * 1.0 / Consts.PAGE_SIZE_NUM);
     }
   }
 }

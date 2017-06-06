@@ -8,7 +8,7 @@ namespace Fit.Common
 {
   public class PageHelper
   {
-    public const int PAGE_COUNT = 5;
+    public const int PAGE_COUNT = 2;
 
     public static int CurrentPage { get; set; }
     public static int TotalPage { get; set; }
@@ -18,7 +18,8 @@ namespace Fit.Common
     private static string hrefStr = "/AdminUser/List?pageIndex=";
     private static string firstPageAttr = string.Empty, lastPageAttr = string.Empty
                                       , prevPageAttr = string.Empty, nextPageAttr = string.Empty
-                                      , currPageAttr = string.Empty;
+                                      , firstPageHref = string.Empty, lastPageHref = string.Empty
+                                      , prevPageHref = string.Empty, nextPageHref = string.Empty;
 
     internal static void CalcTotalPage()
     {
@@ -42,51 +43,73 @@ namespace Fit.Common
         startPage = CurrentPage - PAGE_COUNT / 2;
         endPage = startPage + PAGE_COUNT - 1;
       }
+
       if (startPage <= 1)
       {
         startPage = 1;
-        firstPageAttr = "disabled";
-        prevPageAttr = "disabled";
       }
       if (endPage >= TotalPage)
       {
         endPage = TotalPage;
+      }
+
+      SetAttrAndHref();
+    }
+    private static void SetAttrAndHref()
+    {
+      firstPageHref = hrefStr + 1;
+      prevPageHref = hrefStr + (CurrentPage - 1);
+      lastPageHref = hrefStr + TotalPage;
+      nextPageHref = hrefStr + (CurrentPage + 1);
+      if (startPage <= 1)
+      {
+        firstPageAttr = "disabled";
+        firstPageHref = "#";
+      }
+      if (endPage >= TotalPage)
+      {
         lastPageAttr = "disabled";
+        lastPageHref = "#";
+      }
+      if (CurrentPage <= 1)
+      {
+        prevPageAttr = "disabled";
+        prevPageHref = "#";
+      }
+      if (CurrentPage >= TotalPage)
+      {
         nextPageAttr = "disabled";
+        nextPageHref = "#";
       }
     }
 
     public static string GetHtmlPager()
     {
+      CalcTotalPage();
       CoreAlgorithm();
 
       StringBuilder strB = new StringBuilder();
       strB.Append(" <ul class='pagination pull-right'>")
-        .AppendFormat("<li class='footable-page-arrow {0}'><a href='{1}'>«</a></li>", firstPageAttr, hrefStr + 1)
-        .AppendFormat("<li class='footable-page-arrow {0}'><a href='{1}'>‹</a></li>", prevPageAttr, hrefStr + (CurrentPage - 1));
+        .AppendFormat("<li class='footable-page-arrow {0}'><a href='{1}'>«</a></li>", firstPageAttr, firstPageHref)
+        .AppendFormat("<li class='footable-page-arrow {0}'><a href='{1}'>‹</a></li>", prevPageAttr, prevPageHref);
       for (int i = startPage; i <= endPage; i++)
       {
+        var currPageAttr = string.Empty;
         if (i == CurrentPage) currPageAttr = "active";
-        strB.AppendFormat("<li class='footable-page {0}'><a href='{1}'>{2}</a></li>", currPageAttr, hrefStr + i, i);
+        strB.AppendFormat("<li class='footable-page {0}'><a href='{1}' >{2}</a></li>", currPageAttr, hrefStr + i, i);
       }
-      strB.AppendFormat("<li class='footable-page-arrow {0}'><a href='{1}'>›</a></li>", nextPageAttr, hrefStr + (CurrentPage + 1))
-       .AppendFormat("<li class='footable-page-arrow {0}'><a href='{1}'>»</a></li>", lastPageAttr, hrefStr + TotalPage)
+      strB.AppendFormat("<li class='footable-page-arrow {0}'><a href='{1}'>›</a></li>", nextPageAttr, nextPageHref)
+       .AppendFormat("<li class='footable-page-arrow {0}'><a href='{1}'>»</a></li>", lastPageAttr, lastPageHref)
        .Append("</ul>");
       return strB.ToString();
     }
 
     public static void Reset()
     {
-      startPage = 0;
-      endPage = 0;
-      CurrentPage = 0;
       TotalCount = 0;
-      TotalPage = 0;
-      firstPageAttr = string.Empty;
-      lastPageAttr = string.Empty;
-      prevPageAttr = string.Empty;
-      nextPageAttr = string.Empty;
-      currPageAttr = string.Empty;
+      startPage = endPage = CurrentPage = TotalPage = 0;
+      firstPageAttr = lastPageAttr = prevPageAttr = nextPageAttr =  string.Empty;
+      firstPageHref = lastPageHref = prevPageHref = nextPageHref = string.Empty;
     }
 
     /// <summary>

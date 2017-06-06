@@ -24,7 +24,7 @@ namespace Fit.Service.Tests
       repository.Add(Arg.Any<AdminUserEntity>()).Returns(2);
       var adminUser = new AdminUserService(repository);
 
-      var id = adminUser.AddAdminUser("Test1", "123@123", "123");
+      var id = adminUser.AddAdminUser("Test1","123123123", "123@123", "123");
 
       Assert.AreEqual(2, id);
     }
@@ -41,7 +41,7 @@ namespace Fit.Service.Tests
       var adminUser = new AdminUserService(repository);
 
       Assert.Throws<ArgumentException>(() =>
-      adminUser.AddAdminUser("Test1", email, "123"));
+      adminUser.AddAdminUser("Test1","123123123", email, "123"));
     }
 
     [Test]

@@ -54,7 +54,8 @@
                     Fit.Common.PageHelper.TotalCount = ViewBag.TotalCount;
                     Fit.Common.PageHelper.CurrentPage = ViewBag.PageIndex;
                   }
-                  @Html.Raw(Fit.Common.PageHelper.GetHtmlPager());
+                  @Html.Raw(Fit.Common.PageHelper.GetHtmlPager())
+                  @{Fit.Common.PageHelper.Reset();}
                 </td>
               </tr>
             </tfoot>
