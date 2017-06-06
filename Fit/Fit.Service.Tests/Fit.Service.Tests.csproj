@@ -57,6 +57,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AdminUserServiceTests.cs" />
+    <Compile Include="AutofacTest\CustomBll.cs" />
+    <Compile Include="AutofacTest\Dal.cs" />
+    <Compile Include="AutofacTest\Entities.cs" />
+    <Compile Include="AutofacTest\Idal.cs" />
+    <Compile Include="AutofacTest\IDependency.cs" />
+    <Compile Include="AutofacTest\IRepository.cs" />
+    <Compile Include="AutofacTest\PersonBll.cs" />
+    <Compile Include="AutofacTest\Repository.cs" />
+    <Compile Include="AutofacTest\Test.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
