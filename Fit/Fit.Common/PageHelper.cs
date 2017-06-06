@@ -114,7 +114,7 @@ namespace Fit.Common
     {
       TotalCount = 0;
       startPage = endPage = CurrentPage = TotalPage = 0;
-      firstPageAttr = lastPageAttr = prevPageAttr = nextPageAttr =  string.Empty;
+      firstPageAttr = lastPageAttr = prevPageAttr = nextPageAttr = string.Empty;
       firstPageHref = lastPageHref = prevPageHref = nextPageHref = string.Empty;
     }
 
@@ -134,7 +134,8 @@ namespace Fit.Common
     }
     internal static string FotTestAttr()
     {
-      return string.Format("firstPageAttr:{0},prevPageAttr:{1},nextPageAttr:{2},lastPageAttr:{3}"
+      return
+        string.Format("firstPageAttr:{0},prevPageAttr:{1},nextPageAttr:{2},lastPageAttr:{3}"
                                             , firstPageAttr, prevPageAttr, nextPageAttr, lastPageAttr);
     }
   }

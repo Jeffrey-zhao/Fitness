@@ -22,7 +22,7 @@ namespace Fit.Service.Services.RBAC
     public long Add(PermissionDTO dto)
     {
       var checkExist = repository.GetAll().Where(a => a.Name == dto.Name).FirstOrDefault();
-      if (checkExist != null) throw new ArgumentException(ExceptionMsg.GetObjExistMsg("Permission",dto.Name));
+      if (checkExist != null) throw new ArgumentException(ExceptionMsg.GetObjExistMsg("Permission", dto.Name));
 
       var entity = new PermissionEntity
       {
@@ -39,14 +39,8 @@ namespace Fit.Service.Services.RBAC
 
     public PermissionDTO GetById(long id)
     {
-      var entity = repository.GetById(id);
-      var dto = new PermissionDTO
-      {
-        Id = entity.ID,
-        Name = entity.Name,
-        Description = entity.Description
-      };
-      return dto;
+      repository.GetById(id);
+      return ToDTO(repository.GetById(id));
     }
 
     public PermissionDTO[] GetPagedData(int startIndex, int pageSize)
@@ -55,11 +49,18 @@ namespace Fit.Service.Services.RBAC
       return entity.ToList().Select(a => ToDTO(a)).ToArray();
     }
 
+    public long GetTotalCount()
+    {
+      return repository.GetAll().Count();
+    }
+
     public void Update(PermissionDTO dto)
     {
       var entity = repository.GetById(dto.Id);
+      if (entity == null) throw new ArgumentException(ExceptionMsg.GetObjectNullMsg("PermissionEntity"));
       entity.Name = dto.Name;
       entity.Description = dto.Description;
+      repository.Update(entity);
     }
 
     private PermissionDTO ToDTO(PermissionEntity entity)

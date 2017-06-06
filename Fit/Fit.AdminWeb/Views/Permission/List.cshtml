@@ -1,12 +1,12 @@
 ﻿@{
-  ViewBag.Title = "Admin | List";
-  ViewBag.Name = "管理员管理";
+  ViewBag.Title = "Permission | List";
+  ViewBag.Name = "权限项管理";
 }
-@model Fit.DTO.RBAC.AdminUserDTO[]
+@model Fit.DTO.RBAC.PermissionDTO[]
 
 <div class="row wrapper border-bottom white-bg  page-heading">
   <div class="col-sm-4">
-    <h4>管理员管理</h4>
+    <h4>权限项管理</h4>
   </div>
   <div class="col-sm-8">
     <div>
@@ -23,24 +23,22 @@
             <thead>
               <tr>
                 <th>名称</th>
-                <th>手机号</th>
-                <th>邮箱</th>
+                <th>描述</th>
                 <th>操作</th>
               </tr>
             </thead>
             <tbody>
-              @foreach (var adminUser in Model)
+              @foreach (var permission in Model)
               {
                 <tr>
-                  <td>@adminUser.Name</td>
-                  <td>@adminUser.PhoneNum</td>
-                  <td>@adminUser.Email</td>
+                  <td>@permission.Name</td>
+                  <td>@permission.Description</td>
                   <td>
-                    <a href="~/AdminUser/Edit/@adminUser.ID">
+                    <a href="~/AdminUser/Edit/@permission.Id">
                       <i class="fa fa-edit"></i>
                     </a>
                     <span>&nbsp;</span>
-                    <a href="javascript:void(0);" onclick='onDelete(@adminUser.ID);return false'>
+                    <a href="javascript:void(0);" onclick='onDelete(@permission.Id);return false'>
                       <i class="fa fa-times"></i>
                     </a>
                   </td>
@@ -78,7 +76,7 @@
     };
     function deleteById(id) {
       $.ajax({
-        url: "/AdminUser/Delete/" + id,
+        url: "/Permission/Delete/" + id,
         type: "post",
         success: function (res) {
           if (res.status == "ok") {

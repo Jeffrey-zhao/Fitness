@@ -32,7 +32,8 @@ namespace Fit.Service.Repository
 
     public IQueryable<PermissionEntity> GetAll()
     {
-      return ctx.Permissions.Where(a => a.IsDeleted == false);
+      var c = ctx.Permissions.Where(a => a.IsDeleted == false);
+      return c;
     }
 
     public PermissionEntity GetById(long id)

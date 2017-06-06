@@ -11,6 +11,8 @@ namespace Fit.IService
   {
     PermissionDTO[] GetPagedData(int startIndex, int pageSize);
 
+    long GetTotalCount();
+
     PermissionDTO GetById(long id);
 
     long Add(PermissionDTO dto);
