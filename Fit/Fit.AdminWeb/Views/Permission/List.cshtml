@@ -1,16 +1,24 @@
 ﻿@{
   ViewBag.Title = "Permission | List";
-  ViewBag.Name = "权限项管理";
+  ViewBag.Name = "权限管理";
 }
 @model Fit.DTO.RBAC.PermissionDTO[]
 
 <div class="row wrapper border-bottom white-bg  page-heading">
   <div class="col-sm-4">
-    <h4>权限项管理</h4>
+    <h2>权限管理</h2>
+    <ol class="breadcrumb">
+      <li>
+        <a>权限角色</a>
+      </li>
+      <li class="active">
+        <strong>权限管理</strong>
+      </li>
+    </ol>
   </div>
   <div class="col-sm-8">
-    <div>
-      <a href="~/AdminUser/Add" class="btn btn-primary">添加</a>
+    <div class="title-action">
+      <a href="~/Permission/Add" class="btn btn-primary">添加</a>
     </div>
   </div>
 </div>
