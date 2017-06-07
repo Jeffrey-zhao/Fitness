@@ -183,6 +183,7 @@
     <Compile Include="Models\AdminUserAddModel.cs" />
     <Compile Include="Models\AdminUserEditModel.cs" />
     <Compile Include="Models\LoginModel.cs" />
+    <Compile Include="Models\PermissionModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -200,6 +201,8 @@
     <Content Include="Views\AdminUser\Edit.cshtml" />
     <Content Include="Views\AdminUser\Add.cshtml" />
     <Content Include="Views\Permission\List.cshtml" />
+    <Content Include="Views\Permission\Add.cshtml" />
+    <Content Include="Views\Permission\Edit.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

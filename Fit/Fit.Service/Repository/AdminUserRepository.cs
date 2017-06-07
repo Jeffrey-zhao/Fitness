@@ -1,4 +1,5 @@
-﻿using Fit.Service.Entities.RBAC;
+﻿using Fit.Common;
+using Fit.Service.Entities.RBAC;
 using Fit.Service.Services;
 using System;
 using System.Collections.Generic;
@@ -44,13 +45,15 @@ namespace Fit.Service.Repository
     public void Update(AdminUserEntity entity)
     {
       var updating = GetById(entity.ID);
-
+      if (updating == null) throw new ArgumentException(ExceptionMsg.GetObjectNullMsg("AdminUserEntity"));
       updating.Name = entity.Name;
       updating.Email = entity.Email;
-      updating.PasswordSalt = entity.PasswordSalt;
-      updating.PasswordHash = entity.PasswordHash;
-      updating.LoginErrorTimes = entity.LoginErrorTimes;
-      updating.LastLoginErrorDateTime = entity.LastLoginErrorDateTime;
+      updating.PhoneNum = entity.PhoneNum;
+      if (!string.IsNullOrEmpty(entity.PasswordHash))
+      {
+        updating.PasswordSalt = entity.PasswordSalt;
+        updating.PasswordHash = entity.PasswordHash;
+      }      
 
       ctx.SaveChanges();
     }

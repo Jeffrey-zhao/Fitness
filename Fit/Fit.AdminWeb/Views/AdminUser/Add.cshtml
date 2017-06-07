@@ -10,7 +10,7 @@
         <form class="m-t" role="form" id="formAdd">
           <div class="form-group">
             <label>邮箱</label>
-            <input type="email" class="form-control" name="Email" required="">
+            <input type="email" class="form-control" name="Email" required="" pattern=@Html.Raw("^([0-9a-zA-Z]+)@([0-9a-zA-Z])+.([0-9a-zA-Z])+") title="电子邮件地址">
           </div>
           <div class="form-group">
             <label>名称</label>
@@ -22,11 +22,11 @@
           </div>
           <div class="form-group">
             <label>新密码</label>
-            <input type="password" class="form-control" name="PassWord" required="">
+            <input type="password" class="form-control" name="PassWord" required="" pattern="^.{6,}" title="密码必须大于等于6位">
           </div>
           <div class="form-group">
             <label>再次输入新密码</label>
-            <input type="password" class="form-control" name="PasswordComfirm" required="">
+            <input type="password" class="form-control" name="PasswordComfirm" required="" pattern="^.{6,}" title="密码必须大于等于6位">
           </div>
           <input id="btnSave" type="submit" class="btn btn-primary block full-width m-b" value="保存">
         </form>

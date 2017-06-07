@@ -61,6 +61,7 @@
                   @{
                     Fit.Common.PageHelper.TotalCount = ViewBag.TotalCount;
                     Fit.Common.PageHelper.CurrentPage = ViewBag.PageIndex;
+                    Fit.Common.PageHelper.HrefStr = "/AdminUser/List?pageIndex=";
                   }
                   @Html.Raw(Fit.Common.PageHelper.GetHtmlPager())
                   @{Fit.Common.PageHelper.Reset();}

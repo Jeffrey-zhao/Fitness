@@ -56,10 +56,12 @@ namespace Fit.Service.Services.RBAC
 
     public void Update(PermissionDTO dto)
     {
-      var entity = repository.GetById(dto.Id);
-      if (entity == null) throw new ArgumentException(ExceptionMsg.GetObjectNullMsg("PermissionEntity"));
-      entity.Name = dto.Name;
-      entity.Description = dto.Description;
+      var entity = new PermissionEntity
+      {
+        ID = dto.Id,
+        Name = dto.Name,
+        Description = dto.Description
+      };
       repository.Update(entity);
     }
 

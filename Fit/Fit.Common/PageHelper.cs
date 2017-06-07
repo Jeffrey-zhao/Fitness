@@ -13,9 +13,8 @@ namespace Fit.Common
     public static int CurrentPage { get; set; }
     public static int TotalPage { get; set; }
     public static long TotalCount { get; set; }
-
+    public static string HrefStr { get; set; } = "/AdminUser/List?pageIndex=";
     private static int startPage, endPage;
-    private static string hrefStr = "/AdminUser/List?pageIndex=";
     private static string firstPageAttr = string.Empty, lastPageAttr = string.Empty
                                       , prevPageAttr = string.Empty, nextPageAttr = string.Empty
                                       , firstPageHref = string.Empty, lastPageHref = string.Empty
@@ -57,10 +56,10 @@ namespace Fit.Common
     }
     private static void SetAttrAndHref()
     {
-      firstPageHref = hrefStr + 1;
-      prevPageHref = hrefStr + (CurrentPage - 1);
-      lastPageHref = hrefStr + TotalPage;
-      nextPageHref = hrefStr + (CurrentPage + 1);
+      firstPageHref = HrefStr + 1;
+      prevPageHref = HrefStr + (CurrentPage - 1);
+      lastPageHref = HrefStr + TotalPage;
+      nextPageHref = HrefStr + (CurrentPage + 1);
       if (startPage <= 1)
       {
         firstPageAttr = "disabled";
@@ -99,7 +98,7 @@ namespace Fit.Common
         var currPageAttr = string.Empty;
         if (i == CurrentPage) currPageAttr = "active";
         strB.AppendFormat("<li class='footable-page {0}'><a href='{1}' >{2}</a></li>"
-            , currPageAttr, hrefStr + i, i);
+            , currPageAttr, HrefStr + i, i);
       }
       strB.AppendFormat("<li class='footable-page-arrow {0}'><a href='{1}'>›</a></li>"
             , nextPageAttr, nextPageHref)

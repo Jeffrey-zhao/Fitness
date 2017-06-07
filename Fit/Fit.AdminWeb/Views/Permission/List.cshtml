@@ -42,7 +42,7 @@
                   <td>@permission.Name</td>
                   <td>@permission.Description</td>
                   <td>
-                    <a href="~/AdminUser/Edit/@permission.Id">
+                    <a href="~/Permission/Edit/@permission.Id">
                       <i class="fa fa-edit"></i>
                     </a>
                     <span>&nbsp;</span>
@@ -59,6 +59,7 @@
                   @{
                     Fit.Common.PageHelper.TotalCount = ViewBag.TotalCount;
                     Fit.Common.PageHelper.CurrentPage = ViewBag.PageIndex;
+                    Fit.Common.PageHelper.HrefStr = "/Permission/List?pageIndex=";
                   }
                   @Html.Raw(Fit.Common.PageHelper.GetHtmlPager())
                   @{Fit.Common.PageHelper.Reset();}

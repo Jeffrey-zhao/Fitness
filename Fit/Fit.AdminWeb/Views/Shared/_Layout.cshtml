@@ -17,7 +17,7 @@
   <link href="~/Content/style.css" rel="stylesheet">
   <!-- FooTable -->
   <link href="~/Content/plugins/footable/footable.core.css" rel="stylesheet">
- 
+
   @RenderSection("HeaderScript", false)
 </head>
 <body>
@@ -41,16 +41,9 @@
             </div>
           </li>
           <li class="active">
-            <a href="/AdminUser/List?pageIndex=1">
-              <i class="fa fa-th-large"></i>
-              <span class="nav-label">管理员管理</span>
-              <span class="fa arrow"></span>
-            </a>
-          </li>
-          <li>
-            <a href="#">
+            <a>
               <i class="fa fa-diamond"></i>
-              <span class="nav-label">权限角色</span>
+              <span class="nav-label">管理员&权限</span>
               <span class="fa arrow"></span>
             </a>
             <ul class="nav nav-second-level collapse">
@@ -60,10 +53,13 @@
               <li>
                 <a href="/Role/List?pageIndex=1">角色管理</a>
               </li>
+              <li>
+                <a href="/AdminUser/List?pageIndex=1">管理员管理</a>
+              </li>
             </ul>
           </li>
           <li>
-            <a href="index.html#">
+            <a>
               <i class="fa fa-diamond"></i>
               <span class="nav-label">健身管理</span>
               <span class="fa arrow"></span>

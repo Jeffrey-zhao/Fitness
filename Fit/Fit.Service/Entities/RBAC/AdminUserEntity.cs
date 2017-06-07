@@ -24,7 +24,7 @@ namespace Fit.Service.Entities.RBAC
       bool isEqual = true;
       isEqual &= ID == other.ID;
       isEqual &= Name.Equals(other.Name);
-      isEqual &= Email.Equals(other.Name);
+      isEqual &= Email.Equals(other.Email);
       return isEqual;
     }
 

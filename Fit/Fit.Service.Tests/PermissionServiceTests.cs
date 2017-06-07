@@ -117,17 +117,10 @@ namespace Fit.Service.Tests
 
       service.Update(dto);
 
-      Assert.AreEqual("UpdateName", entity.Name);
-      Assert.AreEqual("UpdateDescription", entity.Description);
-    }
-    [Test]
-    public void Update_IdNotExist_Throw()
-    {
-      var dto = GetFakeDTO();
-      var repository = GetRepository();
-      var service = new PermissionService(repository);
+      entity.Name = "UpdateName";
+      entity.Description = "UpdateDescription";
 
-      Assert.Throws<ArgumentException>(() => service.Update(dto));
+      repository.Received().Update(entity);
     }
 
     private IQueryable<PermissionEntity> GetFakeEntities()
@@ -165,7 +158,7 @@ namespace Fit.Service.Tests
     {
       var dto = new PermissionDTO
       {
-        Id = 2,
+        Id = 1,
         Name = "UpdateName",
         Description = "UpdateDescription"
       };

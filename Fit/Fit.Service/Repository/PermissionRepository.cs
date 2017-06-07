@@ -1,4 +1,5 @@
-﻿using Fit.Service.Entities.RBAC;
+﻿using Fit.Common;
+using Fit.Service.Entities.RBAC;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -44,8 +45,10 @@ namespace Fit.Service.Repository
     public void Update(PermissionEntity entity)
     {
       var updating = GetById(entity.ID);
+      if (updating == null) throw new ArgumentException(ExceptionMsg.GetObjectNullMsg("PermissionEntity"));
       updating.Name = entity.Name;
       updating.Description = entity.Description;
+      ctx.SaveChanges();
     }
   }
 }

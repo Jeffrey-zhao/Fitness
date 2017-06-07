@@ -24,7 +24,7 @@ namespace Fit.Service.Tests
       repository.Add(Arg.Any<AdminUserEntity>()).Returns(2);
       var adminUser = new AdminUserService(repository);
 
-      var id = adminUser.AddAdminUser("Test1","123123123", "123@123", "123");
+      var id = adminUser.AddAdminUser("Test1", "123123123", "123@123", "123");
 
       Assert.AreEqual(2, id);
     }
@@ -41,7 +41,7 @@ namespace Fit.Service.Tests
       var adminUser = new AdminUserService(repository);
 
       Assert.Throws<ArgumentException>(() =>
-      adminUser.AddAdminUser("Test1","123123123", email, "123"));
+      adminUser.AddAdminUser("Test1", "123123123", email, "123"));
     }
 
     [Test]
@@ -310,33 +310,21 @@ namespace Fit.Service.Tests
       var dto = new AdminUserDTO
       {
         ID = 1,
-        Name = "Updated"
+        Name = "Updated",
+        Email = "email"
       };
       var fakeEntity = new AdminUserEntity
       {
         ID = 1,
-        Name = string.Empty
+        Name = "Updated",
+        Email = "email"
       };
       var repository = Substitute.For<IRepository<AdminUserEntity>>();
-      repository.GetById(Arg.Any<long>()).Returns(fakeEntity);
+
       var service = new AdminUserService(repository);
       service.Update(dto);
-      var updatedEntity = service.GetById(1);
 
-      Assert.AreEqual(dto.Name, updatedEntity.Name);
-    }
-    [Test]
-    public void Update_IdNotExist_Throw()
-    {
-      var dto = new AdminUserDTO
-      {
-        ID = 1,
-        Name = "Updated"
-      };
-      var repository = Substitute.For<IRepository<AdminUserEntity>>();
-      var service = new AdminUserService(repository);
-
-      Assert.Throws<ArgumentException>(() => service.Update(dto));
+      repository.Received().Update(fakeEntity);
     }
     [Test]
     public void Update_WillUpdatePwd_PwdUpdated()
@@ -345,6 +333,7 @@ namespace Fit.Service.Tests
       {
         ID = 1,
         Name = "Updated",
+        Email = "email",
         WillUpdatePwd = true,
         Password = "123"
       };
@@ -352,8 +341,9 @@ namespace Fit.Service.Tests
       {
         ID = 1,
         Name = string.Empty,
-        PasswordHash="abcd"
+        Email = "email"
       };
+      fakeEntity.PasswordHash = CommonHelper.CalcMD5(fakeEntity.PasswordSalt + dto.Password);
       var repository = Substitute.For<IRepository<AdminUserEntity>>();
       repository.GetById(Arg.Any<long>()).Returns(fakeEntity);
       var service = new AdminUserService(repository);

@@ -28,7 +28,7 @@ namespace Fit.Service.Services.RBAC
       if (isEmailExist)
       {
         throw new ArgumentException(ExceptionMsg
-          .GetObjExistMsg("email",email));
+          .GetObjExistMsg("email", email));
       }
 
       var entity = new AdminUserEntity
@@ -112,14 +112,14 @@ namespace Fit.Service.Services.RBAC
 
     public void Update(AdminUserDTO dto)
     {
-      var entity = repository.GetById(dto.ID);
-      if (entity == null) throw new ArgumentException(ExceptionMsg.GetObjectNullMsg("AdminUserEntity"));
-
-      entity.ID = dto.ID;
-      entity.Name = dto.Name;
-      entity.PhoneNum = dto.PhoneNum;
-      entity.Email = dto.Email;
-
+      var entity = new AdminUserEntity
+      {
+        ID = dto.ID,
+        Name = dto.Name,
+        PhoneNum = dto.PhoneNum,
+        Email = dto.Email
+      };
+      
       entity.PasswordHash = dto.WillUpdatePwd ?
         CommonHelper.CalcMD5(entity.PasswordSalt + dto.Password)
         : entity.PasswordHash;
