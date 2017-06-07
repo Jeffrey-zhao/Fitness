@@ -15,5 +15,28 @@ namespace Fit.Service.Entities.RBAC
 
     public virtual ICollection<PermissionEntity> Permissions { get; set; }
       = new List<PermissionEntity>();
+
+
+    public override bool Equals(object obj)
+    {
+      if (ReferenceEquals(null, obj)) return false;
+      if (ReferenceEquals(this, obj)) return true;
+      if (obj.GetType() != this.GetType()) return false;
+      return AreEqual((RoleEntity)obj);
+    }
+
+    public override int GetHashCode()
+    {
+      return base.GetHashCode();
+    }
+
+    private bool AreEqual(RoleEntity other)
+    {
+      bool isEqual = true;
+      isEqual &= ID == other.ID;
+      isEqual &= Name == other.Name;
+      isEqual &= Description == other.Description;
+      return isEqual;
+    }
   }
 }

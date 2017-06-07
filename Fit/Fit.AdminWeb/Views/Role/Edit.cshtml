@@ -1,20 +1,22 @@
 ﻿
 @{
-  ViewBag.Title = "Permission | Add";
+  ViewBag.Title = "Role | Edit";
 }
+@model Fit.DTO.RBAC.RoleDTO
 
 <div class="row">
   <div class="col-sm-12">
     <div class="ibox float-e-margins">
       <div class="ibox-content">
         <form class="m-t" role="form" id="formAdd">
+          <input type="hidden" name="ID" value="@Model.Id" />
           <div class="form-group">
             <label>名称</label>
-            <input type="text" class="form-control" name="Name" required="" pattern="^[0-9a-zA-Z.]+" title="只能输入字母，数字和“.”">
+            <input type="text" class="form-control" name="Name" required="" value="@Model.Name" pattern="^[0-9a-zA-Z.]+" title="只能输入字母，数字和“.”">
           </div>
           <div class="form-group">
             <label>描述</label>
-            <input type="text" class="form-control" name="Description">
+            <input type="text" class="form-control" name="Description" value="@Model.Description">
           </div>
           <input id="btnSave" type="submit" class="btn btn-primary block full-width m-b" value="保存">
         </form>
@@ -30,7 +32,7 @@
       success: function (response) {
         execResponse(response);
       },
-      url: "/Permission/Add",
+      url: "/Role/Edit",
       type: "post"
     };
 
@@ -41,10 +43,11 @@
 
     function execResponse(res) {
       if (res.status == "ok") {
-        location.href = "/Permission/List";
+        location.href = "/Role/List";
       } else {
         alert(res.msg);
       }
     }
   </script>
 }
+

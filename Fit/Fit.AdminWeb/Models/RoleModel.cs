@@ -6,7 +6,7 @@ using System.Web;
 
 namespace Fit.AdminWeb.Models
 {
-  public class PermissionModel
+  public class RoleModel
   {
     public long ID { get; set; }
     [Required]

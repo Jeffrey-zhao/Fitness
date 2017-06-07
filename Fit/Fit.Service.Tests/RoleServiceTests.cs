@@ -31,7 +31,11 @@ namespace Fit.Service.Tests
     public void Add_Exist_Throw()
     {
       var dto = GetFakeDTO();
-      var entities = GetFakeEntities();
+      dto.Name = "e";
+      var entity = GetFakeEntity();
+      entity.Name = "e";
+      var entities = new List<RoleEntity> { entity }.AsQueryable();
+
       var repository = GetFakeRepository();
       var service = new RoleService(repository);
       repository.GetAll().Returns(entities);
@@ -39,6 +43,104 @@ namespace Fit.Service.Tests
       Assert.Throws<ArgumentException>(() => service.Add(dto));
     }
 
+    [Test]
+    public void Delete()
+    {
+      var repository = GetFakeRepository();
+      var service = new RoleService(repository);
+      service.Delete(1);
+
+      repository.Received().DeleteById(1);
+    }
+
+    [Test]
+    public void GetById_IdExist_ReturnDTO()
+    {
+      var entity = GetFakeEntity();
+      var repository = GetFakeRepository();
+      var service = new RoleService(repository);
+      repository.GetById(Arg.Any<long>()).Returns(entity);
+
+      var dto = service.GetById(1);
+
+      Assert.AreEqual(entity.ID, dto.Id, "id");
+      Assert.AreEqual(entity.Name, dto.Name, "Name");
+      Assert.AreEqual(entity.Description, dto.Description, "Description");
+    }
+    [Test]
+    public void GetById_IdNotExist_Throw()
+    {
+      var repository = GetFakeRepository();
+      var service = new RoleService(repository);
+
+      Assert.Throws<ArgumentException>(() => service.GetById(1));
+    }
+
+    [Test]
+    public void GetPagedData_InOnePage_ReturnAll()
+    {
+      var entities = GetFakeEntities(5);
+      var repository = GetFakeRepository();
+      var service = new RoleService(repository);
+      repository.GetAll().Returns(entities);
+
+      var pagedData = service.GetPagedData(0, 10);
+
+      Assert.AreEqual(5, pagedData.Count());
+    }
+    [Test]
+    public void GetPagedData_NotInOnePage_ReturnPaged()
+    {
+      var entities = GetFakeEntities(5);
+      var repository = GetFakeRepository();
+      var service = new RoleService(repository);
+      repository.GetAll().Returns(entities);
+
+      var pagedData = service.GetPagedData(0, 3);
+
+      Assert.AreEqual(3, pagedData.Count());
+    }
+
+    [Test]
+    public void GetTotalCount_HaveData_ReturnCount()
+    {
+      var entities = GetFakeEntities(5);
+      var repository = GetFakeRepository();
+      var service = new RoleService(repository);
+      repository.GetAll().Returns(entities);
+      var count = service.GetTotalCount();
+
+      Assert.AreEqual(5, count);
+    }
+    [Test]
+    public void GetTotalCount_NoData_ReturnCount()
+    {
+      var repository = GetFakeRepository();
+      var service = new RoleService(repository);
+      var count = service.GetTotalCount();
+
+      Assert.AreEqual(0, count);
+    }
+
+    [Test]
+    public void Update_Test_EntityReceived()
+    {
+      var entity = GetFakeEntity();
+      var dto = new RoleDTO
+      {
+        Id=entity.ID,
+        Name=entity.Name,
+        Description=entity.Description
+      };
+
+      var repository = GetFakeRepository();
+      var service = new RoleService(repository);
+      var count = service.GetTotalCount();
+
+      service.Update(dto);
+
+      repository.Received().Update(entity);
+    }
 
     private IRepository<RoleEntity> GetFakeRepository()
     {
@@ -64,22 +166,21 @@ namespace Fit.Service.Tests
       };
       return entity;
     }
-    private IQueryable<RoleEntity> GetFakeEntities()
+    private IQueryable<RoleEntity> GetFakeEntities(int count = 3)
     {
-      var entity1 = new RoleEntity
+      var list = new List<RoleEntity>();
+      for (int i = 1; i <= count; i++)
       {
-        ID = 1,
-        Name = "RoleEntity1",
-        Description = "RoleDescription1"
-      };
-      var entity2 = new RoleEntity
-      {
-        ID = 2,
-        Name = "RoleEntity2",
-        Description = "RoleDescription2"
-      };
+        var entity = new RoleEntity
+        {
+          ID = i,
+          Name = "RoleEntity" + i,
+          Description = "RoleDescription" + i
+        };
+        list.Add(entity);
+      }
 
-      return new List<RoleEntity> { entity1, entity2 }.AsQueryable();
+      return list.AsQueryable();
     }
   }
 }

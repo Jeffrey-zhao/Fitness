@@ -1,24 +1,24 @@
 ﻿@{
-  ViewBag.Title = "Permission | List";
-  ViewBag.Name = "权限管理";
+  ViewBag.Title = "Role | List";
+  ViewBag.Name = "角色管理";
 }
-@model Fit.DTO.RBAC.PermissionDTO[]
+@model Fit.DTO.RBAC.RoleDTO[]
 
 <div class="row wrapper border-bottom white-bg  page-heading">
   <div class="col-sm-4">
-    <h2>权限管理</h2>
+    <h2>角色管理</h2>
     <ol class="breadcrumb">
       <li>
         <span>管理员&权限</span>
       </li>
       <li class="active">
-        <strong>权限管理</strong>
+        <strong>角色管理</strong>
       </li>
     </ol>
   </div>
   <div class="col-sm-8">
     <div class="title-action">
-      <a href="~/Permission/Add" class="btn btn-primary">添加</a>
+      <a href="~/Role/Add" class="btn btn-primary">添加</a>
     </div>
   </div>
 </div>
@@ -42,7 +42,7 @@
                   <td>@permission.Name</td>
                   <td>@permission.Description</td>
                   <td>
-                    <a href="~/Permission/Edit/@permission.Id">
+                    <a href="~/Role/Edit/@permission.Id">
                       <i class="fa fa-edit"></i>
                     </a>
                     <span>&nbsp;</span>
@@ -59,7 +59,7 @@
                   @{
                     Fit.Common.PageHelper.TotalCount = ViewBag.TotalCount;
                     Fit.Common.PageHelper.CurrentPage = ViewBag.PageIndex;
-                    Fit.Common.PageHelper.HrefStr = "/Permission/List?pageIndex=";
+                    Fit.Common.PageHelper.HrefStr = "/Role/List?pageIndex=";
                   }
                   @Html.Raw(Fit.Common.PageHelper.GetHtmlPager())
                   @{Fit.Common.PageHelper.Reset();}
@@ -85,7 +85,7 @@
     };
     function deleteById(id) {
       $.ajax({
-        url: "/Permission/Delete/" + id,
+        url: "/Role/Delete/" + id,
         type: "post",
         success: function (res) {
           if (res.status == "ok") {

@@ -9,11 +9,11 @@ using System.Threading.Tasks;
 
 namespace Fit.Service
 {
- public class FitDbContext:DbContext
+  public class FitDbContext : DbContext
   {
     public FitDbContext() : base("name=connStr")
     {
-      //Database.SetInitializer<FitDbContext>
+      Database.SetInitializer<FitDbContext>(null);
     }
 
     //This function is import which maps the entity with it's modelconfig
