@@ -8,7 +8,7 @@ namespace Fit.Common
 {
   public class PageHelper
   {
-    public const int PAGE_COUNT = 2;
+    public const int PAGE_COUNT = 5;  //只能是奇数
 
     public static int CurrentPage { get; set; }
     public static int TotalPage { get; set; }

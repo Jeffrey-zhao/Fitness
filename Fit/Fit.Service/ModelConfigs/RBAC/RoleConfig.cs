@@ -14,6 +14,7 @@ namespace Fit.Service.ModelConfigs.RBAC
     {
       this.ToTable("TFit_Roles");
       this.Property(p => p.Name).IsRequired().HasMaxLength(50);
+      this.Property(p => p.Description).IsOptional().HasMaxLength(512);
       this.HasMany(p => p.Permissions).WithMany(p => p.Roles)
         .Map(m => m.ToTable("TFit_RolePermissions")
           .MapLeftKey("RoleId")

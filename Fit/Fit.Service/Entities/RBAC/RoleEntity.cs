@@ -9,7 +9,7 @@ namespace Fit.Service.Entities.RBAC
   public class RoleEntity : BaseEntity
   {
     public string Name { get; set; }
-
+    public string Description { get; set; }
     public virtual ICollection<AdminUserEntity> AdminUsers { get; set; }
       = new List<AdminUserEntity>();
 
