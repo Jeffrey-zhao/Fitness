@@ -17,6 +17,8 @@ namespace Fit.IService
 
     PermissionDTO[] GetAll();
 
+    long[] GetIDsByRole(long id);
+
     long Add(PermissionDTO dto);
 
     void Update(PermissionDTO dto);

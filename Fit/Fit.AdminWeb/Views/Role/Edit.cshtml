@@ -2,14 +2,14 @@
 @{
   ViewBag.Title = "Role | Edit";
 }
-@model Fit.DTO.RBAC.RoleDTO
+@model Fit.AdminWeb.Models.RoleModel
 
 <div class="row">
   <div class="col-sm-12">
     <div class="ibox float-e-margins">
       <div class="ibox-content">
         <form class="m-t" role="form" id="formAdd">
-          <input type="hidden" name="ID" value="@Model.Id" />
+          <input type="hidden" name="ID" value="@Model.ID" />
           <div class="form-group">
             <label>名称</label>
             <input type="text" class="form-control" name="Name" required="" value="@Model.Name" pattern="^[0-9a-zA-Z.]+" title="只能输入字母，数字和“.”">
@@ -17,6 +17,36 @@
           <div class="form-group">
             <label>描述</label>
             <input type="text" class="form-control" name="Description" value="@Model.Description">
+          </div>
+          <div class="hr-line-dashed"></div>
+          <div class="form-group">
+            <label>权限设置</label>
+            <div class="row">
+              @{
+                if (Model.AllPermissions.Length <= 0)
+                {
+                  return;
+                }
+                for (int i = 1; i <= Model.AllPermissions.Length; i++)
+                {
+                  <label class="checkbox-inline i-checks col-sm-3">
+                    <input type="checkbox" name="PermissionIDs" value="@Model.AllPermissions[i - 1].Id"
+                    @{
+                      if (Model.PermissionIDs.Length > 0 && Model.PermissionIDs.Contains(Model.AllPermissions[i - 1].Id))
+                      {
+                        @Html.Raw("checked='true'"):
+                    }
+                    }
+                    >
+                    <span>&nbsp;</span><strong>@Model.AllPermissions[i - 1].Name</strong>
+                  </label>
+                      if (i % 3 == 0)
+                      {
+                        @Html.Raw(@"</div><br /><div class='row'>");
+                        }
+                      }
+              }
+            </div>
           </div>
           <input id="btnSave" type="submit" class="btn btn-primary block full-width m-b" value="保存">
         </form>

@@ -56,15 +56,17 @@ namespace Fit.AdminWeb.Controllers
     public ActionResult Edit(long id)
     {
       var permissions = permissionService.GetAll();
+      var permissionIDs = permissionService.GetIDsByRole(id);
       var role = roleService.GetById(id);
       var model = new RoleModel
       {
-        ID=id,
-        Name=role.Name,
-        Description=role.Description,
-        PermissionIDs=role.
+        ID = id,
+        Name = role.Name,
+        Description = role.Description,
+        PermissionIDs = permissionIDs,
+        AllPermissions = permissions
       };
-      return View(role);
+      return View(model);
     }
     [HttpPost]
     public ActionResult Edit(RoleModel model)

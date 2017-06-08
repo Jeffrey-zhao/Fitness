@@ -18,6 +18,6 @@ namespace Fit.AdminWeb.Models
 
     public long[] PermissionIDs { get; set; }
 
-    public PermissionDTO AllPermissions { get; set; }
+    public PermissionDTO[] AllPermissions { get; set; }
   }
 }

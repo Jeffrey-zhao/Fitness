@@ -14,10 +14,12 @@ namespace Fit.AdminWeb.Controllers
 {
   public class AdminUserController : Controller
   {
+    private IRoleService roleService;
     private IAdminUserService auService;
-    public AdminUserController(IAdminUserService service)
+    public AdminUserController(IRoleService roleService, IAdminUserService auService)
     {
-      auService = service;
+      this.roleService = roleService;
+      this.auService = auService;
     }
 
     public ActionResult Index()

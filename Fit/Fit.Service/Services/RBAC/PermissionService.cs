@@ -8,6 +8,7 @@ using Fit.DTO.RBAC;
 using Fit.Service.Repository;
 using Fit.Service.Entities.RBAC;
 using Fit.Common;
+using System.Data.Entity;
 
 namespace Fit.Service.Services.RBAC
 {
@@ -51,12 +52,14 @@ namespace Fit.Service.Services.RBAC
     public void EditRolePermission(long roleId, long[] permissionIDs)
     {
       var role = roleRepository.GetById(roleId);
-      if (role == null) throw new ArgumentException(ExceptionMsg.GetObjNullMsg("RoleEntity"));
+      if (role == null) throw new ArgumentException(
+        ExceptionMsg.GetObjNullMsg("RoleEntity"));
       if (permissionIDs.Length <= 0) return;
 
-      var allPermission=roleRepository.Ctx.Permissions.Where(a => a.IsDeleted == false);
+      var allPermission = roleRepository.Ctx.Permissions.Where(a => a.IsDeleted == false);
       var updatings = allPermission.Where(p => permissionIDs.Contains(p.ID));
-      if (updatings == null) throw new ArgumentException(ExceptionMsg.GetObjNullMsg("PermissionEntities"));
+      if (updatings == null) throw new ArgumentException(
+        ExceptionMsg.GetObjNullMsg("PermissionEntities"));
 
       role.Permissions.Clear();
       foreach (var item in updatings)
@@ -77,6 +80,18 @@ namespace Fit.Service.Services.RBAC
     {
       permissionRepository.GetById(id);
       return ToDTO(permissionRepository.GetById(id));
+    }
+
+    public long[] GetIDsByRole(long id)
+    {
+      var ids = new List<long>();
+      var permissions = permissionRepository.GetAll().Include(a => a.Roles);
+      foreach (var item in permissions)
+      {
+        if (item.Roles.Select(a => a.ID).Contains(id)) ids.Add(item.ID);
+      }
+
+      return ids.ToArray();
     }
 
     public PermissionDTO[] GetPagedData(int startIndex, int pageSize)
