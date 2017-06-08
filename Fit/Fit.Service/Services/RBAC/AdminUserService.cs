@@ -92,7 +92,7 @@ namespace Fit.Service.Services.RBAC
       var entity = repository.GetById(id);
       if (entity == null)
       {
-        throw new ArgumentException(ExceptionMsg.GetObjectNullMsg("AdminUserEntity"));
+        throw new ArgumentException(ExceptionMsg.GetObjNullMsg("AdminUserEntity"));
       }
       entity.LoginErrorTimes++;
       entity.LastLoginErrorDateTime = DateTimeHelper.GetNow();
@@ -104,7 +104,7 @@ namespace Fit.Service.Services.RBAC
       var entity = repository.GetById(id);
       if (entity == null)
       {
-        throw new ArgumentException(ExceptionMsg.GetObjectNullMsg("AdminUserEntity"));
+        throw new ArgumentException(ExceptionMsg.GetObjNullMsg("AdminUserEntity"));
       }
       entity.LoginErrorTimes = 0;
       repository.Update(entity);
@@ -131,7 +131,7 @@ namespace Fit.Service.Services.RBAC
       var entity = repository.GetById(id);
       if (entity == null)
       {
-        throw new ArgumentException(ExceptionMsg.GetObjectNullMsg("AdminUserEntity"));
+        throw new ArgumentException(ExceptionMsg.GetObjNullMsg("AdminUserEntity"));
       }
       entity.Name = name;
       entity.PasswordHash = CommonHelper.CalcMD5(entity.PasswordSalt + password);
@@ -140,7 +140,7 @@ namespace Fit.Service.Services.RBAC
 
     private AdminUserDTO ToDTO(AdminUserEntity entity)
     {
-      if (entity == null) throw new ArgumentException(ExceptionMsg.GetObjectNullMsg("AdminUserEntity"));
+      if (entity == null) throw new ArgumentException(ExceptionMsg.GetObjNullMsg("AdminUserEntity"));
 
       var dto = new AdminUserDTO
       {

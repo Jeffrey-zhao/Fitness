@@ -8,6 +8,8 @@ namespace Fit.Service.Repository
 {
   public interface IRepository<T> where T : class
   {
+    FitDbContext Ctx { get; }
+
     T GetById(long id);
 
     IQueryable<T> GetAll();

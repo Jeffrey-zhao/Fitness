@@ -12,7 +12,7 @@ namespace Fit.Common
     {
       return string.Format("The {0} has exists: {1}", objName,objValue);
     }
-    public static string GetObjectNullMsg(string objName)
+    public static string GetObjNullMsg(string objName)
     {
       return string.Format("The object is null: {0}", objName);
     }

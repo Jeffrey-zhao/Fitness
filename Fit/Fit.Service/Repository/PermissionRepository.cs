@@ -10,17 +10,17 @@ namespace Fit.Service.Repository
 {
   public class PermissionRepository : IRepository<PermissionEntity>
   {
-    private FitDbContext ctx;
+    public FitDbContext Ctx { get; }
 
     public PermissionRepository()
     {
-      ctx = new FitDbContext();
+      Ctx = new FitDbContext();
     }
 
     public long Add(PermissionEntity entity)
     {
-      ctx.Permissions.Add(entity);
-      ctx.SaveChanges();
+      Ctx.Permissions.Add(entity);
+      Ctx.SaveChanges();
       return entity.ID;
     }
 
@@ -28,12 +28,12 @@ namespace Fit.Service.Repository
     {
       var entity = GetById(id);
       entity.IsDeleted = true;
-      ctx.SaveChanges();
+      Ctx.SaveChanges();
     }
 
     public IQueryable<PermissionEntity> GetAll()
     {
-      var c = ctx.Permissions.Where(a => a.IsDeleted == false);
+      var c = Ctx.Permissions.Where(a => a.IsDeleted == false);
       return c;
     }
 
@@ -45,10 +45,10 @@ namespace Fit.Service.Repository
     public void Update(PermissionEntity entity)
     {
       var updating = GetById(entity.ID);
-      if (updating == null) throw new ArgumentException(ExceptionMsg.GetObjectNullMsg("PermissionEntity"));
+      if (updating == null) throw new ArgumentException(ExceptionMsg.GetObjNullMsg("PermissionEntity"));
       updating.Name = entity.Name;
       updating.Description = entity.Description;
-      ctx.SaveChanges();
+      Ctx.SaveChanges();
     }
   }
 }

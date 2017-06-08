@@ -14,5 +14,6 @@ namespace Fit.AdminWeb.Models
     public string Name { get; set; }
     [MaxLength(512)]
     public string Description { get; set; }
+    public long[] PermissionIDs { get; set; }
   }
 }

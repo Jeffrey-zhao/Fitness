@@ -28,9 +28,11 @@ namespace Fit.AdminWeb.App_Start
         .Where(a => !a.IsAbstract && a.Name.EndsWith("Repository")).AsImplementedInterfaces();
       //builder.Register(typeof(AdminUserRepository)).As(typeof(IRepository<AdminUserEntity>));
 
-      builder.Register(a => new AdminUserService(
-          (IRepository<AdminUserEntity>)a.Resolve(typeof(IRepository<AdminUserEntity>))
-          ));
+      //builder.Register(a => new AdminUserService(
+      //    (IRepository<AdminUserEntity>)a.Resolve(typeof(IRepository<AdminUserEntity>))
+      //    ));
+
+
 
       var container = builder.Build();
       DependencyResolver.SetResolver(new AutofacDependencyResolver(container));

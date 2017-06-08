@@ -13,11 +13,13 @@ namespace Fit.AdminWeb.Controllers
   public class RoleController : Controller
   {
     private IRoleService roleService;
-    public RoleController(IRoleService service)
+    private IPermissionService permissionService;
+    public RoleController(IPermissionService permissionService, IRoleService roleService)
     {
-      this.roleService = service;
+      this.roleService = roleService;
+      this.permissionService = permissionService;
     }
-    // GET: Role
+
     public ActionResult List(int pageIndex = 1)
     {
       var roles = roleService.GetPagedData((pageIndex - 1) * Consts.PAGE_SIZE_NUM, Consts.PAGE_SIZE_NUM);
@@ -29,7 +31,8 @@ namespace Fit.AdminWeb.Controllers
     [HttpGet]
     public ActionResult Add()
     {
-      return View();
+      var permissions = permissionService.GetAll();
+      return View(permissions);
     }
     [HttpPost]
     public ActionResult Add(RoleModel model)
@@ -44,7 +47,8 @@ namespace Fit.AdminWeb.Controllers
         Description = model.Description
       };
 
-      roleService.Add(dto);
+      var roleId = roleService.Add(dto);
+      permissionService.EditRolePermission(roleId, model.PermissionIDs);
       return MVCHelper.GetJsonResult(AjaxResultEnum.ok);
     }
 

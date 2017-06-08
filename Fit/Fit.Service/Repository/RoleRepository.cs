@@ -10,12 +10,12 @@ namespace Fit.Service.Repository
 {
   public class RoleRepository : IRepository<RoleEntity>
   {
-    FitDbContext ctx = new FitDbContext();
+   public FitDbContext Ctx { get; } = new FitDbContext();
 
     public long Add(RoleEntity entity)
     {
-      ctx.Roles.Add(entity);
-      ctx.SaveChanges();
+      Ctx.Roles.Add(entity);
+      Ctx.SaveChanges();
       return entity.ID;
     }
 
@@ -23,12 +23,12 @@ namespace Fit.Service.Repository
     {
       var entity = GetById(id);
       entity.IsDeleted = true;
-      ctx.SaveChanges();
+      Ctx.SaveChanges();
     }
 
     public IQueryable<RoleEntity> GetAll()
     {
-      return ctx.Roles.Where(a => a.IsDeleted == false);
+      return Ctx.Roles.Where(a => a.IsDeleted == false);
     }
 
     public RoleEntity GetById(long id)
@@ -39,10 +39,10 @@ namespace Fit.Service.Repository
     public void Update(RoleEntity entity)
     {
       var updating = GetById(entity.ID);
-      if (updating == null) throw new ArgumentException(ExceptionMsg.GetObjectNullMsg("RoleEntity"));
+      if (updating == null) throw new ArgumentException(ExceptionMsg.GetObjNullMsg("RoleEntity"));
       updating.Name = entity.Name;
       updating.Description = entity.Description;
-      ctx.SaveChanges();
+      Ctx.SaveChanges();
     }
   }
 }

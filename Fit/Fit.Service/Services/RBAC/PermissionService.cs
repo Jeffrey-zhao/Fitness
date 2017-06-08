@@ -13,15 +13,17 @@ namespace Fit.Service.Services.RBAC
 {
   public class PermissionService : IPermissionService
   {
-    IRepository<PermissionEntity> repository;
-    public PermissionService(IRepository<PermissionEntity> repository)
+    IRepository<PermissionEntity> permissionRepository;
+    IRepository<RoleEntity> roleRepository;
+    public PermissionService(IRepository<PermissionEntity> permissionRepository, IRepository<RoleEntity> roleRepository)
     {
-      this.repository = repository;
+      this.permissionRepository = permissionRepository;
+      this.roleRepository = roleRepository;
     }
 
     public long Add(PermissionDTO dto)
     {
-      var checkExist = repository.GetAll().Where(a => a.Name == dto.Name).FirstOrDefault();
+      var checkExist = permissionRepository.GetAll().Where(a => a.Name == dto.Name).FirstOrDefault();
       if (checkExist != null) throw new ArgumentException(ExceptionMsg.GetObjExistMsg("Permission", dto.Name));
 
       var entity = new PermissionEntity
@@ -29,29 +31,63 @@ namespace Fit.Service.Services.RBAC
         Name = dto.Name,
         Description = dto.Description
       };
-      return repository.Add(entity);
+      return permissionRepository.Add(entity);
+    }
+
+    public void AddRolePermission(long roleId, long[] permissionIDs)
+    {
+      //var role = roleRepository.GetById(roleId);
+      //if (role == null) throw new ArgumentException(ExceptionMsg.GetObjNullMsg("RoleEntity"));
+      //if (permissionIDs.Length <= 0) return;
+
+      //role.Permissions.Clear();
     }
 
     public void Delete(long id)
     {
-      repository.DeleteById(id);
+      permissionRepository.DeleteById(id);
+    }
+
+    public void EditRolePermission(long roleId, long[] permissionIDs)
+    {
+      var role = roleRepository.GetById(roleId);
+      if (role == null) throw new ArgumentException(ExceptionMsg.GetObjNullMsg("RoleEntity"));
+      if (permissionIDs.Length <= 0) return;
+
+      var allPermission=roleRepository.Ctx.Permissions.Where(a => a.IsDeleted == false);
+      var updatings = allPermission.Where(p => permissionIDs.Contains(p.ID));
+      if (updatings == null) throw new ArgumentException(ExceptionMsg.GetObjNullMsg("PermissionEntities"));
+
+      role.Permissions.Clear();
+      foreach (var item in updatings)
+      {
+        role.Permissions.Add(item);
+      }
+
+      roleRepository.Update(role);
+    }
+
+    public PermissionDTO[] GetAll()
+    {
+      var entities = permissionRepository.GetAll().OrderBy(a => a.Name);
+      return entities.ToList().Select(a => ToDTO(a)).ToArray();
     }
 
     public PermissionDTO GetById(long id)
     {
-      repository.GetById(id);
-      return ToDTO(repository.GetById(id));
+      permissionRepository.GetById(id);
+      return ToDTO(permissionRepository.GetById(id));
     }
 
     public PermissionDTO[] GetPagedData(int startIndex, int pageSize)
     {
-      var entity = repository.GetAll().OrderByDescending(a => a.CreatedDateTime).Skip(startIndex).Take(pageSize);
+      var entity = permissionRepository.GetAll().OrderByDescending(a => a.CreatedDateTime).Skip(startIndex).Take(pageSize);
       return entity.ToList().Select(a => ToDTO(a)).ToArray();
     }
 
     public long GetTotalCount()
     {
-      return repository.GetAll().Count();
+      return permissionRepository.GetAll().Count();
     }
 
     public void Update(PermissionDTO dto)
@@ -62,12 +98,12 @@ namespace Fit.Service.Services.RBAC
         Name = dto.Name,
         Description = dto.Description
       };
-      repository.Update(entity);
+      permissionRepository.Update(entity);
     }
 
     private PermissionDTO ToDTO(PermissionEntity entity)
     {
-      if (entity == null) throw new ArgumentException(ExceptionMsg.GetObjectNullMsg("PermissionEntity"));
+      if (entity == null) throw new ArgumentException(ExceptionMsg.GetObjNullMsg("PermissionEntity"));
       var dto = new PermissionDTO
       {
         Id = entity.ID,

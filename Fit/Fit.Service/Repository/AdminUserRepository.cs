@@ -11,17 +11,17 @@ namespace Fit.Service.Repository
 {
   public class AdminUserRepository : IRepository<AdminUserEntity>
   {
-    private FitDbContext ctx;
+    public FitDbContext Ctx { get; }
 
     public AdminUserRepository()
     {
-      ctx = new FitDbContext();
+      Ctx = new FitDbContext();
     }
 
     public long Add(AdminUserEntity entity)
     {
-      ctx.AdminUsers.Add(entity);
-      ctx.SaveChanges();
+      Ctx.AdminUsers.Add(entity);
+      Ctx.SaveChanges();
       return entity.ID;
     }
 
@@ -29,7 +29,7 @@ namespace Fit.Service.Repository
     {
       var entity = GetById(id);
       entity.IsDeleted = true;
-      ctx.SaveChanges();
+      Ctx.SaveChanges();
     }
 
     public AdminUserEntity GetById(long id)
@@ -39,13 +39,13 @@ namespace Fit.Service.Repository
 
     public IQueryable<AdminUserEntity> GetAll()
     {
-      return ctx.AdminUsers.Where(a => a.IsDeleted == false);
+      return Ctx.AdminUsers.Where(a => a.IsDeleted == false);
     }
 
     public void Update(AdminUserEntity entity)
     {
       var updating = GetById(entity.ID);
-      if (updating == null) throw new ArgumentException(ExceptionMsg.GetObjectNullMsg("AdminUserEntity"));
+      if (updating == null) throw new ArgumentException(ExceptionMsg.GetObjNullMsg("AdminUserEntity"));
       updating.Name = entity.Name;
       updating.Email = entity.Email;
       updating.PhoneNum = entity.PhoneNum;
@@ -53,9 +53,9 @@ namespace Fit.Service.Repository
       {
         updating.PasswordSalt = entity.PasswordSalt;
         updating.PasswordHash = entity.PasswordHash;
-      }      
+      }
 
-      ctx.SaveChanges();
+      Ctx.SaveChanges();
     }
   }
 }

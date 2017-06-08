@@ -66,7 +66,7 @@ namespace Fit.Service.Services.RBAC
 
     private RoleDTO ToDTO(RoleEntity entity)
     {
-      if (entity == null) throw new ArgumentException(ExceptionMsg.GetObjectNullMsg("RoleEntity"));
+      if (entity == null) throw new ArgumentException(ExceptionMsg.GetObjNullMsg("RoleEntity"));
       var dto = new RoleDTO
       {
         Id = entity.ID,

@@ -15,10 +15,16 @@ namespace Fit.IService
 
     PermissionDTO GetById(long id);
 
+    PermissionDTO[] GetAll();
+
     long Add(PermissionDTO dto);
 
     void Update(PermissionDTO dto);
 
     void Delete(long id);
+
+    void AddRolePermission(long roleId, long[] permissionIDs);
+
+    void EditRolePermission(long roleId, long[] permissionIDs);
   }
 }
