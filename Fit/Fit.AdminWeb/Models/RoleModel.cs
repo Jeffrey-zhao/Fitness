@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Fit.DTO.RBAC;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -14,6 +15,9 @@ namespace Fit.AdminWeb.Models
     public string Name { get; set; }
     [MaxLength(512)]
     public string Description { get; set; }
+
     public long[] PermissionIDs { get; set; }
+
+    public PermissionDTO AllPermissions { get; set; }
   }
 }
