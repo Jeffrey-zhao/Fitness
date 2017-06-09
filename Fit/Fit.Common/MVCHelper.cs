@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 using System.Web.Mvc;
 
 namespace Fit.Common
@@ -13,7 +14,8 @@ namespace Fit.Common
   {
     ok,
     error,
-    fail
+    fail,
+    redirect
   }
 
   public class MVCHelper
@@ -48,38 +50,19 @@ namespace Fit.Common
       };
     }
 
-    public static string ToQueryString(NameValueCollection nvc)
+    public static JsonResult GetJsonResult(AjaxResult ajaxResult)
     {
-      StringBuilder strb = new StringBuilder();
-      string value = string.Empty;
-      foreach (var key in nvc.AllKeys)
-      {
-        value = nvc[key];
-        strb.Append(key).Append("=").Append(Uri.EscapeDataString(value)).Append("&");
-      }
-
-      return strb.ToString().TrimEnd('&');
+      return new JsonResult { Data = ajaxResult };
     }
 
-    public static string RemoveQueryString(NameValueCollection nvc, string name)
+    public static long? GetLoginIdFromSession(HttpContextBase ctx)
     {
-      var newNvc = new NameValueCollection(nvc);
-      newNvc.Remove(name);
-      return ToQueryString(newNvc);
+      return (long?)ctx.Session[Consts.LOGIN_ID];
     }
-
-    public static string UpdateQueryString(NameValueCollection nvc, string name, string value)
+    public static void SetLoginInfoToSession(HttpContextBase ctx, long id, string email)
     {
-      var newNvc = new NameValueCollection(nvc);
-      if (newNvc.AllKeys.Contains(name))
-      {
-        newNvc[name] = value;
-      }
-      else
-      {
-        newNvc.Add(name, value);
-      }
-      return ToQueryString(newNvc);
+      ctx.Session[Consts.LOGIN_ID] = id;
+      ctx.Session[Consts.LOGIN_EMAIL] = email;
     }
 
     public static string RenderViewToString(ControllerContext context, string viewPath, object model = null)

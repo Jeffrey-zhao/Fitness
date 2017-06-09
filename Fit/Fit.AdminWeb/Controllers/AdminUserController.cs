@@ -1,4 +1,5 @@
 ﻿using CaptchaGen;
+using Fit.AdminWeb.App_Start;
 using Fit.AdminWeb.Models;
 using Fit.Common;
 using Fit.DTO.RBAC;
@@ -22,11 +23,6 @@ namespace Fit.AdminWeb.Controllers
       this.auService = auService;
     }
 
-    public ActionResult Index()
-    {
-      ViewBag.Message = Request.QueryString["testMsg"];
-      return View();
-    }
     [HttpGet]
     public ActionResult Login()
     {
@@ -47,7 +43,7 @@ namespace Fit.AdminWeb.Controllers
       bool result = auService.CheckLogin(model.Email, model.Password);
       if (result)
       {
-        Session[Consts.LOGIN_EMAIL] = model.Email;
+        MVCHelper.SetLoginInfoToSession(HttpContext, 1, model.Email);
         return MVCHelper.GetJsonResult(AjaxResultEnum.ok);
       }
       else
@@ -64,6 +60,7 @@ namespace Fit.AdminWeb.Controllers
       return File(ms, "image/jpeg");
     }
 
+    //[Permission("AdminUser.List")]
     public ActionResult List(int pageIndex = 1)
     {
       var adminUsers = auService.GetPagedData((pageIndex - 1) * Consts.PAGE_SIZE_NUM, Consts.PAGE_SIZE_NUM);
@@ -72,12 +69,26 @@ namespace Fit.AdminWeb.Controllers
       return View(adminUsers);
     }
 
+    //[Permission("AdminUser.Edit")]
     [HttpGet]
     public ActionResult Edit(long id)
     {
       var adminUser = auService.GetById(id);
-      return View(adminUser);
+      var roles = roleService.GetAll();
+      var roleIDs = roleService.GetIDsByAdmin(id);
+      var model = new AdminUserEditViewModel
+      {
+        ID = adminUser.ID,
+        Name = adminUser.Name,
+        PhoneNum = adminUser.PhoneNum,
+        Email = adminUser.Email,
+        AllRoles = roles,
+        RoleIDs = roleIDs
+      };
+
+      return View(model);
     }
+    //[Permission("AdminUser.Edit")]
     [HttpPost]
     public ActionResult Edit(AdminUserEditModel model)
     {
@@ -95,14 +106,18 @@ namespace Fit.AdminWeb.Controllers
         WillUpdatePwd = !string.IsNullOrWhiteSpace(model.Password)
       };
       auService.Update(dto);
+      roleService.EditAdminRole(model.ID, model.RoleIDs);
       return MVCHelper.GetJsonResult(AjaxResultEnum.ok);
     }
 
+    //[Permission("AdminUser.Add")]
     [HttpGet]
     public ActionResult Add()
     {
-      return View();
+      var roles = roleService.GetAll();
+      return View(roles);
     }
+    //[Permission("AdminUser.Add")]
     [HttpPost]
     public ActionResult Add(AdminUserAddModel model)
     {
@@ -110,10 +125,12 @@ namespace Fit.AdminWeb.Controllers
       {
         return MVCHelper.GetJsonResult(AjaxResultEnum.error, MVCHelper.GetValidMsg(ModelState));
       }
-      auService.AddAdminUser(model.Name, model.PhoneNum, model.Email, model.Password);
+      var id = auService.AddAdminUser(model.Name, model.PhoneNum, model.Email, model.Password);
+      roleService.EditAdminRole(id, model.RoleIDs);
       return MVCHelper.GetJsonResult(AjaxResultEnum.ok);
     }
 
+    //[Permission("AdminUser.Delete")]
     public ActionResult Delete(long id)
     {
       auService.MarkDeleted(id);

@@ -54,17 +54,19 @@ namespace Fit.Service.Services.RBAC
       var role = roleRepository.GetById(roleId);
       if (role == null) throw new ArgumentException(
         ExceptionMsg.GetObjNullMsg("RoleEntity"));
-      if (permissionIDs.Length <= 0) return;
-
-      var allPermission = roleRepository.Ctx.Permissions.Where(a => a.IsDeleted == false);
-      var updatings = allPermission.Where(p => permissionIDs.Contains(p.ID));
-      if (updatings == null) throw new ArgumentException(
-        ExceptionMsg.GetObjNullMsg("PermissionEntities"));
 
       role.Permissions.Clear();
-      foreach (var item in updatings)
+      if (permissionIDs != null && permissionIDs.Length > 0)
       {
-        role.Permissions.Add(item);
+        var allPermission = roleRepository.Ctx.Permissions.Where(a => a.IsDeleted == false);
+        var updatings = allPermission.Where(p => permissionIDs.Contains(p.ID));
+        if (updatings == null) throw new ArgumentException(
+          ExceptionMsg.GetObjNullMsg("PermissionEntities"));
+
+        foreach (var item in updatings)
+        {
+          role.Permissions.Add(item);
+        }
       }
 
       roleRepository.Update(role);

@@ -171,9 +171,11 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="App_Start\AuthorizaFilter.cs" />
     <Compile Include="App_Start\AutofacConfig.cs" />
     <Compile Include="App_Start\ExceptionFilter.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
+    <Compile Include="App_Start\PermissionAttribute.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AdminUserController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -184,6 +186,7 @@
     </Compile>
     <Compile Include="Models\AdminUserAddModel.cs" />
     <Compile Include="Models\AdminUserEditModel.cs" />
+    <Compile Include="Models\AdminUserEditViewModel.cs" />
     <Compile Include="Models\LoginModel.cs" />
     <Compile Include="Models\PermissionModel.cs" />
     <Compile Include="Models\RoleModel.cs" />

@@ -1,4 +1,5 @@
-﻿using Fit.AdminWeb.Models;
+﻿using Fit.AdminWeb.App_Start;
+using Fit.AdminWeb.Models;
 using Fit.Common;
 using Fit.DTO.RBAC;
 using Fit.IService;
@@ -20,6 +21,7 @@ namespace Fit.AdminWeb.Controllers
       this.permissionService = permissionService;
     }
 
+    //[Permission("Role.List")]
     public ActionResult List(int pageIndex = 1)
     {
       var roles = roleService.GetPagedData((pageIndex - 1) * Consts.PAGE_SIZE_NUM, Consts.PAGE_SIZE_NUM);
@@ -28,12 +30,14 @@ namespace Fit.AdminWeb.Controllers
       return View(roles);
     }
 
+    //[Permission("Role.Add")]
     [HttpGet]
     public ActionResult Add()
     {
       var permissions = permissionService.GetAll();
       return View(permissions);
     }
+    //[Permission("Role.Add")]
     [HttpPost]
     public ActionResult Add(RoleModel model)
     {
@@ -52,6 +56,7 @@ namespace Fit.AdminWeb.Controllers
       return MVCHelper.GetJsonResult(AjaxResultEnum.ok);
     }
 
+    //[Permission("Role.Edit")]
     [HttpGet]
     public ActionResult Edit(long id)
     {
@@ -68,6 +73,7 @@ namespace Fit.AdminWeb.Controllers
       };
       return View(model);
     }
+    //[Permission("Role.Edit")]
     [HttpPost]
     public ActionResult Edit(RoleModel model)
     {
@@ -83,9 +89,11 @@ namespace Fit.AdminWeb.Controllers
       };
 
       roleService.Update(dto);
+      permissionService.EditRolePermission(model.ID, model.PermissionIDs);
       return MVCHelper.GetJsonResult(AjaxResultEnum.ok);
     }
 
+    //[Permission("Role.Delete")]
     public ActionResult Delete(long id)
     {
       roleService.Delete(id);

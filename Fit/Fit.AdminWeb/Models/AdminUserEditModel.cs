@@ -23,5 +23,7 @@ namespace Fit.AdminWeb.Models
     public string Password { get; set; }
     [Compare("Password",ErrorMessage = "两次输入的密码不一致")]
     public string PasswordComfirm { get; set; }
+
+    public long[] RoleIDs { get; set; }
   }
 }

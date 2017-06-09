@@ -32,5 +32,7 @@ namespace Fit.IService
     void ResetLoginError(long id);
 
     AdminUserDTO GetById(long id);
+
+    bool CheckPermission(long adminId, string permissionName);
   }
 }

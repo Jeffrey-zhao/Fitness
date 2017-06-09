@@ -12,5 +12,6 @@ namespace Fit.Common
     public const string PAGE_SIZE_NAME = "PageSize";
     public const int PAGE_SIZE_NUM = 10;
     public const string LOGIN_EMAIL = "LoginEmail";
+    public const string LOGIN_ID = "LoginID";
   }
 }

@@ -8,60 +8,103 @@ using Fit.DTO.RBAC;
 using Fit.Service.Repository;
 using Fit.Service.Entities.RBAC;
 using Fit.Common;
+using System.Data.Entity;
 
 namespace Fit.Service.Services.RBAC
 {
   public class RoleService : IRoleService
   {
-    IRepository<RoleEntity> repository;
-    public RoleService(IRepository<RoleEntity> repository)
+    IRepository<RoleEntity> roleRepository;
+    IRepository<AdminUserEntity> adminRepository;
+    public RoleService(IRepository<RoleEntity> roleRepository, IRepository<AdminUserEntity> adminRepository)
     {
-      this.repository = repository;
+      this.roleRepository = roleRepository;
+      this.adminRepository = adminRepository;
     }
+
     public long Add(RoleDTO dto)
     {
-      var existedRole = repository.GetAll().Where(a => a.Name == dto.Name).FirstOrDefault();
-      if (existedRole != null) throw new ArgumentException(ExceptionMsg.GetObjExistMsg("RoleEntity",dto.Name));
-      
+      var existedRole = roleRepository.GetAll().Where(a => a.Name == dto.Name).FirstOrDefault();
+      if (existedRole != null) throw new ArgumentException(ExceptionMsg.GetObjExistMsg("RoleEntity", dto.Name));
+
       var entity = new RoleEntity
       {
         Name = dto.Name,
         Description = dto.Description
       };
-      return repository.Add(entity);
+      return roleRepository.Add(entity);
     }
 
     public void Delete(long id)
     {
-      repository.DeleteById(id);
+      roleRepository.DeleteById(id);
+    }
+
+    public void EditAdminRole(long adminId, long[] roleIDs)
+    {
+      var admin = adminRepository.GetById(adminId);
+      if (admin == null) throw new ArgumentException(
+        ExceptionMsg.GetObjNullMsg("AdminUserEntity"));
+
+      admin.Roles.Clear();
+      if (roleIDs != null && roleIDs.Length > 0)
+      {
+        var allRoles = adminRepository.Ctx.Roles.Where(a => a.IsDeleted == false);
+        var updatings = allRoles.Where(p => roleIDs.Contains(p.ID));
+        if (updatings == null) throw new ArgumentException(
+          ExceptionMsg.GetObjNullMsg("RoleEntities"));
+
+        foreach (var item in updatings)
+        {
+          admin.Roles.Add(item);
+        }
+      }
+
+      adminRepository.Update(admin);
+    }
+
+    public RoleDTO[] GetAll()
+    {
+      return roleRepository.GetAll().ToList().Select(a => ToDTO(a)).ToArray();
     }
 
     public RoleDTO GetById(long id)
     {
-      var entity = repository.GetById(id);
+      var entity = roleRepository.GetById(id);
       return ToDTO(entity);
+    }
+
+    public long[] GetIDsByAdmin(long adminID)
+    {
+      var list = new List<long>();
+      var roles = roleRepository.GetAll().Include(a => a.AdminUsers);
+      foreach (var role in roles)
+      {
+        if (role.AdminUsers.Select(a => a.ID).Contains(adminID)) list.Add(role.ID);
+      }
+      return list.ToArray();
     }
 
     public RoleDTO[] GetPagedData(int startIndex, int pageSize)
     {
-      var entities = repository.GetAll().OrderByDescending(a => a.CreatedDateTime).Skip(startIndex).Take(pageSize);
+      var entities = roleRepository.GetAll().OrderByDescending(a => a.CreatedDateTime).Skip(startIndex).Take(pageSize);
       return entities.ToList().Select(a => ToDTO(a)).ToArray();
     }
 
     public long GetTotalCount()
     {
-      return repository.GetAll().Count();
+      return roleRepository.GetAll().Count();
     }
 
     public void Update(RoleDTO dto)
     {
       var entity = new RoleEntity
       {
-        ID=dto.Id,
-        Name=dto.Name,
-        Description=dto.Description
+        ID = dto.Id,
+        Name = dto.Name,
+        Description = dto.Description
       };
-      repository.Update(entity);
+      roleRepository.Update(entity);
     }
 
     private RoleDTO ToDTO(RoleEntity entity)

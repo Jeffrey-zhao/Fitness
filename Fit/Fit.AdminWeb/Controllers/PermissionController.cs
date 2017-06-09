@@ -1,4 +1,5 @@
-﻿using Fit.AdminWeb.Models;
+﻿using Fit.AdminWeb.App_Start;
+using Fit.AdminWeb.Models;
 using Fit.Common;
 using Fit.DTO.RBAC;
 using Fit.IService;
@@ -18,6 +19,7 @@ namespace Fit.AdminWeb.Controllers
       this.pmService = service;
     }
 
+    //[Permission("Permission.List")]
     public ActionResult List(int pageIndex = 1)
     {
       var pms = pmService.GetPagedData((pageIndex - 1) * Consts.PAGE_SIZE_NUM
@@ -26,11 +28,14 @@ namespace Fit.AdminWeb.Controllers
       ViewBag.TotalCount = pmService.GetTotalCount();
       return View(pms);
     }
+
+    //[Permission("Permission.Add")]
     [HttpGet]
     public ActionResult Add()
     {
       return View();
     }
+    //[Permission("Permission.Add")]
     [HttpPost]
     public ActionResult Add(PermissionModel model)
     {
@@ -47,12 +52,14 @@ namespace Fit.AdminWeb.Controllers
       return MVCHelper.GetJsonResult(AjaxResultEnum.ok);
     }
 
+    //[Permission("Permission.Edit")]
     [HttpGet]
     public ActionResult Edit(long id)
     {
       var dto = pmService.GetById(id);
       return View(dto);
     }
+    //[Permission("Permission.Edit")]
     [HttpPost]
     public ActionResult Edit(PermissionModel model)
     {
@@ -70,6 +77,7 @@ namespace Fit.AdminWeb.Controllers
       return MVCHelper.GetJsonResult(AjaxResultEnum.ok);
     }
 
+    //[Permission("Permission.Delete")]
     public ActionResult Delete(long id)
     {
       pmService.Delete(id);

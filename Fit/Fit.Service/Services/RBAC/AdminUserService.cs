@@ -53,6 +53,13 @@ namespace Fit.Service.Services.RBAC
       return hashForCheck.Equals(entity.PasswordHash);
     }
 
+    public bool CheckPermission(long adminId, string permissionName)
+    {
+      var admin = repository.GetById(adminId);
+      return admin.Roles.SelectMany(a => a.Permissions)
+        .Any(p => p.Name == permissionName);
+    }
+
     public AdminUserDTO[] GetAll()
     {
       return repository.GetAll().ToList().Select(a => ToDTO(a)).ToArray();
@@ -119,7 +126,7 @@ namespace Fit.Service.Services.RBAC
         PhoneNum = dto.PhoneNum,
         Email = dto.Email
       };
-      
+
       entity.PasswordHash = dto.WillUpdatePwd ?
         CommonHelper.CalcMD5(entity.PasswordSalt + dto.Password)
         : entity.PasswordHash;

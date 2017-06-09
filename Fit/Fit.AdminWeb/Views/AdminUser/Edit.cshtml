@@ -2,7 +2,7 @@
 @{
   ViewBag.Title = "AdminUser | Edit";
 }
-@model Fit.DTO.RBAC.AdminUserDTO
+@model Fit.AdminWeb.Models.AdminUserEditViewModel
 
 <div class="row">
   <div class="col-sm-12">
@@ -30,6 +30,37 @@
             <label>再次输入新密码</label>
             <input type="password" class="form-control" name="PasswordComfirm">
           </div>
+          <div class="hr-line-dashed"></div>
+          <div class="form-group">
+            <label>权限设置</label>
+            <div class="row">
+              @{
+                if (Model.AllRoles.Length <= 0)
+                {
+                  return;
+                }
+                for (int i = 1; i <= Model.AllRoles.Length; i++)
+                {
+                  <label class="checkbox-inline i-checks col-sm-3">
+                    <input type="checkbox" name="RoleIDs" value="@Model.AllRoles[i - 1].Id"
+                    @{
+                      if (Model.RoleIDs.Length > 0 && Model.RoleIDs.Contains(Model.AllRoles[i - 1].Id))
+                      {
+                        @Html.Raw("checked='true'");
+                      }
+                    }
+                    >
+                    <span>&nbsp;</span><strong>@Model.AllRoles[i - 1].Name</strong>
+                  </label>
+                      if (i % 3 == 0)
+                      {
+                        @Html.Raw(@"</div><br /><div class='row'>");
+                        }
+                      }
+              }
+            </div>
+          </div>
+
           <input id="btnSave" type="submit" class="btn btn-primary block full-width m-b" value="保存">
         </form>
       </div>
@@ -38,7 +69,7 @@
 </div>
 
 @section FooterScript{
-<script type="text/javascript" src="~/Scripts/jquery-1.10.2.min.js"></script>
+  <script type="text/javascript" src="~/Scripts/jquery-1.10.2.min.js"></script>
   <script type="text/javascript">
     var options = {
       success: function (response) {

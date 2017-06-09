@@ -7,9 +7,13 @@ using System.Threading.Tasks;
 
 namespace Fit.IService
 {
-  public interface IRoleService:IServiceSupport
+  public interface IRoleService : IServiceSupport
   {
     RoleDTO[] GetPagedData(int startIndex, int pageSize);
+
+    RoleDTO[] GetAll();
+
+    long[] GetIDsByAdmin(long adminID);
 
     long GetTotalCount();
 
@@ -20,5 +24,7 @@ namespace Fit.IService
     void Update(RoleDTO dto);
 
     void Delete(long id);
+
+    void EditAdminRole(long adminId, long[] roleIDs);
   }
 }
