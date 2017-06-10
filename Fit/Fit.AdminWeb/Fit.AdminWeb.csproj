@@ -212,6 +212,7 @@
     <Content Include="Views\Role\List.cshtml" />
     <Content Include="Views\Role\Add.cshtml" />
     <Content Include="Views\Role\Edit.cshtml" />
+    <Content Include="Views\Shared\LoginEmail.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

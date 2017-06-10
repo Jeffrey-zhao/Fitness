@@ -44,13 +44,13 @@ namespace Fit.Service.Services.RBAC
       return id;
     }
 
-    public bool CheckLogin(string email, string password)
+    public long? CheckLogin(string email, string password)
     {
       var entity = repository.GetAll().Where(a => a.Email == email).FirstOrDefault();
-      if (entity == null) return false;
+      if (entity == null) return (long?)null;
 
       string hashForCheck = CommonHelper.CalcMD5(entity.PasswordSalt + password);
-      return hashForCheck.Equals(entity.PasswordHash);
+      return hashForCheck.Equals(entity.PasswordHash) ? entity.ID : (long?)null;
     }
 
     public bool CheckPermission(long adminId, string permissionName)
@@ -89,6 +89,7 @@ namespace Fit.Service.Services.RBAC
     {
       return GetAll().Count();
     }
+
     public void MarkDeleted(long id)
     {
       repository.DeleteById(id);
@@ -119,17 +120,18 @@ namespace Fit.Service.Services.RBAC
 
     public void Update(AdminUserDTO dto)
     {
-      var entity = new AdminUserEntity
-      {
-        ID = dto.ID,
-        Name = dto.Name,
-        PhoneNum = dto.PhoneNum,
-        Email = dto.Email
-      };
+      var entity = repository.GetById(dto.ID);
 
-      entity.PasswordHash = dto.WillUpdatePwd ?
-        CommonHelper.CalcMD5(entity.PasswordSalt + dto.Password)
-        : entity.PasswordHash;
+      entity.ID = dto.ID;
+      entity.Name = dto.Name;
+      entity.PhoneNum = dto.PhoneNum;
+      entity.Email = dto.Email;
+
+      if (dto.WillUpdatePwd)
+      {
+        entity.PasswordHash = CommonHelper.CalcMD5(entity.PasswordSalt + dto.Password);
+      }
+      
       repository.Update(entity);
     }
 

@@ -23,7 +23,13 @@ namespace Fit.IService
 
     AdminUserDTO GetByEmail(string email);
 
-    bool CheckLogin(string email, string password);
+    /// <summary>
+    ///
+    /// </summary>
+    /// <param name="email"></param>
+    /// <param name="password"></param>
+    /// <returns>if login false, return null value, else return the admin Id</returns>
+    long? CheckLogin(string email, string password);
 
     void MarkDeleted(long id);
 

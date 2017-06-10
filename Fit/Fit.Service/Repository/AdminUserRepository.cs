@@ -44,16 +44,7 @@ namespace Fit.Service.Repository
 
     public void Update(AdminUserEntity entity)
     {
-      var updating = GetById(entity.ID);
-      if (updating == null) throw new ArgumentException(ExceptionMsg.GetObjNullMsg("AdminUserEntity"));
-      updating.Name = entity.Name;
-      updating.Email = entity.Email;
-      updating.PhoneNum = entity.PhoneNum;
-      if (!string.IsNullOrEmpty(entity.PasswordHash))
-      {
-        updating.PasswordSalt = entity.PasswordSalt;
-        updating.PasswordHash = entity.PasswordHash;
-      }
+     
 
       Ctx.SaveChanges();
     }

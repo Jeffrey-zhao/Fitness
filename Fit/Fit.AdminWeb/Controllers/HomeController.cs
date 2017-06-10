@@ -1,4 +1,5 @@
-﻿using Fit.IService;
+﻿using Fit.AdminWeb.App_Start;
+using Fit.IService;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,7 +15,8 @@ namespace Fit.AdminWeb.Controllers
     {
       this.auService = auService;
     }
-    // GET: Home
+
+    //[Permission("Home.Index")]
     public ActionResult Index()
     {
       return View();

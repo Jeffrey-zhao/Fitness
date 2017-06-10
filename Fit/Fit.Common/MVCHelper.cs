@@ -55,14 +55,23 @@ namespace Fit.Common
       return new JsonResult { Data = ajaxResult };
     }
 
-    public static long? GetLoginIdFromSession(HttpContextBase ctx)
-    {
-      return (long?)ctx.Session[Consts.LOGIN_ID];
-    }
     public static void SetLoginInfoToSession(HttpContextBase ctx, long id, string email)
     {
       ctx.Session[Consts.LOGIN_ID] = id;
       ctx.Session[Consts.LOGIN_EMAIL] = email;
+    }
+    public static long? GetLoginIdFromSession(HttpContextBase ctx)
+    {
+      return (long?)ctx.Session[Consts.LOGIN_ID];
+    }
+    public static string GetLoginEmailFromSession(HttpContextBase ctx)
+    {
+      var email = string.Empty;
+      if (ctx.Session[Consts.LOGIN_EMAIL] != null)
+      {
+        email = ctx.Session[Consts.LOGIN_EMAIL].ToString();
+      }
+      return email;
     }
 
     public static string RenderViewToString(ControllerContext context, string viewPath, object model = null)

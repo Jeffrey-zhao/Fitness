@@ -40,10 +40,10 @@ namespace Fit.AdminWeb.Controllers
       {
         return MVCHelper.GetJsonResult(AjaxResultEnum.error, "Verify Code Error");
       }
-      bool result = auService.CheckLogin(model.Email, model.Password);
-      if (result)
+      long? id = auService.CheckLogin(model.Email, model.Password);
+      if (id.HasValue)
       {
-        MVCHelper.SetLoginInfoToSession(HttpContext, 1, model.Email);
+        MVCHelper.SetLoginInfoToSession(HttpContext, id.Value, model.Email);
         return MVCHelper.GetJsonResult(AjaxResultEnum.ok);
       }
       else
@@ -135,6 +135,13 @@ namespace Fit.AdminWeb.Controllers
     {
       auService.MarkDeleted(id);
       return MVCHelper.GetJsonResult(AjaxResultEnum.ok);
+    }
+
+    [ChildActionOnly]
+    public ActionResult LoginEmail()
+    {
+      var email = MVCHelper.GetLoginEmailFromSession(HttpContext);
+      return PartialView("LoginEmail",email);
     }
   }
 }
