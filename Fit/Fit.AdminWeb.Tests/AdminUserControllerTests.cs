@@ -2,6 +2,7 @@
 using Fit.AdminWeb.Models;
 using Fit.Common;
 using Fit.DTO.RBAC;
+using Fit.IService;
 using Fit.Service.Entities.RBAC;
 using Fit.Service.Repository;
 using Fit.Service.Services.RBAC;
@@ -61,7 +62,7 @@ namespace Fit.AdminWeb.Tests
       Assert.AreEqual(1, result.ViewBag.PageIndex);
     }
     [Test]
-    public void List_PageNotExist_ReturnData()
+    public void List_PageNotExist_NotReturnData()
     {
       int count = 4;
       var entities = GetFakeAuEntities(count);
@@ -115,12 +116,12 @@ namespace Fit.AdminWeb.Tests
       };
 
       auController.Edit(model);
-     var updatedEntity = new AdminUserEntity
+      var updatedEntity = new AdminUserEntity
       {
         ID = 1,
-       Name = "Model_Name",
-       Email = "Model_Email",
-       PhoneNum = "Model_PhoneNum",
+        Name = "Model_Name",
+        Email = "Model_Email",
+        PhoneNum = "Model_PhoneNum",
         PasswordHash = "123"
       };
       adminRep.Received().Update(updatedEntity);
@@ -161,6 +162,71 @@ namespace Fit.AdminWeb.Tests
         PasswordHash = CommonHelper.CalcMD5(model.Password)
       };
       adminRep.Received().Update(updatedEntity);
+    }
+
+    [Test]
+    public void AddGet_Nomal_ReturnRoles()
+    {
+      int roleCount = 2;
+      var admin = GetFakeAdminEntity();
+      var roles = GetFakeRoleEntities(roleCount);
+      var controller = GetController(roles, null, null);
+
+      var result = controller.Add() as ViewResult;
+      var model = result.Model as RoleDTO[];
+
+      Assert.AreEqual(roleCount, model.Length);
+    }
+    [Test]
+    public void AddPost_Nomal_ReturnJson()
+    {
+      var adminRep = GetFakeAdminRep();
+      var auService = new AdminUserService(adminRep);
+      var roleService = Substitute.For<IRoleService>();
+      var auController = new AdminUserController(roleService, auService);
+      adminRep.Add(Arg.Any<AdminUserEntity>()).Returns(1);
+      var arr = new List<long>() { 1, 2 }.ToArray();
+      var model = new AdminUserAddModel
+      {
+        RoleIDs = arr
+      };
+
+      var result = auController.Add(model) as JsonResult;
+
+      roleService.Received().EditAdminRole(1, arr);
+      Assert.AreEqual("ok", (result.Data as AjaxResult).Status);
+    }
+
+    [Test]
+    public void Delete_Normal_ReturnJson()
+    {
+      var adminRep = GetFakeAdminRep();
+      var roleRep = GetFakeRoleRep();
+      var auService = new AdminUserService(adminRep);
+      var roleService = new RoleService(roleRep, adminRep);
+      var auController = new AdminUserController(roleService, auService);
+
+      var result= auController.Delete(1)as JsonResult;
+
+      adminRep.Received().DeleteById(1);
+      Assert.AreEqual("ok",(result.Data as AjaxResult).Status);
+    }
+
+    [Test]
+    public void LoginEmail_SessionHasEmail_ReturnEmail()
+    {
+      var adminRep = GetFakeAdminRep();
+      var roleRep = GetFakeRoleRep();
+      var auService = new AdminUserService(adminRep);
+      var roleService = new RoleService(roleRep, adminRep);
+      var auController = new AdminUserController(roleService, auService);
+      var context = Substitute.For<ControllerContext>();
+      context.HttpContext.Session[Consts.LOGIN_EMAIL].Returns("email");
+      auController.ControllerContext = context;
+
+      var result = auController.LoginEmail() as PartialViewResult;
+
+      Assert.AreEqual("email", result.Model.ToString());
     }
 
     //[Test]
