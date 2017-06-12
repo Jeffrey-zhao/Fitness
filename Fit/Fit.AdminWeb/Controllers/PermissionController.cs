@@ -19,7 +19,7 @@ namespace Fit.AdminWeb.Controllers
       this.pmService = service;
     }
 
-    //[Permission("Permission.List")]
+    [Permission("Permission.List")]
     public ActionResult List(int pageIndex = 1)
     {
       var pms = pmService.GetPagedData((pageIndex - 1) * Consts.PAGE_SIZE_NUM
@@ -29,13 +29,13 @@ namespace Fit.AdminWeb.Controllers
       return View(pms);
     }
 
-    //[Permission("Permission.Add")]
+    [Permission("Permission.Add")]
     [HttpGet]
     public ActionResult Add()
     {
       return View();
     }
-    //[Permission("Permission.Add")]
+    [Permission("Permission.Add")]
     [HttpPost]
     public ActionResult Add(PermissionModel model)
     {
@@ -45,21 +45,21 @@ namespace Fit.AdminWeb.Controllers
       }
       var dto = new PermissionDTO
       {
-        Name=model.Name,
-        Description=model.Description
+        Name = model.Name,
+        Description = model.Description
       };
       pmService.Add(dto);
       return MVCHelper.GetJsonResult(AjaxResultEnum.ok);
     }
 
-    //[Permission("Permission.Edit")]
+    [Permission("Permission.Edit")]
     [HttpGet]
     public ActionResult Edit(long id)
     {
       var dto = pmService.GetById(id);
       return View(dto);
     }
-    //[Permission("Permission.Edit")]
+    [Permission("Permission.Edit")]
     [HttpPost]
     public ActionResult Edit(PermissionModel model)
     {
@@ -69,15 +69,15 @@ namespace Fit.AdminWeb.Controllers
       }
       var dto = new PermissionDTO
       {
-        Id=model.ID,
-        Name=model.Name,
-        Description=model.Description
+        Id = model.ID,
+        Name = model.Name,
+        Description = model.Description
       };
       pmService.Update(dto);
       return MVCHelper.GetJsonResult(AjaxResultEnum.ok);
     }
 
-    //[Permission("Permission.Delete")]
+    [Permission("Permission.Delete")]
     public ActionResult Delete(long id)
     {
       pmService.Delete(id);

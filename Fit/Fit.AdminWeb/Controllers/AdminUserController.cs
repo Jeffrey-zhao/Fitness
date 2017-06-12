@@ -60,7 +60,7 @@ namespace Fit.AdminWeb.Controllers
       return File(ms, "image/jpeg");
     }
 
-    //[Permission("AdminUser.List")]
+    [Permission("AdminUser.List")]
     public ActionResult List(int pageIndex = 1)
     {
       var adminUsers = auService.GetPagedData((pageIndex - 1) * Consts.PAGE_SIZE_NUM, Consts.PAGE_SIZE_NUM);
@@ -69,7 +69,7 @@ namespace Fit.AdminWeb.Controllers
       return View(adminUsers);
     }
 
-    //[Permission("AdminUser.Edit")]
+    [Permission("AdminUser.Edit")]
     [HttpGet]
     public ActionResult Edit(long id)
     {
@@ -88,7 +88,7 @@ namespace Fit.AdminWeb.Controllers
 
       return View(model);
     }
-    //[Permission("AdminUser.Edit")]
+    [Permission("AdminUser.Edit")]
     [HttpPost]
     public ActionResult Edit(AdminUserEditModel model)
     {
@@ -110,14 +110,14 @@ namespace Fit.AdminWeb.Controllers
       return MVCHelper.GetJsonResult(AjaxResultEnum.ok);
     }
 
-    //[Permission("AdminUser.Add")]
+    [Permission("AdminUser.Add")]
     [HttpGet]
     public ActionResult Add()
     {
       var roles = roleService.GetAll();
       return View(roles);
     }
-    //[Permission("AdminUser.Add")]
+    [Permission("AdminUser.Add")]
     [HttpPost]
     public ActionResult Add(AdminUserAddModel model)
     {
@@ -130,7 +130,7 @@ namespace Fit.AdminWeb.Controllers
       return MVCHelper.GetJsonResult(AjaxResultEnum.ok);
     }
 
-    //[Permission("AdminUser.Delete")]
+    [Permission("AdminUser.Delete")]
     public ActionResult Delete(long id)
     {
       auService.MarkDeleted(id);

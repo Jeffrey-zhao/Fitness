@@ -10,6 +10,7 @@ namespace Fit.Service.Entities
   {
     public string Name { get; set; }
     public string Description { get; set; }
+    public long? MuscleID { get; set; }
     public virtual MuscleEntity Muscle { get; set; }
   }
 }

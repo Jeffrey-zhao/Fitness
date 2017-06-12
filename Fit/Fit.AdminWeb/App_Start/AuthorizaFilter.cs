@@ -36,7 +36,7 @@ namespace Fit.AdminWeb.App_Start
       var adminUserService = DependencyResolver.Current.GetService<IAdminUserService>();
       foreach (var item in attrs)
       {
-        if (adminUserService.CheckPermission(userId.Value, item.Permission))
+        if (!adminUserService.CheckPermission(userId.Value, item.Permission))
         {
           filterContext.Result = new ContentResult { Content = "You don't have the permission of " + item.Permission };
         }

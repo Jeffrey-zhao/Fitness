@@ -15,7 +15,7 @@ namespace Fit.Service
     private ILog log = LogManager.GetLogger(typeof(FitDbContext));
     public FitDbContext() : base("name=connStr")
     {
-      Database.SetInitializer<FitDbContext>(null);
+      //Database.SetInitializer<FitDbContext>(null);
 
       this.Database.Log = (sql) => { log.DebugFormat("EF-SQL: {0}", sql); };
     }
