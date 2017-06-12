@@ -34,16 +34,7 @@ namespace Fit.Service.Services.RBAC
       };
       return permissionRepository.Add(entity);
     }
-
-    public void AddRolePermission(long roleId, long[] permissionIDs)
-    {
-      //var role = roleRepository.GetById(roleId);
-      //if (role == null) throw new ArgumentException(ExceptionMsg.GetObjNullMsg("RoleEntity"));
-      //if (permissionIDs.Length <= 0) return;
-
-      //role.Permissions.Clear();
-    }
-
+    
     public void Delete(long id)
     {
       permissionRepository.DeleteById(id);

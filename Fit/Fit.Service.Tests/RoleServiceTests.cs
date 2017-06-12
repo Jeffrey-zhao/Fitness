@@ -1,4 +1,5 @@
 ﻿using Fit.DTO.RBAC;
+using Fit.IService;
 using Fit.Service.Entities.RBAC;
 using Fit.Service.Repository;
 using Fit.Service.Services.RBAC;
@@ -13,15 +14,51 @@ using System.Threading.Tasks;
 namespace Fit.Service.Tests
 {
   [TestFixture]
-  public class RoleServiceTests
+  public class RoleServiceTests : IRoleService
   {
+    public RoleDTO[] GetAll()
+    {
+      throw new NotImplementedException();
+    }
+    [Test]
+    public void GetAll_ReturnAll()
+    {
+      var roleRepository = GetFakeRoleRepository();
+      var adminRepository = GetFakeAdminRepository();
+      var service = new RoleService(roleRepository, adminRepository);
+      roleRepository.GetAll().Returns(GetFakeEntities());
+      var result = service.GetAll();
+
+      Assert.IsTrue(result.Length>0);
+    }
+
+    public long[] GetIDsByAdmin(long adminID)
+    {
+      throw new NotImplementedException();
+    }
+    [Test]
+    [Ignore("Not tested")]
+    public void GetIDsByAdmin() { }
+    public void EditAdminRole(long adminId, long[] roleIDs)
+    {
+      throw new NotImplementedException();
+    }
+    [Test]
+    [Ignore("Not tested")]
+    public void EditAdminRole() { }
+
+    public long Add(RoleDTO dto)
+    {
+      throw new NotImplementedException();
+    }
     [Test]
     public void Add_NotExist_ReturnId()
     {
       var dto = GetFakeDTO();
-      var repository = GetFakeRepository();
-      var service = new RoleService(repository);
-      repository.Add(Arg.Any<RoleEntity>()).Returns(1);
+      var roleRepository = GetFakeRoleRepository();
+      var adminRepository = GetFakeAdminRepository();
+      var service = new RoleService(roleRepository, adminRepository);
+      roleRepository.Add(Arg.Any<RoleEntity>()).Returns(1);
 
       var id = service.Add(dto);
 
@@ -36,30 +73,42 @@ namespace Fit.Service.Tests
       entity.Name = "e";
       var entities = new List<RoleEntity> { entity }.AsQueryable();
 
-      var repository = GetFakeRepository();
-      var service = new RoleService(repository);
-      repository.GetAll().Returns(entities);
+      var roleRepository = GetFakeRoleRepository();
+      var adminRepository = GetFakeAdminRepository();
+      var service = new RoleService(roleRepository, adminRepository);
+      roleRepository.GetAll().Returns(entities);
 
       Assert.Throws<ArgumentException>(() => service.Add(dto));
     }
 
+
+    public void Delete(long id)
+    {
+      throw new NotImplementedException();
+    }
     [Test]
     public void Delete()
     {
-      var repository = GetFakeRepository();
-      var service = new RoleService(repository);
+      var roleRepository = GetFakeRoleRepository();
+      var adminRepository = GetFakeAdminRepository();
+      var service = new RoleService(roleRepository, adminRepository);
       service.Delete(1);
 
-      repository.Received().DeleteById(1);
+      roleRepository.Received().DeleteById(1);
     }
 
+    public RoleDTO GetById(long id)
+    {
+      throw new NotImplementedException();
+    }
     [Test]
     public void GetById_IdExist_ReturnDTO()
     {
       var entity = GetFakeEntity();
-      var repository = GetFakeRepository();
-      var service = new RoleService(repository);
-      repository.GetById(Arg.Any<long>()).Returns(entity);
+      var roleRepository = GetFakeRoleRepository();
+      var adminRepository = GetFakeAdminRepository();
+      var service = new RoleService(roleRepository, adminRepository);
+      roleRepository.GetById(Arg.Any<long>()).Returns(entity);
 
       var dto = service.GetById(1);
 
@@ -70,19 +119,26 @@ namespace Fit.Service.Tests
     [Test]
     public void GetById_IdNotExist_Throw()
     {
-      var repository = GetFakeRepository();
-      var service = new RoleService(repository);
+      var roleRepository = GetFakeRoleRepository();
+      var adminRepository = GetFakeAdminRepository();
+      var service = new RoleService(roleRepository, adminRepository);
 
       Assert.Throws<ArgumentException>(() => service.GetById(1));
     }
 
+
+    public RoleDTO[] GetPagedData(int startIndex, int pageSize)
+    {
+      throw new NotImplementedException();
+    }
     [Test]
     public void GetPagedData_InOnePage_ReturnAll()
     {
       var entities = GetFakeEntities(5);
-      var repository = GetFakeRepository();
-      var service = new RoleService(repository);
-      repository.GetAll().Returns(entities);
+      var roleRepository = GetFakeRoleRepository();
+      var adminRepository = GetFakeAdminRepository();
+      var service = new RoleService(roleRepository, adminRepository);
+      roleRepository.GetAll().Returns(entities);
 
       var pagedData = service.GetPagedData(0, 10);
 
@@ -92,22 +148,29 @@ namespace Fit.Service.Tests
     public void GetPagedData_NotInOnePage_ReturnPaged()
     {
       var entities = GetFakeEntities(5);
-      var repository = GetFakeRepository();
-      var service = new RoleService(repository);
-      repository.GetAll().Returns(entities);
+      var roleRepository = GetFakeRoleRepository();
+      var adminRepository = GetFakeAdminRepository();
+      var service = new RoleService(roleRepository, adminRepository);
+      roleRepository.GetAll().Returns(entities);
 
       var pagedData = service.GetPagedData(0, 3);
 
       Assert.AreEqual(3, pagedData.Count());
     }
 
+
+    public long GetTotalCount()
+    {
+      throw new NotImplementedException();
+    }
     [Test]
     public void GetTotalCount_HaveData_ReturnCount()
     {
       var entities = GetFakeEntities(5);
-      var repository = GetFakeRepository();
-      var service = new RoleService(repository);
-      repository.GetAll().Returns(entities);
+      var roleRepository = GetFakeRoleRepository();
+      var adminRepository = GetFakeAdminRepository();
+      var service = new RoleService(roleRepository, adminRepository);
+      roleRepository.GetAll().Returns(entities);
       var count = service.GetTotalCount();
 
       Assert.AreEqual(5, count);
@@ -115,36 +178,47 @@ namespace Fit.Service.Tests
     [Test]
     public void GetTotalCount_NoData_ReturnCount()
     {
-      var repository = GetFakeRepository();
-      var service = new RoleService(repository);
+      var roleRepository = GetFakeRoleRepository();
+      var adminRepository = GetFakeAdminRepository();
+      var service = new RoleService(roleRepository, adminRepository);
       var count = service.GetTotalCount();
 
       Assert.AreEqual(0, count);
     }
 
+
+    public void Update(RoleDTO dto)
+    {
+      throw new NotImplementedException();
+    }
     [Test]
     public void Update_Test_EntityReceived()
     {
       var entity = GetFakeEntity();
       var dto = new RoleDTO
       {
-        Id=entity.ID,
-        Name=entity.Name,
-        Description=entity.Description
+        Id = entity.ID,
+        Name = entity.Name,
+        Description = entity.Description
       };
 
-      var repository = GetFakeRepository();
-      var service = new RoleService(repository);
+      var roleRepository = GetFakeRoleRepository();
+      var adminRepository = GetFakeAdminRepository();
+      var service = new RoleService(roleRepository, adminRepository);
       var count = service.GetTotalCount();
 
       service.Update(dto);
 
-      repository.Received().Update(entity);
+      roleRepository.Received().Update(entity);
     }
 
-    private IRepository<RoleEntity> GetFakeRepository()
+    private IRepository<RoleEntity> GetFakeRoleRepository()
     {
       return Substitute.For<IRepository<RoleEntity>>();
+    }
+    private IRepository<AdminUserEntity> GetFakeAdminRepository()
+    {
+      return Substitute.For<IRepository<AdminUserEntity>>();
     }
     private RoleDTO GetFakeDTO()
     {

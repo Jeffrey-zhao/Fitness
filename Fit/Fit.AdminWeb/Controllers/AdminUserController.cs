@@ -141,7 +141,7 @@ namespace Fit.AdminWeb.Controllers
     public ActionResult LoginEmail()
     {
       var email = MVCHelper.GetLoginEmailFromSession(HttpContext);
-      return PartialView("LoginEmail",email);
+      return PartialView("LoginEmail", email);
     }
   }
 }

@@ -25,8 +25,6 @@ namespace Fit.IService
 
     void Delete(long id);
 
-    void AddRolePermission(long roleId, long[] permissionIDs);
-
     void EditRolePermission(long roleId, long[] permissionIDs);
   }
 }

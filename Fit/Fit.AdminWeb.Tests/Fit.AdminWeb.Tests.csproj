@@ -87,6 +87,10 @@
       <Project>{1cb91ea5-128e-420e-b06b-214c2b79c4b5}</Project>
       <Name>Fit.Common</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Fit.DTO\Fit.DTO.csproj">
+      <Project>{3777ac66-3725-4fbe-a931-43d55bfc2655}</Project>
+      <Name>Fit.DTO</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Fit.IService\Fit.IService.csproj">
       <Project>{c4724dc1-c6e9-463d-9df7-84261f17e2ee}</Project>
       <Name>Fit.IService</Name>

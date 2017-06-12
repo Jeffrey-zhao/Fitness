@@ -1,5 +1,6 @@
 ﻿using Fit.Common;
 using Fit.DTO.RBAC;
+using Fit.IService;
 using Fit.Service.Entities.RBAC;
 using Fit.Service.Repository;
 using Fit.Service.Services.RBAC;
@@ -15,8 +16,12 @@ using System.Threading.Tasks;
 namespace Fit.Service.Tests
 {
   [TestFixture]
-  public class AdminUserServiceTests
+  public class AdminUserServiceTests:IAdminUserService
   {
+    public long AddAdminUser(string name, string phoneNum, string email, string password)
+    {
+      throw new NotImplementedException();
+    }
     [Test]
     public void AddAdminUser_NormalValue_ReturnId()
     {
@@ -44,6 +49,11 @@ namespace Fit.Service.Tests
       adminUser.AddAdminUser("Test1", "123123123", email, "123"));
     }
 
+
+    public long? CheckLogin(string email, string password)
+    {
+      throw new NotImplementedException();
+    }
     [Test]
     public void CheckLogin_CorrectValue_ReturnTrue()
     {
@@ -61,8 +71,8 @@ namespace Fit.Service.Tests
       repository.GetAll().Returns(data);
       var service = new AdminUserService(repository);
 
-      var result = service.CheckLogin(inputedEmail, inputedPassword);
-      Assert.IsTrue(result);
+      var id = service.CheckLogin(inputedEmail, inputedPassword);
+      Assert.IsTrue(id.HasValue);
     }
     [Test]
     public void CheckLogin_NoEmail_ReturnFalse()
@@ -81,8 +91,8 @@ namespace Fit.Service.Tests
       repository.GetAll().Returns(data);
       var service = new AdminUserService(repository);
 
-      var result = service.CheckLogin("123", inputedPassword);
-      Assert.IsFalse(result);
+      var id = service.CheckLogin("123", inputedPassword);
+      Assert.IsFalse(id.HasValue);
     }
     [Test]
     public void CheckLogin_WrongPwd_ReturnFalse()
@@ -101,8 +111,8 @@ namespace Fit.Service.Tests
       repository.GetAll().Returns(data);
       var service = new AdminUserService(repository);
 
-      var result = service.CheckLogin(inputedEmail, "123");
-      Assert.IsFalse(result);
+      var id = service.CheckLogin(inputedEmail, "123");
+      Assert.IsFalse(id.HasValue);
     }
     [Test]
     public void CheckLogin_Deleted_ReturnFalse()
@@ -122,10 +132,15 @@ namespace Fit.Service.Tests
       repository.GetAll().Returns(data);
       var service = new AdminUserService(repository);
 
-      var result = service.CheckLogin(inputedEmail, inputedEmail);
-      Assert.IsFalse(result);
+      var id = service.CheckLogin(inputedEmail, inputedEmail);
+      Assert.IsFalse(id.HasValue);
     }
 
+
+    public AdminUserDTO[] GetAll()
+    {
+      throw new NotImplementedException();
+    }
     [Test]
     public void GetAll_ReturnArray()
     {
@@ -150,6 +165,11 @@ namespace Fit.Service.Tests
       Assert.AreEqual(lastLoginErrorDateTime, entity.LastLoginErrorDateTime, "LastLoginErrorDateTime");
     }
 
+
+    public AdminUserDTO GetByEmail(string email)
+    {
+      throw new NotImplementedException();
+    }
     [Test]
     public void GetByEmail_EmailExist_ReturnDTO()
     {
@@ -176,6 +196,11 @@ namespace Fit.Service.Tests
       Assert.Throws<ArgumentException>(() => adminUser.GetByEmail("123"));
     }
 
+
+    public AdminUserDTO GetById(long id)
+    {
+      throw new NotImplementedException();
+    }
     [Test]
     public void GetById_IdExist_ReturnEntity()
     {
@@ -201,6 +226,11 @@ namespace Fit.Service.Tests
       Assert.Throws<ArgumentException>(() => service.GetById(1));
     }
 
+
+    public void MarkDeleted(long id)
+    {
+      throw new NotImplementedException();
+    }
     [Test]
     public void MarkDeleted_Deleted()
     {
@@ -212,6 +242,11 @@ namespace Fit.Service.Tests
       repository.Received().DeleteById(entityId);
     }
 
+
+    public void RecordLoginError(long id)
+    {
+      throw new NotImplementedException();
+    }
     [Test]
     public void RecordLoginError_IdExist_ErrorTimesEqualsOne()
     {
@@ -242,6 +277,11 @@ namespace Fit.Service.Tests
       Assert.Throws<ArgumentException>(() => service.RecordLoginError(1));
     }
 
+
+    public void ResetLoginError(long id)
+    {
+      throw new NotImplementedException();
+    }
     [Test]
     public void ResetLoginError_IdExist_ErrorTimesEqualsZero()
     {
@@ -272,6 +312,11 @@ namespace Fit.Service.Tests
       Assert.Throws<ArgumentException>(() => service.ResetLoginError(1));
     }
 
+
+    public void UpdateAdminUser(long id, string name, string password)
+    {
+      throw new NotImplementedException();
+    }
     [Test]
     public void UpdateAdminUser_IdExist_SucceedLoginAfterUpdated()
     {
@@ -290,9 +335,9 @@ namespace Fit.Service.Tests
       var service = new AdminUserService(repository);
 
       service.UpdateAdminUser(entityId, "Updated", "pwd2");
-      var isLogin = service.CheckLogin("TestEmail", "pwd2");
+      var id = service.CheckLogin("TestEmail", "pwd2");
 
-      Assert.IsTrue(isLogin, "Try Login");
+      Assert.IsTrue(id.HasValue, "Try Login");
       Assert.AreEqual("Updated", fakeEntity.Name, "name=Updated");
     }
     [Test]
@@ -304,6 +349,11 @@ namespace Fit.Service.Tests
       Assert.Throws<ArgumentException>(() => service.UpdateAdminUser(1, "Updated", "pwd2"));
     }
 
+
+    public void Update(AdminUserDTO dto)
+    {
+      throw new NotImplementedException();
+    }
     [Test]
     public void Update_IdExist_NameUpdated()
     {
@@ -320,7 +370,7 @@ namespace Fit.Service.Tests
         Email = "email"
       };
       var repository = Substitute.For<IRepository<AdminUserEntity>>();
-
+      repository.GetById(Arg.Any<long>()).Returns(fakeEntity);
       var service = new AdminUserService(repository);
       service.Update(dto);
 
@@ -376,5 +426,29 @@ namespace Fit.Service.Tests
       var expectedPwdHash = CommonHelper.CalcMD5(dto.Password);
       Assert.AreNotEqual(expectedPwdHash, fakeEntity.PasswordHash);
     }
+    
+    public AdminUserDTO[] GetPagedData(int startIndex, int pageSize)
+    {
+      throw new NotImplementedException();
+    }
+    [Test]
+    [Ignore("Not tested")]
+    public void GetPagedData() { }
+
+    public long GetTotalCount()
+    {
+      throw new NotImplementedException();
+    }
+    [Test]
+    [Ignore("Not tested")]
+    public void GetTotalCount_Test() { }
+
+    public bool CheckPermission(long adminId, string permissionName)
+    {
+      throw new NotImplementedException();
+    }
+    [Test]
+    [Ignore("Not tested")]
+    public void CheckPermission() { }
   }
 }

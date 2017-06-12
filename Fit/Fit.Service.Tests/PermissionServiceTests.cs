@@ -1,4 +1,5 @@
 ﻿using Fit.DTO.RBAC;
+using Fit.IService;
 using Fit.Service.Entities.RBAC;
 using Fit.Service.Repository;
 using Fit.Service.Services.RBAC;
@@ -13,8 +14,93 @@ using System.Threading.Tasks;
 namespace Fit.Service.Tests
 {
   [TestFixture]
-  public class PermissionServiceTests
+  public class PermissionServiceTests : IPermissionService
   {
+    public PermissionDTO[] GetPagedData(int startIndex, int pageSize)
+    {
+      throw new NotImplementedException();
+    }
+    [Test]
+    public void GetPagedData_AllInOnePage_ReturnAllData()
+    {
+      var service = GetService();
+      var dtos = service.GetPagedData(0, 5);
+
+      Assert.AreEqual(2, dtos.Length);
+    }
+    [Test]
+    public void GetPagedData_NotAllInOnePage_ReturnPagedData()
+    {
+      var service = GetService();
+      var dtos = service.GetPagedData(0, 1);
+
+      Assert.AreEqual(1, dtos.Length);
+    }
+
+
+    public long GetTotalCount()
+    {
+      throw new NotImplementedException();
+    }
+    [Test]
+    public void GetTotalCount_ReturnCount()
+    {
+      var service = GetService();
+      var count = service.GetTotalCount();
+
+      Assert.AreEqual(2, count);
+    }
+
+
+    public PermissionDTO GetById(long id)
+    {
+      throw new NotImplementedException();
+    }
+    [Test]
+    public void GetById_IdExist_ReturnById()
+    {
+      var service = GetService();
+      var dto = service.GetById(1);
+
+      Assert.AreEqual(1, dto.Id);
+    }
+    [Test]
+    public void GetById_IdNotExist_Throw()
+    {
+      var permissionRepository = GetFakePermissionRepository();
+      var roleRepository = GetFakeRoleRepository();
+      permissionRepository.GetAll().Returns(GetFakeEntities());
+      var service = new PermissionService(permissionRepository, roleRepository);
+      Assert.Throws<ArgumentException>(() => service.GetById(1));
+    }
+
+
+    public PermissionDTO[] GetAll()
+    {
+      throw new NotImplementedException();
+    }
+    [Test]
+    public void GetAll_ReturnAll()
+    {
+      var service = GetService();
+      var result = service.GetAll();
+
+      Assert.IsTrue(result.Length > 0);
+    }
+
+
+    public long[] GetIDsByRole(long id)
+    {
+      throw new NotImplementedException();
+    }
+    [Test]
+    [Ignore("Not tested")]
+    public void GetIDsByRole() { }
+
+    public long Add(PermissionDTO dto)
+    {
+      throw new NotImplementedException();
+    }
     [Test]
     public void Add_Normal_ReturnId()
     {
@@ -22,9 +108,10 @@ namespace Fit.Service.Tests
       {
         Id = 2
       };
-      var repository = Substitute.For<IRepository<PermissionEntity>>();
-      repository.Add(Arg.Any<PermissionEntity>()).Returns(dto.Id);
-      var service = new PermissionService(repository);
+      var permissionRepository = GetFakePermissionRepository();
+      var roleRepository = GetFakeRoleRepository();
+      permissionRepository.Add(Arg.Any<PermissionEntity>()).Returns(dto.Id);
+      var service = new PermissionService(permissionRepository, roleRepository);
 
       var id = service.Add(dto);
 
@@ -34,94 +121,62 @@ namespace Fit.Service.Tests
     public void Add_Exist_Throw()
     {
       var entities = new List<PermissionEntity>() { new PermissionEntity() }.AsQueryable();
-      var repository = Substitute.For<IRepository<PermissionEntity>>();
-      repository.GetAll().Returns(entities);
-      var service = new PermissionService(repository);
+      var permissionRepository = GetFakePermissionRepository();
+      var roleRepository = GetFakeRoleRepository();
+      permissionRepository.GetAll().Returns(entities);
+      var service = new PermissionService(permissionRepository, roleRepository);
 
       Assert.Throws<ArgumentException>(() => service.Add(new PermissionDTO()));
     }
 
-    [Test]
-    public void Delete_IdExist_MarkDelete()
+
+    public void Update(PermissionDTO dto)
     {
-      var repository = Substitute.For<IRepository<PermissionEntity>>();
-      var service = new PermissionService(repository);
-
-      service.Delete(2);
-
-      repository.Received().DeleteById(2);
-    }
-
-    [Test]
-    public void GetById_IdExist_ReturnById()
-    {
-      var repository = GetRepository();
-      var service = new PermissionService(repository);
-      repository.GetById(Arg.Any<long>()).Returns(GetFakeEntity());
-
-      var dto = service.GetById(1);
-
-      Assert.AreEqual(1, dto.Id);
-    }
-    [Test]
-    public void GetById_IdNotExist_Throw()
-    {
-      var repository = GetRepository();
-      var service = new PermissionService(repository);
-
-      Assert.Throws<ArgumentException>(() => service.GetById(1));
-    }
-
-    [Test]
-    public void GetPagedData_AllInOnePage_ReturnAllData()
-    {
-      var repository = GetRepository();
-      repository.GetAll().Returns(GetFakeEntities());
-      var service = new PermissionService(repository);
-
-      var dtos = service.GetPagedData(0, 5);
-
-      Assert.AreEqual(2, dtos.Length);
-    }
-    [Test]
-    public void GetPagedData_NotAllInOnePage_ReturnPagedData()
-    {
-      var repository = GetRepository();
-      repository.GetAll().Returns(GetFakeEntities());
-      var service = new PermissionService(repository);
-
-      var dtos = service.GetPagedData(0, 1);
-
-      Assert.AreEqual(1, dtos.Length);
-    }
-
-    [Test]
-    public void GetTotalCount_ReturnCount()
-    {
-      var repository = GetRepository();
-      repository.GetAll().Returns(GetFakeEntities());
-      var service = new PermissionService(repository);
-
-      var count = service.GetTotalCount();
-
-      Assert.AreEqual(2, count);
+      throw new NotImplementedException();
     }
     [Test]
     public void Update_IdExist_Updated()
     {
       var dto = GetFakeDTO();
-      var repository = GetRepository();
+      var permissionRepository = GetFakePermissionRepository();
+      var roleRepository = GetFakeRoleRepository();
       var entity = GetFakeEntity();
-      var service = new PermissionService(repository);
-      repository.GetById(Arg.Any<long>()).Returns(entity);
+      var service = new PermissionService(permissionRepository, roleRepository);
+      permissionRepository.GetById(Arg.Any<long>()).Returns(entity);
 
       service.Update(dto);
 
       entity.Name = "UpdateName";
       entity.Description = "UpdateDescription";
 
-      repository.Received().Update(entity);
+      permissionRepository.Received().Update(entity);
     }
+
+
+    public void Delete(long id)
+    {
+      throw new NotImplementedException();
+    }
+    [Test]
+    public void Delete_IdExist_MarkDelete()
+    {
+      var permissionRepository = GetFakePermissionRepository();
+      var roleRepository = GetFakeRoleRepository();
+      var service = new PermissionService(permissionRepository, roleRepository);
+
+      service.Delete(2);
+
+      permissionRepository.Received().DeleteById(2);
+    }
+
+
+    public void EditRolePermission(long roleId, long[] permissionIDs)
+    {
+      throw new NotImplementedException();
+    }
+    [Test]
+    [Ignore("Not tested")]
+    public void EditRolePermission() { }
 
     private IQueryable<PermissionEntity> GetFakeEntities()
     {
@@ -164,10 +219,21 @@ namespace Fit.Service.Tests
       };
       return dto;
     }
-    private IRepository<PermissionEntity> GetRepository()
+    private IRepository<PermissionEntity> GetFakePermissionRepository()
     {
       return Substitute.For<IRepository<PermissionEntity>>();
     }
-
+    private IRepository<RoleEntity> GetFakeRoleRepository()
+    {
+      return Substitute.For<IRepository<RoleEntity>>();
+    }
+    private PermissionService GetService()
+    {
+      var permissionRepository = GetFakePermissionRepository();
+      var roleRepository = GetFakeRoleRepository();
+      permissionRepository.GetAll().Returns(GetFakeEntities());
+      permissionRepository.GetById(Arg.Any<long>()).Returns(GetFakeEntity());
+      return new PermissionService(permissionRepository, roleRepository);
+    }
   }
 }
