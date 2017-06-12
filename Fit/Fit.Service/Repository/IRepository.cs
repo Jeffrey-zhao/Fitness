@@ -8,7 +8,7 @@ namespace Fit.Service.Repository
 {
   public interface IRepository<T> where T : class
   {
-    FitDbContext Ctx { get; }
+    FitDbContext Ctx { get;  }
 
     T GetById(long id);
 

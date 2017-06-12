@@ -1,4 +1,5 @@
-﻿using Fit.Service.Entities.RBAC;
+﻿using Fit.Service.Entities;
+using Fit.Service.Entities.RBAC;
 using log4net;
 using System;
 using System.Collections.Generic;
@@ -30,5 +31,8 @@ namespace Fit.Service
     public DbSet<PermissionEntity> Permissions { get; set; }
     public DbSet<RoleEntity> Roles { get; set; }
     public DbSet<AdminUserEntity> AdminUsers { get; set; }
+
+    public DbSet<MuscleGroupEntity> MuscleGroups { get; set; }
+    public DbSet<MuscleEntity> Muscles { get; set; }
   }
 }

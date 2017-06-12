@@ -40,6 +40,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="MuscleDTO.cs" />
+    <Compile Include="MuscleGroupDTO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RBAC\AdminUserDTO.cs" />
     <Compile Include="RBAC\PermissionDTO.cs" />

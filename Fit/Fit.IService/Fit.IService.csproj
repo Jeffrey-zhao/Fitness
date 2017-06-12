@@ -41,6 +41,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="IAdminUserService.cs" />
+    <Compile Include="IMuscleGroupService.cs" />
+    <Compile Include="IMuscleService.cs" />
     <Compile Include="IPermissionService.cs" />
     <Compile Include="IRoleService.cs" />
     <Compile Include="IServiceSupport.cs" />

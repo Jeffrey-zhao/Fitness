@@ -179,6 +179,8 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AdminUserController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\MuscleController.cs" />
+    <Compile Include="Controllers\MuscleGroupController.cs" />
     <Compile Include="Controllers\PermissionController.cs" />
     <Compile Include="Controllers\RoleController.cs" />
     <Compile Include="Global.asax.cs">
@@ -213,6 +215,8 @@
     <Content Include="Views\Role\Add.cshtml" />
     <Content Include="Views\Role\Edit.cshtml" />
     <Content Include="Views\Shared\LoginEmail.cshtml" />
+    <Content Include="Views\MuscleGroup\List.cshtml" />
+    <Content Include="Views\Muscle\List.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
