@@ -115,6 +115,8 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\plugins\awesome-bootstrap-checkbox\awesome-bootstrap-checkbox.css" />
+    <Content Include="Content\plugins\dropzone\basic.css" />
+    <Content Include="Content\plugins\dropzone\dropzone.css" />
     <Content Include="Content\plugins\footable\fonts\footable.svg" />
     <Content Include="Content\plugins\footable\footable.core.css" />
     <Content Include="Content\plugins\iCheck\custom.css" />
@@ -150,6 +152,7 @@
     <Content Include="lib\Validform\5.3.2\Validform.js" />
     <Content Include="lib\Validform\5.3.2\Validform.min.js" />
     <Content Include="Scripts\plugins\chartJs\Chart.min.js" />
+    <Content Include="Scripts\plugins\dropzone\dropzone.js" />
     <Content Include="Scripts\plugins\flot\curvedLines.js" />
     <Content Include="Scripts\plugins\flot\jquery.flot.js" />
     <Content Include="Scripts\plugins\flot\jquery.flot.pie.js" />
@@ -183,6 +186,7 @@
     <Compile Include="Controllers\MuscleGroupController.cs" />
     <Compile Include="Controllers\PermissionController.cs" />
     <Compile Include="Controllers\RoleController.cs" />
+    <Compile Include="Controllers\UploadTestController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -217,6 +221,7 @@
     <Content Include="Views\Shared\LoginEmail.cshtml" />
     <Content Include="Views\MuscleGroup\List.cshtml" />
     <Content Include="Views\Muscle\List.cshtml" />
+    <Content Include="Views\UploadTest\Upload.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
