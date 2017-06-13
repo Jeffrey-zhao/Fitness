@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Fit.IService
 {
-  public interface IMuscleService
+  public interface IMuscleService : IServiceSupport
   {
     MuscleDTO[] GetPagedData(int startIndex, int pageSize);
 

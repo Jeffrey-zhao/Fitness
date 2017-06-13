@@ -36,7 +36,7 @@ namespace Fit.Service.Services
 
     public MuscleDTO[] GetPagedData(int startIndex, int pageSize)
     {
-      return repository.GetAll().AsNoTracking().OrderByDescending(a => a.CreatedDateTime).ToList()
+      return repository.GetAll().Include(a=>a.MuscleGroup).AsNoTracking().OrderByDescending(a => a.CreatedDateTime).ToList()
         .Skip(startIndex).Take(pageSize)
         .Select(a => ToDTO(a)).ToArray();
     }
@@ -58,6 +58,10 @@ namespace Fit.Service.Services
         Name = entity.Name,
         Description = entity.Description
       };
+      if (entity.MuscleGroup != null)
+      {
+        dto.MuscleGroupName = entity.MuscleGroup.Name;
+      }
       return dto;
     }
   }
