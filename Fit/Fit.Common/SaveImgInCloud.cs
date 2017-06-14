@@ -36,6 +36,7 @@ namespace Fit.Common
       // https://developer.qiniu.com/kodo/manual/upload-token            
       string jstr = putPolicy.ToJsonString();
       string token = Auth.CreateUploadToken(mac, jstr);
+      string dToken=Auth.CreateDownloadToken(mac,)
       UploadManager um = new UploadManager();
       HttpResult result = um.UploadFile(localFile, saveKey, token);
 
