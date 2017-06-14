@@ -2,8 +2,8 @@
   Layout = null;
 }
 
-form_advanced
-file_manager
+@*form_advanced
+  file_manager*@
 <!DOCTYPE html>
 <html>
 <head>
@@ -26,9 +26,7 @@ file_manager
   <!--iCheck-->
   <link href="~/Content/plugins/iCheck/custom.css" rel="stylesheet">
   <link href="~/Content/plugins/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css" rel="stylesheet">
-  <!-- DropZone -->
-  <link href="~/Content/plugins/dropzone/basic.css" rel="stylesheet">
-  <link href="~/Content/plugins/dropzone/dropzone.css" rel="stylesheet">
+
 </head>
 <body>
   <div id="wrapper">
@@ -219,33 +217,78 @@ file_manager
         </nav>
       </div>
       <!--Content-->
-      @*<div class="wrapper wrapper-content animated fadeIn">
-        <div class="row">
-          <div class="col-lg-12">
-            <div class="ibox float-e-margins">
-              <div class="ibox-content">
-                <form id="my-awesome-dropzone" class="dropzone" action="#">
-                  <div class="dropzone-previews"></div>
-                  <button type="submit" class="btn btn-primary pull-right">Submit this form!</button>
-                  <label>jhgh</label>
-                </form>
+      <form id="formAdd" method="post" action="/UploadTest/Upload/1" enctype="multipart/form-data">
+        <label title="Upload image file" for="inputImage" class="btn btn-primary">
+          <input type="file" accept="image/*" name="file1" id="inputImage" class="hide">
+          Upload new image
+        </label>
+
+      </form>
+      <div class="wrapper wrapper-content">
+        <div class="ibox float-e-margins">
+          <div class="file-box">
+            <div class="file">
+              <a href="modal-form" data-toggle="modal">
+                <div class="image">
+                  <img alt="image" class="img-responsive" src="/a.png">
+                </div>
+                <div class="file-name">
+                  <span >点击图片以删除</span>
+                  @*<br />
+                <small>Added: Jan 6, 2014</small>*@
+
+                </div>
+              </a>
+            </div>
+          </div>
+          <div id="modal-form" class="modal fade" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-body">
+                 aaaaa
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      </div>*@
-      <div id="dZUpload" class="dropzone">
-        <div class="dz-default dz-message"></div>
-      </div>
-      <!--Footer-->
-      <footer>
-        <div class="footer">
-          <div class="pull-right">
-            &copy; @DateTime.Now.Year - Fit，你的健身助手
+          <div class="file-box">
+            <div class="file">
+              <a href="javascript:void(0);" onclick='onDelete();return false'>
+                <div class="image">
+                  <img alt="image" class="img-responsive" src="/a.png">
+                </div>
+                <div class="file-name">
+                  点击图片以删除
+                  @*<br />
+                <small>Added: Jan 6, 2014</small>*@
+                </div>
+              </a>
+            </div>
+          </div>
+          <div class="file-box">
+            <div class="file">
+              <a href="javascript:void(0);" onclick='onDelete();return false'>
+                <div class="image">
+                  <img alt="image" class="img-responsive" src="/a.png">
+                </div>
+                <div class="file-name">
+                  点击图片以删除
+                  @*<br />
+                <small>Added: Jan 6, 2014</small>*@
+                </div>
+              </a>
+            </div>
           </div>
         </div>
-      </footer>
-    </div>
+      </div>
+        <!--Footer-->
+        <footer>
+          <div class="footer">
+            <div class="pull-right">
+              &copy; @DateTime.Now.Year - Fit，你的健身助手
+            </div>
+          </div>
+        </footer>
+      </div>
   </div>
 
   <!-- Mainly scripts -->
@@ -261,52 +304,19 @@ file_manager
   <script src="~/Scripts/plugins/footable/footable.all.min.js"></script>
   <!-- iCheck -->
   <script src="~/Scripts/plugins/iCheck/icheck.min.js"></script>
-  <!-- DropZone -->
-  <script src="~/Scripts/plugins/dropzone/dropzone.js"></script>
+
 </body>
 </html>
 <script>
   $(document).ready(function () {
-    //Dropzone.options.myAwesomeDropzone = {
-    //  autoProcessQueue: false,
-    //  uploadMultiple: true,
-    //  parallelUploads: 10,
-    //  maxFiles: 10,
-    //  addRemoveLinks: true,
-    //  // Dropzone settings
-    //  init: function () {
-    //    var myDropzone = this;
-    //    this.element.querySelector("button[type=submit]").addEventListener("click", function (e) {
-    //      e.preventDefault();
-    //      e.stopPropagation();
-    //      myDropzone.processQueue();
-    //    });
-    //    this.on("sendingmultiple", function () {
-    //    });
-    //    this.on("successmultiple", function (files, response) {
-    //    });
-    //    this.on("errormultiple", function (files, response) {
-    //    });
-    //    this.on("removedfile", function (files) {
-    //    });
-    //  }
-    //}
-
-    Dropzone.autoDiscover = false;
-    //Simple Dropzonejs 
-    $("#dZUpload").dropzone({
-      url: "hn_SimpeFileUploader.ashx",
-      addRemoveLinks: true,
-      success: function (file, response) {
-        var imgName = response;
-        file.previewElement.classList.add("dz-success");
-        console.log("Successfully uploaded :" + imgName);
-      },
-      error: function (file, response) {
-        file.previewElement.classList.add("dz-error");
-      }
+    $("#inputImage").change(function () {
+      $("#formAdd").submit();
     });
-
   });
+  function onDelete(id) {
+    if (confirm("确定要删除吗？")) {
+   
+    }
+  };
 </script>
 

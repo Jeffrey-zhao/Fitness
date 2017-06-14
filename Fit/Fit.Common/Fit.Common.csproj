@@ -37,6 +37,9 @@
     <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.10.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="Qiniu, Version=7.2.15.0, Culture=neutral, PublicKeyToken=2894d75bb9f220bf, processorArchitecture=MSIL">
+      <HintPath>..\packages\Qiniu.Shared.7.2.15\lib\net45\Qiniu.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Web" />
@@ -76,8 +79,10 @@
     <Compile Include="MVCHelper.cs" />
     <Compile Include="PageHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SaveImgInCloud.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
