@@ -34,5 +34,7 @@ namespace Fit.Service
 
     public DbSet<MuscleGroupEntity> MuscleGroups { get; set; }
     public DbSet<MuscleEntity> Muscles { get; set; }
+    public DbSet<MotionEntity> Motions { get; set; }
+    public DbSet<MotionPicEntity> MotionPics { get; set; }
   }
 }

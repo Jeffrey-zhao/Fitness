@@ -44,8 +44,6 @@ namespace Fit.Service.Repository
 
     public void Update(AdminUserEntity entity)
     {
-     
-
       Ctx.SaveChanges();
     }
   }
