@@ -41,12 +41,19 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MotionDTO.cs" />
+    <Compile Include="MotionPicDTO.cs" />
     <Compile Include="MuscleDTO.cs" />
     <Compile Include="MuscleGroupDTO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RBAC\AdminUserDTO.cs" />
     <Compile Include="RBAC\PermissionDTO.cs" />
     <Compile Include="RBAC\RoleDTO.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Fit.Common\Fit.Common.csproj">
+      <Project>{1cb91ea5-128e-420e-b06b-214c2b79c4b5}</Project>
+      <Name>Fit.Common</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

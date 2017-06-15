@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 using Fit.DTO;
 using Fit.Service.Repository;
 using Fit.Service.Entities;
+using Fit.Common;
+using System.Data.Entity;
+using static Fit.Common.Enums;
 
 namespace Fit.Service.Services
 {
@@ -22,37 +25,100 @@ namespace Fit.Service.Services
 
     public long Add(MotionDTO dto)
     {
-      throw new NotImplementedException();
+      var isExists = motionRep.GetAll().Where(a => a.Name == dto.Name).Any();
+      if (isExists) throw new ArgumentException(ExceptionMsg.GetObjExistMsg("MotionEntity", dto.Name));
+
+      var entity = new MotionEntity
+      {
+        Name = dto.Name,
+        Description = dto.Description,
+        Detail = dto.Detail,
+        Attention = dto.Attention,
+        MainPoint = dto.MainPoint
+      };
+      return motionRep.Add(entity);
     }
 
     public void Delete(long id)
     {
-      throw new NotImplementedException();
+      motionRep.DeleteById(id);
     }
 
-    public void Edit(MotionDTO dto)
+    public void Update(MotionDTO dto)
     {
-      throw new NotImplementedException();
-    }
+      var getByID = motionRep.GetById(dto.Id);
+      if (getByID == null)
+      {
+        throw new ArgumentException(ExceptionMsg.GetObjNullMsg("MotionEntity"));
+      }
 
-    public MotionDTO[] GetAll()
-    {
-      throw new NotImplementedException();
+      getByID.Name = dto.Name;
+      getByID.Description = dto.Description;
+      getByID.Attention = dto.Attention;
+      getByID.Detail = dto.Detail;
+      getByID.MainPoint = dto.MainPoint;
+
+      motionRep.Update(getByID);
     }
 
     public MotionDTO[] GetByMuscleID(long id)
     {
-      throw new NotImplementedException();
+      var entities = motionRep.GetAll().Include(a => a.MotionPics).Include(a => a.Muscle).AsNoTracking()
+         .Where(a => a.MuscleID == id);
+      
+      return entities.Select(a => ToDTO(a)).ToArray();
     }
 
     public MotionDTO[] GetPagedData(int startIndex, int pageSize)
     {
-      throw new NotImplementedException();
+      var entities = motionRep.GetAll().Include(a => a.MotionPics).Include(a => a.Muscle).AsNoTracking()
+          .Skip(startIndex).Take(pageSize);
+
+      return entities.Select(a => ToDTO(a)).ToArray();
     }
 
     public long GetTotalCount()
     {
-      throw new NotImplementedException();
+      return motionRep.GetAll().Count();
+    }
+
+    private MotionDTO ToDTO(MotionEntity entity)
+    {
+      if (entity == null) throw new ArgumentException(ExceptionMsg.GetObjNullMsg("MotionEntity"));
+
+      var dto = new MotionDTO
+      {
+        Id = entity.ID,
+        Name = entity.Name,
+        Description = entity.Description,
+        Detail = entity.Detail,
+        Attention = entity.Attention,
+        MainPoint = entity.MainPoint,
+      };
+      if (entity.Muscle != null)
+      {
+        dto.MuscleName = entity.Muscle.Name;
+      }
+
+      dto.DetailDic = GetPicsDic(PicType.Detail, entity);
+      dto.AttentionDic = GetPicsDic(PicType.Attention, entity);
+      dto.MainPointDic = GetPicsDic(PicType.MainPoint, entity);
+
+      return dto;
+    }
+
+    private Dictionary<long, string> GetPicsDic(PicType picType, MotionEntity entity)
+    {
+      Dictionary<long, string> dic = new Dictionary<long, string>;
+
+      var detailPics = entity.MotionPics.Where(a => a.PicType == (int)picType)
+        .OrderBy(a => a.CreatedDateTime);
+      foreach (var pic in detailPics)
+      {
+        dic.Add(pic.ID,pic.Url);
+      }
+
+      return dic;
     }
   }
 }

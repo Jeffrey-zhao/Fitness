@@ -3,15 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static Fit.Common.Enums;
 
-namespace Fit.Service.Entities
+namespace Fit.DTO
 {
-  public class MotionPicEntity : BaseEntity
+  public class MotionPicDTO
   {
-    public int PicType { get; set; }
+    public PicType PicType { get; set; }
     public string Description { get; set; }
     public string Url { get; set; }
     public long MotionID { get; set; }
-    public virtual MotionEntity Motion { get; set; }
   }
 }

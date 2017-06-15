@@ -13,13 +13,11 @@ namespace Fit.IService
 
     long GetTotalCount();
 
-    MotionDTO[] GetAll();
-
     MotionDTO[] GetByMuscleID(long id);
 
     long Add(MotionDTO dto);
 
-    void Edit(MotionDTO dto);
+    void Update(MotionDTO dto);
 
     void Delete(long id);
   }
