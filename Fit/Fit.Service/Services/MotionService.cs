@@ -109,8 +109,8 @@ namespace Fit.Service.Services
 
     private Dictionary<long, string> GetPicsDic(PicType picType, MotionEntity entity)
     {
-      Dictionary<long, string> dic = new Dictionary<long, string>;
-
+      Dictionary<long, string> dic = new Dictionary<long, string>();
+      
       var detailPics = entity.MotionPics.Where(a => a.PicType == (int)picType)
         .OrderBy(a => a.CreatedDateTime);
       foreach (var pic in detailPics)

@@ -67,6 +67,7 @@
     <Compile Include="ModelConfigs\RBAC\RoleConfig.cs" />
     <Compile Include="Repository\MotionPicRepository.cs" />
     <Compile Include="Repository\MotionRepository.cs" />
+    <Compile Include="Services\MotionPicService.cs" />
     <Compile Include="Services\MotionService.cs" />
     <Compile Include="Services\MuscleGroupService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

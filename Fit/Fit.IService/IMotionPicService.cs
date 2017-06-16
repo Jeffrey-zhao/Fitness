@@ -10,6 +10,7 @@ namespace Fit.IService
   public interface IMotionPicService : IServiceSupport
   {
     long Add(MotionPicDTO dto);
+
     void Delete(long id);
   }
 }
