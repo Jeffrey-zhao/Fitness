@@ -25,8 +25,9 @@ namespace Fit.Service.Services
 
     public long Add(MotionDTO dto)
     {
-      var isExists = motionRep.GetAll().Where(a => a.Name == dto.Name).Any();
-      if (isExists) throw new ArgumentException(ExceptionMsg.GetObjExistMsg("MotionEntity", dto.Name));
+      FitDbContext ctx = new FitDbContext();
+      //var isExists = motionRep.GetAll().Where(a => a.Name == dto.Name).Any();
+      //if (isExists) throw new ArgumentException(ExceptionMsg.GetObjExistMsg("MotionEntity", dto.Name));
 
       var entity = new MotionEntity
       {
@@ -40,7 +41,8 @@ namespace Fit.Service.Services
       {
         entity.MuscleID = dto.MuscleID.Value;
       }
-      return motionRep.Add(entity);
+      ctx.Motions.Add(entity);
+      return 0;// motionRep.Add(entity);
     }
 
     public void Delete(long id)

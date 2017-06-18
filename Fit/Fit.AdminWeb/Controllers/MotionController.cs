@@ -60,7 +60,8 @@ namespace Fit.AdminWeb.Controllers
         dto.MuscleID = model.MuscleID;
       }
       motionService.Add(dto);
-      return View("Motion/List/1");
+      //return Redirect("/Motion/List/1");
+      return View();
     }
 
 
