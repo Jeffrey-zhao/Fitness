@@ -60,6 +60,7 @@
     <Compile Include="Entities\RBAC\RoleEntity.cs" />
     <Compile Include="FitDbContext.cs" />
     <Compile Include="ModelConfigs\MotionConfig.cs" />
+    <Compile Include="ModelConfigs\MotionPicConfig.cs" />
     <Compile Include="ModelConfigs\MuscleConfig.cs" />
     <Compile Include="ModelConfigs\MuscleGroupConfig.cs" />
     <Compile Include="ModelConfigs\RBAC\AdminUserConfig.cs" />

@@ -84,35 +84,90 @@ namespace Fit.Service.Tests
       var picRep = GetPicRep();
       var service = new MotionService(motionRep, picRep);
 
-      var picEntities = GetFakePicEntities(3);
       var motionEntities = GetFakeMotionEntities(3);
-      foreach (var item in motionEntities)
-      {
-        item.MotionPics = picEntities;
-      }
 
       motionRep.GetAll().Returns(motionEntities);
 
       var result = service.GetByMuscleID(2);
 
       Assert.AreEqual(3, result.Length);
-      Assert.AreEqual(3, result[0].AttentionDic.Count);
     }
     [Test]
-    public void GetByMuscleID_IdNotExist_Throw()
+    public void GetByMuscleID_IdNotExist_ReturnEmpty()
     {
+      var motionRep = GetMotionRep();
+      var picRep = GetPicRep();
+      var service = new MotionService(motionRep, picRep);
+
+      var result = service.GetByMuscleID(2);
+
+      Assert.IsTrue(result.Length == 0);
     }
 
     public MotionDTO[] GetPagedData(int startIndex, int pageSize)
     {
       throw new NotImplementedException();
     }
+    [Test]
+    public void GetPagedData_InOnePage_ReturnAll()
+    {
+      var motionRep = GetMotionRep();
+      var picRep = GetPicRep();
+      var service = new MotionService(motionRep, picRep);
+      var motionEntities = GetFakeMotionEntities(5);
+      motionRep.GetAll().Returns(motionEntities);
+
+      var result = service.GetPagedData(0, 10);
+
+      Assert.AreEqual(5, result.Length);
+    }
+    [Test]
+    public void GetPagedData_InMultiPage_ReturnPageSizeData()
+    {
+      var motionRep = GetMotionRep();
+      var picRep = GetPicRep();
+      var service = new MotionService(motionRep, picRep);
+      var motionEntities = GetFakeMotionEntities(5);
+      motionRep.GetAll().Returns(motionEntities);
+
+      var result = service.GetPagedData(0, 4);
+
+      Assert.AreEqual(4, result.Length);
+    }
+    [Test]
+    public void GetPagedData_NotInPage_ReturnEmpty()
+    {
+      var motionRep = GetMotionRep();
+      var picRep = GetPicRep();
+      var service = new MotionService(motionRep, picRep);
+      var motionEntities = GetFakeMotionEntities(5);
+      motionRep.GetAll().Returns(motionEntities);
+
+      var result = service.GetPagedData(8, 4);
+
+      Assert.AreEqual(0, result.Length);
+    }
 
     public long GetTotalCount()
     {
       throw new NotImplementedException();
     }
+    [Test]
+    public void GetTotalCount_Test_ReturnCount()
+    {
+      var motionRep = GetMotionRep();
+      var picRep = GetPicRep();
+      var service = new MotionService(motionRep, picRep);
+      var motionEntities = GetFakeMotionEntities(5);
+      motionRep.GetAll().Returns(motionEntities);
 
+      var result = service.GetTotalCount();
+
+      Assert.AreEqual(5, result);
+    }
+
+    [Test]
+    [Ignore("")]
     public void Update(MotionDTO dto)
     {
       throw new NotImplementedException();

@@ -15,6 +15,11 @@ namespace Fit.Service.ModelConfigs
       this.ToTable("TFit_Motions");
       this.Property(p => p.Name).IsRequired().HasMaxLength(50);
       this.Property(p => p.Description).IsOptional().HasMaxLength(512);
+      this.Property(p => p.Detail).IsOptional().HasMaxLength(1024);
+      this.Property(p => p.Attention).IsOptional().HasMaxLength(1024);
+      this.Property(p => p.MainPoint).IsOptional().HasMaxLength(1024);
+      this.HasOptional(p => p.Muscle).WithMany(p => p.Motions)
+        .HasForeignKey(p => p.MuscleID).WillCascadeOnDelete(false);
     }
   }
 }

@@ -36,6 +36,10 @@ namespace Fit.Service.Services
         Attention = dto.Attention,
         MainPoint = dto.MainPoint
       };
+      if (dto.MuscleID.HasValue)
+      {
+        entity.MuscleID = dto.MuscleID.Value;
+      }
       return motionRep.Add(entity);
     }
 
@@ -63,7 +67,8 @@ namespace Fit.Service.Services
 
     public MotionDTO[] GetByMuscleID(long id)
     {
-      var entities = motionRep.GetAll().Include(a => a.MotionPics).Include(a => a.Muscle).AsNoTracking()
+      var entities = motionRep.GetAll().Include(a => a.Muscle)
+        .Include(a => a.Muscle.MuscleGroup).AsNoTracking()
          .Where(a => a.MuscleID == id);
       
       return entities.Select(a => ToDTO(a)).ToArray();
@@ -71,8 +76,9 @@ namespace Fit.Service.Services
 
     public MotionDTO[] GetPagedData(int startIndex, int pageSize)
     {
-      var entities = motionRep.GetAll().Include(a => a.MotionPics).Include(a => a.Muscle).AsNoTracking()
-          .Skip(startIndex).Take(pageSize);
+      var entities = motionRep.GetAll().Include(a => a.Muscle)
+        .Include(a=>a.Muscle.MuscleGroup).AsNoTracking().OrderBy(a=>a.MuscleID)
+          .Skip(startIndex).Take(pageSize).ToList();
 
       return entities.Select(a => ToDTO(a)).ToArray();
     }
@@ -97,13 +103,15 @@ namespace Fit.Service.Services
       };
       if (entity.Muscle != null)
       {
+        dto.MuscleID = entity.Muscle.ID;
         dto.MuscleName = entity.Muscle.Name;
+        if (entity.Muscle.MuscleGroup != null)
+        {
+          dto.MuscleGroupID = entity.Muscle.MuscleGroup.ID;
+          dto.MuscleGroupName = entity.Muscle.MuscleGroup.Name;
+        }
       }
-
-      dto.DetailDic = GetPicsDic(PicType.Detail, entity);
-      dto.AttentionDic = GetPicsDic(PicType.Attention, entity);
-      dto.MainPointDic = GetPicsDic(PicType.MainPoint, entity);
-
+    
       return dto;
     }
 

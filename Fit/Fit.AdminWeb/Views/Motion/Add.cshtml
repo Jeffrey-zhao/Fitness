@@ -1,0 +1,250 @@
+﻿
+@{
+  ViewBag.Title = "Motion | Add";
+}
+@model List<Fit.DTO.MuscleGroupDTO>
+<div class="row">
+  <div class="col-sm-12">
+    <div class="ibox float-e-margins">
+      <div class="ibox-content form-horizontal">
+        <div class="form-group">
+          <label class="col-sm-2 control-label">动作类型</label>
+          <div class="col-sm-6">
+            <div class="i-checks"><label> <input type="radio" id="radioPartial" value="partial" name="motionType">&nbsp;&nbsp;局部训练</label></div>
+            <div class="i-checks"><label> <input type="radio" id="radioCombine" value="combine" name="motionType">&nbsp;&nbsp;综合训练</label></div>
+          </div>
+        </div>
+        <div class="hr-line-dashed"></div>
+        <div id="partialDiv" class="form-group">
+          <div class="col-sm-6">
+            <select class="form-control m-b" name="muscleGroup" onchange="muscleGroupChanged()">
+              @{
+                foreach (var item in Model)
+                {
+                  <option value="@item.Id">@item.Name</option>
+                }
+              }
+            </select>
+
+          </div>
+          <div class="col-sm-6">
+            <select class="form-control m-b" name="muscle">
+              <option value="0">请选择肌肉...</option>
+            </select>
+          </div>
+        </div>
+        <div id="partialDash" class="hr-line-dashed"></div>
+        <div class="form-group">
+          <label>名称</label>
+          <input type="text" class="form-control" name="name" required="" pattern="^[0-9a-zA-Z.]+" title="只能输入字母，数字和“.”">
+        </div>
+        <div class="form-group">
+          <label>描述</label>
+          <input type="text" class="form-control" name="description">
+        </div>
+        <div class="hr-line-dashed"></div>
+        <div class="form-group">
+          <label>动作介绍</label>
+          <textarea class="form-control"></textarea>
+          <br />
+          <form id="formAdd" method="post" action="/UploadTest/Upload/1" enctype="multipart/form-data">
+            <label title="Upload image file" for="inputImage" class="btn btn-white">
+              <input type="file" accept="image/*" name="file1" id="inputImage" class="hide">
+              添加动作介绍图片
+            </label>
+          </form>
+          <div>
+            <div class="file-box">
+              <div class="file">
+                <a href="modal-form" data-toggle="modal">
+                  <div class="image">
+                    <img alt="image" class="img-responsive" src="/1.png">
+                  </div>
+                  <div class="file-name">
+                    <span>点击图片以删除</span>
+                  </div>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="hr-line-dashed"></div>
+        <div class="form-group">
+          <label>动作要点</label>
+          <textarea class="form-control"></textarea>
+          <br />
+          <form id="formAdd" method="post" action="/UploadTest/Upload/1" enctype="multipart/form-data">
+            <label title="Upload image file" for="inputImage" class="btn btn-white">
+              <input type="file" accept="image/*" name="file1" id="inputImage" class="hide">
+              添加动作要点图片
+            </label>
+          </form>
+          <div>
+            <div class="file-box">
+              <div class="file">
+                <a href="modal-form" data-toggle="modal">
+                  <div class="image">
+                    <img alt="image" class="img-responsive" src="1.png">
+                  </div>
+                  <div class="file-name">
+                    <span>点击图片以删除</span>
+                  </div>
+                </a>
+              </div>
+            </div>
+            <div class="file-box">
+              <div class="file">
+                <a href="modal-form" data-toggle="modal">
+                  <div class="image">
+                    <img alt="image" class="img-responsive" src="1.png">
+                  </div>
+                  <div class="file-name">
+                    <span>点击图片以删除</span>
+                  </div>
+                </a>
+              </div>
+            </div>
+            <div class="file-box">
+              <div class="file">
+                <a href="modal-form" data-toggle="modal">
+                  <div class="image">
+                    <img alt="image" class="img-responsive" src="1.png">
+                  </div>
+                  <div class="file-name">
+                    <span>点击图片以删除</span>
+                  </div>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="hr-line-dashed"></div>
+        <div class="form-group">
+          <label>注意事项</label>
+          <textarea class="form-control"></textarea>
+          <br />
+          <form id="formAdd" method="post" action="/UploadTest/Upload/1" enctype="multipart/form-data">
+            <label title="Upload image file" for="inputImage" class="btn btn-white">
+              <input type="file" accept="image/*" name="file1" id="inputImage" class="hide">
+              添加注意事项图片
+            </label>
+          </form>
+          <div>
+            <div class="file-box">
+              <div class="file">
+                <a href="modal-form" data-toggle="modal">
+                  <div class="image">
+                    <img alt="image" class="img-responsive" src="1.png">
+                  </div>
+                  <div class="file-name">
+                    <span>点击图片以删除</span>
+                  </div>
+                </a>
+              </div>
+            </div>
+            <div class="file-box">
+              <div class="file">
+                <a href="modal-form" data-toggle="modal">
+                  <div class="image">
+                    <img alt="image" class="img-responsive" src="1.png">
+                  </div>
+                  <div class="file-name">
+                    <span>点击图片以删除</span>
+                  </div>
+                </a>
+              </div>
+            </div>
+            <div class="file-box">
+              <div class="file">
+                <a href="modal-form" data-toggle="modal">
+                  <div class="image">
+                    <img alt="image" class="img-responsive" src="1.png">
+                  </div>
+                  <div class="file-name">
+                    <span>点击图片以删除</span>
+                  </div>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="hr-line-dashed"></div>
+        <div class="form-group">
+          <div class="col-sm-1 pull-right">
+            <button class="btn btn-primary" onclick="onSave()">保存</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+@section FooterScript{
+  @*<script type="text/javascript" src="~/Scripts/jquery-1.10.2.min.js"></script>*@
+  <script>
+    function muscleGroupChanged() {
+      var muscleGroupId = $("[name='muscleGroup']").val();
+      $.ajax({
+        url: "/Motion/LoadMuscle",
+        type: "post", dataType: "json",
+        data: { id: muscleGroupId },
+        success: loadMuscles,
+        error: function () {
+          alert('加载肌肉列表时出错');
+        }
+      });
+    }
+
+    function loadMuscles(res) {
+      if (res.status == "ok") {
+        $("[name='muscle']").empty();
+        for (var i = 0; i < res.data.length; i++) {
+          var item = res.data[i];
+          $(" <option value='" + item.id + "'>" + item.name + "</option>")
+            .appendTo("[name='muscle']");
+        }
+      }
+    }
+
+    function setVisibilityByMotionType(motionType) {
+      if (motionType == 'partial') {
+        $("#partialDiv").show();
+        $("#partialDash").show();
+      } else if (motionType == 'combine') {
+        $("#partialDiv").hide();
+        $("#partialDash").hide();
+      }
+    }
+
+    function onSave() {
+      var muscleId = $("[name='muscle']").val();
+      var motionName = $("[name='name']").val();
+      var motionDescription = $("[name='description']").val();
+      $.ajax({
+        url: "/Motion/Add",
+        type: "post",
+        data: {
+          muscleId: muscleId,
+          name: motionName,
+          description: motionDescription
+        },
+        success: function (res) {
+          if (res.status == 'error') {
+            alert(res.msg);
+          }
+        },
+        error: function () {
+          alert("保存失败！");
+        }
+      });
+    }
+
+    $(document).ready(function () {
+      $("[name='motionType']").on("ifChecked", function (e) {
+        var motionType = $(e.target).val();
+        setVisibilityByMotionType(motionType);
+      });
+      $("#radioCombine").iCheck("check");
+    });
+  </script>
+}
