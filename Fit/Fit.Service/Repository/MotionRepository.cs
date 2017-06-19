@@ -9,7 +9,11 @@ namespace Fit.Service.Repository
 {
   public class MotionRepository : IRepository<MotionEntity>
   {
-    public FitDbContext Ctx => new FitDbContext();
+    public FitDbContext Ctx { get; }// => new FitDbContext();
+    public MotionRepository()
+    {
+      Ctx = new FitDbContext();
+    }
 
     public long Add(MotionEntity entity)
     {

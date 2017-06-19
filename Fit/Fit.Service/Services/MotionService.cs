@@ -25,9 +25,8 @@ namespace Fit.Service.Services
 
     public long Add(MotionDTO dto)
     {
-      FitDbContext ctx = new FitDbContext();
-      //var isExists = motionRep.GetAll().Where(a => a.Name == dto.Name).Any();
-      //if (isExists) throw new ArgumentException(ExceptionMsg.GetObjExistMsg("MotionEntity", dto.Name));
+      var isExists = motionRep.GetAll().Where(a => a.Name == dto.Name).Any();
+      if (isExists) throw new ArgumentException(ExceptionMsg.GetObjExistMsg("MotionEntity", dto.Name));
 
       var entity = new MotionEntity
       {
@@ -41,8 +40,7 @@ namespace Fit.Service.Services
       {
         entity.MuscleID = dto.MuscleID.Value;
       }
-      ctx.Motions.Add(entity);
-      return 0;// motionRep.Add(entity);
+      return motionRep.Add(entity);
     }
 
     public void Delete(long id)
@@ -70,16 +68,15 @@ namespace Fit.Service.Services
     public MotionDTO[] GetByMuscleID(long id)
     {
       var entities = motionRep.GetAll().Include(a => a.Muscle)
-        .Include(a => a.Muscle.MuscleGroup).AsNoTracking()
-         .Where(a => a.MuscleID == id);
-      
+        .Include(a => a.Muscle.MuscleGroup).Where(a => a.MuscleID == id);
+
       return entities.Select(a => ToDTO(a)).ToArray();
     }
 
     public MotionDTO[] GetPagedData(int startIndex, int pageSize)
     {
       var entities = motionRep.GetAll().Include(a => a.Muscle)
-        .Include(a=>a.Muscle.MuscleGroup).AsNoTracking().OrderBy(a=>a.MuscleID)
+        .Include(a => a.Muscle.MuscleGroup).OrderBy(a => a.MuscleID)
           .Skip(startIndex).Take(pageSize).ToList();
 
       return entities.Select(a => ToDTO(a)).ToArray();
@@ -113,19 +110,19 @@ namespace Fit.Service.Services
           dto.MuscleGroupName = entity.Muscle.MuscleGroup.Name;
         }
       }
-    
+
       return dto;
     }
 
     private Dictionary<long, string> GetPicsDic(PicType picType, MotionEntity entity)
     {
       Dictionary<long, string> dic = new Dictionary<long, string>();
-      
+
       var detailPics = entity.MotionPics.Where(a => a.PicType == (int)picType)
         .OrderBy(a => a.CreatedDateTime);
       foreach (var pic in detailPics)
       {
-        dic.Add(pic.ID,pic.Url);
+        dic.Add(pic.ID, pic.Url);
       }
 
       return dic;
