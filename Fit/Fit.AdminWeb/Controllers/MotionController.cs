@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using static Fit.Common.Enums;
 
 namespace Fit.AdminWeb.Controllers
 {
@@ -60,8 +61,7 @@ namespace Fit.AdminWeb.Controllers
         dto.MuscleID = model.MuscleID;
       }
       motionService.Add(dto);
-      //return Redirect("/Motion/List/1");
-      return View();
+      return MVCHelper.GetJsonResult(AjaxResultEnum.ok);
     }
 
 
@@ -71,6 +71,33 @@ namespace Fit.AdminWeb.Controllers
       var muscleList = muscleService.GetByMuscleGroupID(id).ToList();
       muscleList.Insert(0, new DTO.MuscleDTO { Id = 0, Name = "请选择肌肉..." });
       return MVCHelper.GetJsonResult(new AjaxResult { Data = muscleList, Status = AjaxResultEnum.ok.ToString() });
+    }
+
+    [HttpPost]
+    public ActionResult UploadImg(int motionID, int type)
+    {
+      HttpPostedFileBase file;
+      string saveKey;
+      for (int i = 0; i < Request.Files.Count; i++)
+      {
+        file = Request.Files[i];
+        saveKey = SaveImgInCloud.Save(file);
+        SaveImgUrlInDB(motionID, (PicType)type, saveKey);
+
+      }
+      return MVCHelper.GetJsonResult(AjaxResultEnum.ok);
+    }
+
+    private void SaveImgUrlInDB(int motionID, PicType type, string url)
+    {
+      var dto = new MotionPicDTO
+      {
+        PicType = type,
+        Url = url,
+        MotionID = motionID
+      };
+      var id = picService.Add(dto);
+      if (id <= 0) throw new Exception("adding failed");
     }
   }
 }

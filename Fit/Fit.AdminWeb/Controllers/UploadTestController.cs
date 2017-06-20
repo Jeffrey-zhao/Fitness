@@ -18,7 +18,7 @@ namespace Fit.AdminWeb.Controllers
     public ActionResult Upload(long id)
     {
       HttpPostedFileBase file = Request.Files["file1"];
-      SaveImgInCloud.Save(file, Server);
+      SaveImgInCloud.Save(file);
       return View();
     }
   }

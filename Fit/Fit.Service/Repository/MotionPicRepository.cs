@@ -9,7 +9,12 @@ namespace Fit.Service.Repository
 {
   public class MotionPicRepository : IRepository<MotionPicEntity>
   {
-    public FitDbContext Ctx => throw new NotImplementedException();
+    public FitDbContext Ctx { get; }
+
+    public MotionPicRepository()
+    {
+      Ctx = new FitDbContext();
+    }
 
     public long Add(MotionPicEntity entity)
     {

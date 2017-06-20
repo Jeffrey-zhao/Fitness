@@ -14,5 +14,17 @@ namespace Fit.Common
       Attention=2,
       MainPoint=3
     }
+
+    public enum MotionType
+    {
+      /// <summary>
+      /// 局部训练
+      /// </summary>
+      Partial,
+      /// <summary>
+      /// 综合训练
+      /// </summary>
+      Combine
+    }
   }
 }

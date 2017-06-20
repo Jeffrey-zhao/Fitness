@@ -2,6 +2,7 @@
 @{
   ViewBag.Title = "Motion | Add";
 }
+
 @model List<Fit.DTO.MuscleGroupDTO>
 <div class="row">
   <div class="col-sm-12">
@@ -36,7 +37,7 @@
         <div id="partialDash" class="hr-line-dashed"></div>
         <div class="form-group">
           <label>名称</label>
-          <input type="text" class="form-control" name="name" required="" pattern="^[0-9a-zA-Z.]+" title="只能输入字母，数字和“.”">
+          <input type="text" class="form-control" name="name" required="" title="请输入名称">
         </div>
         <div class="form-group">
           <label>描述</label>
@@ -45,11 +46,11 @@
         <div class="hr-line-dashed"></div>
         <div class="form-group">
           <label>动作介绍</label>
-          <textarea class="form-control"></textarea>
+          <textarea class="form-control" name="motionDetail"></textarea>
           <br />
-          <form id="formAdd" method="post" action="/UploadTest/Upload/1" enctype="multipart/form-data">
-            <label title="Upload image file" for="inputImage" class="btn btn-white">
-              <input type="file" accept="image/*" name="file1" id="inputImage" class="hide">
+          <form id="formMotionDetail" enctype="multipart/form-data">
+            <label title="Upload image file" for="btnUploadMotionDetail" class="btn btn-white">
+              <input type="file" accept="image/*" name="imgMotionDetail" id="btnUploadMotionDetail" class="hide">
               添加动作介绍图片
             </label>
           </form>
@@ -71,7 +72,7 @@
         <div class="hr-line-dashed"></div>
         <div class="form-group">
           <label>动作要点</label>
-          <textarea class="form-control"></textarea>
+          <textarea class="form-control" name="motionMainPoint"></textarea>
           <br />
           <form id="formAdd" method="post" action="/UploadTest/Upload/1" enctype="multipart/form-data">
             <label title="Upload image file" for="inputImage" class="btn btn-white">
@@ -121,7 +122,7 @@
         <div class="hr-line-dashed"></div>
         <div class="form-group">
           <label>注意事项</label>
-          <textarea class="form-control"></textarea>
+          <textarea class="form-control" name="motionAttention"></textarea>
           <br />
           <form id="formAdd" method="post" action="/UploadTest/Upload/1" enctype="multipart/form-data">
             <label title="Upload image file" for="inputImage" class="btn btn-white">
@@ -180,8 +181,38 @@
 </div>
 
 @section FooterScript{
-  @*<script type="text/javascript" src="~/Scripts/jquery-1.10.2.min.js"></script>*@
+
+  @*<link href="~/Content/bootstrap.min.css" rel="stylesheet">
+    <link href="~/font-awesome/css/font-awesome.css" rel="stylesheet">
+
+    <link href="~/Content/animate.css" rel="stylesheet">
+    <link href="~/Content/style.css" rel="stylesheet">
+    <!-- Toastr style -->
+    <link href="~/Content/plugins/toastr/toastr.min.css" rel="stylesheet">
+    <!-- Gritter -->
+    <link href="~/Scripts/plugins/gritter/jquery.gritter.css" rel="stylesheet">
+    <link href="~/Content/animate.css" rel="stylesheet">
+    <link href="~/Content/style.css" rel="stylesheet">
+    <!-- FooTable -->
+    <link href="~/Content/plugins/footable/footable.core.css" rel="stylesheet">
+    <!--iCheck-->
+    <link href="~/Content/plugins/iCheck/custom.css" rel="stylesheet">
+    <link href="~/Content/plugins/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css" rel="stylesheet">
+    <!-- Mainly scripts -->
+    <script src="~/Scripts/jquery-2.1.1.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <script src="~/Scripts/jquery.form.js"></script>
+    <script src="~/Scripts/plugins/metisMenu/jquery.metisMenu.js"></script>
+    <script src="~/Scripts/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+    <!-- Custom and plugin javascript -->
+    <script src="~/Scripts/inspinia.js"></script>
+    <script src="~/Scripts/plugins/pace/pace.min.js"></script>
+    <!-- FooTable -->
+    <script src="~/Scripts/plugins/footable/footable.all.min.js"></script>
+    <!-- iCheck -->
+    <script src="~/Scripts/plugins/iCheck/icheck.min.js"></script>*@
   <script>
+
     function muscleGroupChanged() {
       var muscleGroupId = $("[name='muscleGroup']").val();
       $.ajax({
@@ -217,19 +248,35 @@
     }
 
     function onSave() {
+      var motionType = $("[name='motionType']").val();
       var muscleId = $("[name='muscle']").val();
       var motionName = $("[name='name']").val();
       var motionDescription = $("[name='description']").val();
+      var motionDetail = $("[name='motionDetail']").val();
+      var motionMainPoint = $("[name='motionMainPoint']").val();
+      var motionAttention = $("[name='motionAttention']").val();
+
+      if (motionName == null || motionName == undefined || motionName == '') {
+        $("[name='name']").focus();
+        return;
+      }
+
       $.ajax({
         url: "/Motion/Add",
         type: "post",
         data: {
+          motionType: motionType,
           muscleId: muscleId,
           name: motionName,
-          description: motionDescription
+          description: motionDescription,
+          detail: motionDetail,
+          mainPoint: motionMainPoint,
+          attention: motionAttention
         },
         success: function (res) {
-          if (res.status == 'error') {
+          if (res.status == 'ok') {
+            location.href = "/Motion/List"
+          } else if (res.status == 'error') {
             alert(res.msg);
           }
         },
@@ -239,12 +286,48 @@
       });
     }
 
+    var options = {
+      success: function (response) {
+        execResponse(response);
+      },
+      error: function () {
+        alert('form error');
+      },
+      url: "/Motion/UploadImg",
+      type: "post",
+      data: {
+        motionID: 2,
+        type: 1
+      }
+    };
+
+    $("#formMotionDetail").submit(function () {
+      $(this).ajaxSubmit(options);
+      return false;
+    });
+
+    function execResponse(res) {
+      if (res.status == "ok") {
+        alert("refresh");
+      } else {
+        alert(res.msg);
+      }
+    };
+
     $(document).ready(function () {
+      $('.i-checks').iCheck({
+        checkboxClass: 'icheckbox_square-green',
+        radioClass: 'iradio_square-green',
+      });
       $("[name='motionType']").on("ifChecked", function (e) {
         var motionType = $(e.target).val();
         setVisibilityByMotionType(motionType);
       });
       $("#radioCombine").iCheck("check");
+      $("#btnUploadMotionDetail").change(function () {
+        alert("change");
+        $("#formMotionDetail").submit();
+      });
     });
   </script>
 }
