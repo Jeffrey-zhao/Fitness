@@ -179,6 +179,7 @@
     <Content Include="Scripts\plugins\metisMenu\jquery.metisMenu.js" />
     <Content Include="Scripts\plugins\pace\pace.min.js" />
     <Content Include="Scripts\plugins\slimscroll\jquery.slimscroll.min.js" />
+    <Content Include="Scripts\template.js" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>

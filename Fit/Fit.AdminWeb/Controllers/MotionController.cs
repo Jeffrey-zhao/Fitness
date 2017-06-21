@@ -17,6 +17,7 @@ namespace Fit.AdminWeb.Controllers
     IMuscleService muscleService;
     IMotionService motionService;
     IMotionPicService picService;
+
     public MotionController(IMuscleGroupService muscleGroupService, IMuscleService muscleService
       , IMotionService motionService, IMotionPicService picService)
     {
@@ -38,7 +39,8 @@ namespace Fit.AdminWeb.Controllers
     public ActionResult Add()
     {
       var muscleGroupList = muscleGroupService.GetAll().ToList();
-      muscleGroupList.Insert(0, new DTO.MuscleGroupDTO { Id = 0, Name = "请选择肌群..." });
+      muscleGroupList.Insert(0, new DTO.MuscleGroupDTO { Id = 0, Name = Consts.TEXT_SELECT_MUSCLE_GROUP });
+      picService.DeleteNoReference();
       return View(muscleGroupList);
     }
     [HttpPost]
@@ -64,17 +66,16 @@ namespace Fit.AdminWeb.Controllers
       return MVCHelper.GetJsonResult(AjaxResultEnum.ok);
     }
 
-
     [HttpPost]
     public ActionResult LoadMuscle(long id)
     {
       var muscleList = muscleService.GetByMuscleGroupID(id).ToList();
-      muscleList.Insert(0, new DTO.MuscleDTO { Id = 0, Name = "请选择肌肉..." });
+      muscleList.Insert(0, new DTO.MuscleDTO { Id = 0, Name = Consts.TEXT_SELECT_MUSCLE });
       return MVCHelper.GetJsonResult(new AjaxResult { Data = muscleList, Status = AjaxResultEnum.ok.ToString() });
     }
 
     [HttpPost]
-    public ActionResult UploadImg(int motionID, int type)
+    public ActionResult UploadImg(int type, int motionID = 0)
     {
       HttpPostedFileBase file;
       string saveKey;
@@ -82,22 +83,39 @@ namespace Fit.AdminWeb.Controllers
       {
         file = Request.Files[i];
         saveKey = SaveImgInCloud.Save(file);
-        SaveImgUrlInDB(motionID, (PicType)type, saveKey);
-
+        SaveImgUrlInDB((PicType)type, saveKey, motionID);
       }
       return MVCHelper.GetJsonResult(AjaxResultEnum.ok);
     }
+    [HttpPost]
+    public ActionResult DeleteImg(long id)
+    {
+      picService.Delete(id);
+      return MVCHelper.GetJsonResult(AjaxResultEnum.ok);
+    }
 
-    private void SaveImgUrlInDB(int motionID, PicType type, string url)
+    private void SaveImgUrlInDB(PicType type, string url, int motionID)
     {
       var dto = new MotionPicDTO
       {
-        PicType = type,
+        PicType = (int)type,
         Url = url,
         MotionID = motionID
       };
       var id = picService.Add(dto);
       if (id <= 0) throw new Exception("adding failed");
+    }
+
+    public ActionResult GetImgUrls(int type, int motionID = 0)
+    {
+      var dtos = picService.GetByMotionAndType(type, motionID);
+      return MVCHelper.GetJsonResult(new AjaxResult { Data = dtos, Status = AjaxResultEnum.ok.ToString() });
+    }
+
+    [HttpPost]
+    public ActionResult Edit()
+    {
+      return View();
     }
   }
 }

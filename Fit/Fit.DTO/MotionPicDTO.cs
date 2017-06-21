@@ -9,8 +9,8 @@ namespace Fit.DTO
 {
   public class MotionPicDTO
   {
-    public PicType PicType { get; set; }
-    public string Description { get; set; }
+    public long ID { get; set; }
+    public int PicType { get; set; }
     public string Url { get; set; }
     public long MotionID { get; set; }
   }

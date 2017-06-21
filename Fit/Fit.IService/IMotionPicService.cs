@@ -12,5 +12,9 @@ namespace Fit.IService
     long Add(MotionPicDTO dto);
 
     void Delete(long id);
+
+    void DeleteNoReference();
+
+    MotionPicDTO[] GetByMotionAndType(int picType,long motionID);
   }
 }

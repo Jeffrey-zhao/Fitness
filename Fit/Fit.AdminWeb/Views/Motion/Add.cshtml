@@ -54,19 +54,7 @@
               添加动作介绍图片
             </label>
           </form>
-          <div>
-            <div class="file-box">
-              <div class="file">
-                <a href="modal-form" data-toggle="modal">
-                  <div class="image">
-                    <img alt="image" class="img-responsive" src="/1.png">
-                  </div>
-                  <div class="file-name">
-                    <span>点击图片以删除</span>
-                  </div>
-                </a>
-              </div>
-            </div>
+          <div id="imgDiv1">
           </div>
         </div>
         <div class="hr-line-dashed"></div>
@@ -74,49 +62,13 @@
           <label>动作要点</label>
           <textarea class="form-control" name="motionMainPoint"></textarea>
           <br />
-          <form id="formAdd" method="post" action="/UploadTest/Upload/1" enctype="multipart/form-data">
-            <label title="Upload image file" for="inputImage" class="btn btn-white">
-              <input type="file" accept="image/*" name="file1" id="inputImage" class="hide">
+          <form id="formMainPoint" method="post" action="/UploadTest/Upload/1" enctype="multipart/form-data">
+            <label title="Upload image file" for="btnUploadMainPoint" class="btn btn-white">
+              <input type="file" accept="image/*" name="imgMainPoint" id="btnUploadMainPoint" class="hide">
               添加动作要点图片
             </label>
           </form>
-          <div>
-            <div class="file-box">
-              <div class="file">
-                <a href="modal-form" data-toggle="modal">
-                  <div class="image">
-                    <img alt="image" class="img-responsive" src="1.png">
-                  </div>
-                  <div class="file-name">
-                    <span>点击图片以删除</span>
-                  </div>
-                </a>
-              </div>
-            </div>
-            <div class="file-box">
-              <div class="file">
-                <a href="modal-form" data-toggle="modal">
-                  <div class="image">
-                    <img alt="image" class="img-responsive" src="1.png">
-                  </div>
-                  <div class="file-name">
-                    <span>点击图片以删除</span>
-                  </div>
-                </a>
-              </div>
-            </div>
-            <div class="file-box">
-              <div class="file">
-                <a href="modal-form" data-toggle="modal">
-                  <div class="image">
-                    <img alt="image" class="img-responsive" src="1.png">
-                  </div>
-                  <div class="file-name">
-                    <span>点击图片以删除</span>
-                  </div>
-                </a>
-              </div>
-            </div>
+          <div id="imgDiv2">
           </div>
         </div>
         <div class="hr-line-dashed"></div>
@@ -124,49 +76,13 @@
           <label>注意事项</label>
           <textarea class="form-control" name="motionAttention"></textarea>
           <br />
-          <form id="formAdd" method="post" action="/UploadTest/Upload/1" enctype="multipart/form-data">
-            <label title="Upload image file" for="inputImage" class="btn btn-white">
-              <input type="file" accept="image/*" name="file1" id="inputImage" class="hide">
+          <form id="formAttention" method="post" action="/UploadTest/Upload/1" enctype="multipart/form-data">
+            <label title="Upload image file" for="btnUploadAttention" class="btn btn-white">
+              <input type="file" accept="image/*" name="imgAttention" id="btnUploadAttention" class="hide">
               添加注意事项图片
             </label>
           </form>
-          <div>
-            <div class="file-box">
-              <div class="file">
-                <a href="modal-form" data-toggle="modal">
-                  <div class="image">
-                    <img alt="image" class="img-responsive" src="1.png">
-                  </div>
-                  <div class="file-name">
-                    <span>点击图片以删除</span>
-                  </div>
-                </a>
-              </div>
-            </div>
-            <div class="file-box">
-              <div class="file">
-                <a href="modal-form" data-toggle="modal">
-                  <div class="image">
-                    <img alt="image" class="img-responsive" src="1.png">
-                  </div>
-                  <div class="file-name">
-                    <span>点击图片以删除</span>
-                  </div>
-                </a>
-              </div>
-            </div>
-            <div class="file-box">
-              <div class="file">
-                <a href="modal-form" data-toggle="modal">
-                  <div class="image">
-                    <img alt="image" class="img-responsive" src="1.png">
-                  </div>
-                  <div class="file-name">
-                    <span>点击图片以删除</span>
-                  </div>
-                </a>
-              </div>
-            </div>
+          <div id="imgDiv3">
           </div>
         </div>
         <div class="hr-line-dashed"></div>
@@ -181,36 +97,7 @@
 </div>
 
 @section FooterScript{
-
-  @*<link href="~/Content/bootstrap.min.css" rel="stylesheet">
-    <link href="~/font-awesome/css/font-awesome.css" rel="stylesheet">
-
-    <link href="~/Content/animate.css" rel="stylesheet">
-    <link href="~/Content/style.css" rel="stylesheet">
-    <!-- Toastr style -->
-    <link href="~/Content/plugins/toastr/toastr.min.css" rel="stylesheet">
-    <!-- Gritter -->
-    <link href="~/Scripts/plugins/gritter/jquery.gritter.css" rel="stylesheet">
-    <link href="~/Content/animate.css" rel="stylesheet">
-    <link href="~/Content/style.css" rel="stylesheet">
-    <!-- FooTable -->
-    <link href="~/Content/plugins/footable/footable.core.css" rel="stylesheet">
-    <!--iCheck-->
-    <link href="~/Content/plugins/iCheck/custom.css" rel="stylesheet">
-    <link href="~/Content/plugins/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css" rel="stylesheet">
-    <!-- Mainly scripts -->
-    <script src="~/Scripts/jquery-2.1.1.js"></script>
-    <script src="~/Scripts/bootstrap.min.js"></script>
-    <script src="~/Scripts/jquery.form.js"></script>
-    <script src="~/Scripts/plugins/metisMenu/jquery.metisMenu.js"></script>
-    <script src="~/Scripts/plugins/slimscroll/jquery.slimscroll.min.js"></script>
-    <!-- Custom and plugin javascript -->
-    <script src="~/Scripts/inspinia.js"></script>
-    <script src="~/Scripts/plugins/pace/pace.min.js"></script>
-    <!-- FooTable -->
-    <script src="~/Scripts/plugins/footable/footable.all.min.js"></script>
-    <!-- iCheck -->
-    <script src="~/Scripts/plugins/iCheck/icheck.min.js"></script>*@
+  <script type="text/javascript" src="~/Scripts/template.js"></script>
   <script>
 
     function muscleGroupChanged() {
@@ -287,30 +174,81 @@
     }
 
     var options = {
-      success: function (response) {
-        execResponse(response);
-      },
+      success: undefined,
       error: function () {
         alert('form error');
       },
       url: "/Motion/UploadImg",
       type: "post",
       data: {
-        motionID: 2,
-        type: 1
+        type: undefined,
+        motionID: 0
       }
     };
 
     $("#formMotionDetail").submit(function () {
-      $(this).ajaxSubmit(options);
+      options.data.type = 1;
+      options.success = function (response) {
+        execResponse(response, 1);
+      },
+        $(this).ajaxSubmit(options);
+      return false;
+    });
+    $("#formMainPoint").submit(function () {
+      options.data.type = 2;
+      options.success = function (response) {
+        execResponse(response, 2);
+      },
+        $(this).ajaxSubmit(options);
+      return false;
+    });
+    $("#formAttention").submit(function () {
+      options.data.type = 3;
+      options.success = function (response) {
+        execResponse(response, 3);
+      },
+        $(this).ajaxSubmit(options);
       return false;
     });
 
-    function execResponse(res) {
+    function execResponse(res, type) {
       if (res.status == "ok") {
-        alert("refresh");
+        loadImages(type);
       } else {
         alert(res.msg);
+      }
+    };
+
+    function loadImages(type) {
+      $.ajax({
+        url: "/Motion/GetImgUrls",
+        type: "post", dataType: "json",
+        data: { type: type },
+        success: function (res) {
+          var html = template("motionImg", { imgs: res.data });
+          var id = "#imgDiv" + type;
+          $(id).empty();
+          $(id).append($(html));
+        },
+        error: function () {
+          alert("加载数据失败");
+        }
+      });
+    };
+
+    function onDelete(id) {
+      if (confirm("确定要删除吗？")) {
+        $.ajax({
+          url: "/Motion/DeleteImg",
+          type: "post", dataType: "json",
+          data: { id: id },
+          success: function () {
+            loadImages();
+          },
+          error: function () {
+            alert("删除时，网络请求失败");
+          }
+        });
       }
     };
 
@@ -325,9 +263,30 @@
       });
       $("#radioCombine").iCheck("check");
       $("#btnUploadMotionDetail").change(function () {
-        alert("change");
         $("#formMotionDetail").submit();
       });
+      $("#btnUploadMainPoint").change(function () {
+        $("#formMainPoint").submit();
+      });
+      $("#btnUploadAttention").change(function () {
+        $("#formAttention").submit();
+      });
     });
+  </script>
+  <script id="motionImg" type="text/html">
+    {{each imgs as img}}
+    <div class="file-box">
+      <div class="file">
+        <a href="javascript:void(0);" onclick='onDelete({{img.id}});return false'>
+          <div class="image">
+            <img alt="image" class="img-responsive" src="{{img.url}}">
+          </div>
+          <div class="file-name">
+            <span>点击图片以删除</span>
+          </div>
+        </a>
+      </div>
+    </div>
+    {{/each}}
   </script>
 }

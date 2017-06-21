@@ -26,7 +26,7 @@ namespace Fit.Service.Repository
     public void DeleteById(long id)
     {
       var entity = GetById(id);
-      entity.IsDeleted = false;
+      entity.IsDeleted = true;
       Ctx.SaveChanges();
     }
 

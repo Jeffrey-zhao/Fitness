@@ -26,11 +26,12 @@ namespace Fit.Common
       Config.AutoZone(AK, bucket, false);
       var extension = Path.GetExtension(file.FileName);
       var fileMD5 = CommonHelper.CalcMD5(file.InputStream);
+      file.InputStream.Position = 0;
       var saveKey = fileMD5 + extension;
 
       PutPolicy putPolicy = new PutPolicy()
       {
-        Scope = bucket + ":" + saveKey
+        Scope = bucket //+ ":" + saveKey
       };
       putPolicy.SetExpires(3600);
       string jstr = putPolicy.ToJsonString();

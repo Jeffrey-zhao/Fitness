@@ -13,5 +13,8 @@ namespace Fit.Common
     public const int PAGE_SIZE_NUM = 10;
     public const string LOGIN_EMAIL = "LoginEmail";
     public const string LOGIN_ID = "LoginID";
+    public const string TEXT_SELECT_MUSCLE_GROUP = "请选择肌群...";
+    public const string TEXT_SELECT_MUSCLE = "请选择肌肉...";
+    public const string CLOUD_DOMAIN = "http://orivq9ow0.bkt.clouddn.com/";
   }
 }

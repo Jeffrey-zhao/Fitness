@@ -12,10 +12,10 @@ namespace Fit.Service.ModelConfigs
   {
     public MotionPicConfig()
     {
-      this.ToTable("TFit_MotionPic");
+      this.ToTable("TFit_MotionPics");
       this.Property(a => a.Description).IsOptional().HasMaxLength(512);
       this.Property(a => a.Url).IsOptional().HasMaxLength(512);
-      this.HasRequired(a => a.Motion).WithMany(a => a.MotionPics)
+      this.HasOptional(a => a.Motion).WithMany(a => a.MotionPics)
         .HasForeignKey(a => a.MotionID).WillCascadeOnDelete(false);
     }
   }
