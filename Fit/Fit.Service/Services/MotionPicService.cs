@@ -42,7 +42,7 @@ namespace Fit.Service.Services
 
     public void DeleteNoReference()
     {
-      var entities = motionPicRep.GetAll().Where(a => a.Motion == null).ToList() ;
+      var entities = motionPicRep.GetAll().Where(a => a.Motion == null).ToList();
       if (entities == null) return;
       foreach (var item in entities)
       {
@@ -63,6 +63,12 @@ namespace Fit.Service.Services
         dtos = all.Where(a => a.MotionID == motionID && a.PicType == picType).ToList().Select(a => ToDTO(a)).ToArray();
       }
       return dtos;
+    }
+
+    public void LinkPicToMotion(long motionID)
+    {
+      var addedPics = motionPicRep.GetAll().Where(a => a.Motion == null).ToList();
+      addedPics.ForEach(a => a.MotionID = motionID);
     }
 
     private MotionPicDTO ToDTO(MotionPicEntity entity)

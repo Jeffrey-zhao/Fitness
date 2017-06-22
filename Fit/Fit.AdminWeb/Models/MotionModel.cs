@@ -6,8 +6,9 @@ using System.Web;
 
 namespace Fit.AdminWeb.Models
 {
-  public class MotionAddModel
+  public class MotionModel
   {
+    public long ID { get; set; }
     public long MuscleID { get; set; }
     [Required]
     public string MotionType { get; set; }

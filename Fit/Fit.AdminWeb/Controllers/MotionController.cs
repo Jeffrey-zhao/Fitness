@@ -44,7 +44,7 @@ namespace Fit.AdminWeb.Controllers
       return View(muscleGroupList);
     }
     [HttpPost]
-    public ActionResult Add(MotionAddModel model)
+    public ActionResult Add(MotionModel model)
     {
       if (!ModelState.IsValid)
       {
@@ -58,11 +58,13 @@ namespace Fit.AdminWeb.Controllers
         Attention = model.Attention,
         MainPoint = model.MainPoint
       };
-      if (model.MuscleID > 0)
+      if (model.MotionType == MotionType.Partial.ToString())
       {
         dto.MuscleID = model.MuscleID;
       }
-      motionService.Add(dto);
+      var id = motionService.Add(dto);
+      if (id < 0) throw new Exception("Motion adding failed");
+      picService.LinkPicToMotion(id);
       return MVCHelper.GetJsonResult(AjaxResultEnum.ok);
     }
 
@@ -112,10 +114,48 @@ namespace Fit.AdminWeb.Controllers
       return MVCHelper.GetJsonResult(new AjaxResult { Data = dtos, Status = AjaxResultEnum.ok.ToString() });
     }
 
-    [HttpPost]
-    public ActionResult Edit()
+    [HttpGet]
+    public ActionResult Edit(long id)
     {
-      return View();
+      var motionDto = motionService.GetByID(id);
+
+      var muscleGroupList = muscleGroupService.GetAll().ToList();
+      muscleGroupList.Insert(0, new DTO.MuscleGroupDTO { Id = 0, Name = Consts.TEXT_SELECT_MUSCLE_GROUP });
+      var muscleList = muscleService.GetByMuscleGroupID(motionDto.MuscleGroupID).ToList();
+      muscleList.Insert(0, new DTO.MuscleDTO { Id = 0, Name = Consts.TEXT_SELECT_MUSCLE });
+
+      var model = new MotionEditViewModel
+      {
+        Motion = motionDto,
+        MuscleGroups = muscleGroupList,
+        Muscles = muscleList
+      };
+      model.MotionType = motionDto.MuscleID.HasValue ? MotionType.Partial.ToString() : MotionType.Combine.ToString();
+
+      return View(model);
+    }
+    [HttpPost]
+    public ActionResult Edit(MotionModel model)
+    {
+      if (!ModelState.IsValid)
+      {
+        return MVCHelper.GetJsonResult(AjaxResultEnum.error, MVCHelper.GetValidMsg(ModelState));
+      }
+      var dto = new MotionDTO
+      {
+        Id = model.ID,
+        Description = model.Description,
+        Detail = model.Detail,
+        Attention = model.Attention,
+        MainPoint = model.MainPoint,
+        Name = model.Name,
+      };
+      if (model.MotionType.ToLower().Equals(MotionType.Partial.ToString().ToLower()))
+      {
+        dto.MuscleID = model.MuscleID;
+      }
+      motionService.Update(dto);
+      return MVCHelper.GetJsonResult(AjaxResultEnum.ok);
     }
   }
 }

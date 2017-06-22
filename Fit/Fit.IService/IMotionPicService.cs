@@ -16,5 +16,7 @@ namespace Fit.IService
     void DeleteNoReference();
 
     MotionPicDTO[] GetByMotionAndType(int picType,long motionID);
+
+    void LinkPicToMotion(long motionID);
   }
 }

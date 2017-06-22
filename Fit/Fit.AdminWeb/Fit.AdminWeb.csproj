@@ -204,7 +204,8 @@
     <Compile Include="Models\AdminUserEditModel.cs" />
     <Compile Include="Models\AdminUserEditViewModel.cs" />
     <Compile Include="Models\LoginModel.cs" />
-    <Compile Include="Models\MotionAddModel.cs" />
+    <Compile Include="Models\MotionEditViewModel.cs" />
+    <Compile Include="Models\MotionModel.cs" />
     <Compile Include="Models\PermissionModel.cs" />
     <Compile Include="Models\RoleModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -235,6 +236,7 @@
     <Content Include="Views\UploadTest\Upload.cshtml" />
     <Content Include="Views\Motion\List.cshtml" />
     <Content Include="Views\Motion\Add.cshtml" />
+    <Content Include="Views\Motion\Edit.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

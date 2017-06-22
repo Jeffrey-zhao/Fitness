@@ -61,6 +61,14 @@ namespace Fit.Service.Services
       getByID.Attention = dto.Attention;
       getByID.Detail = dto.Detail;
       getByID.MainPoint = dto.MainPoint;
+      if (dto.MuscleID.HasValue && dto.MuscleID > 0)
+      {
+        getByID.MuscleID = dto.MuscleID.Value;
+      }
+      else
+      {
+        getByID.MuscleID = null;
+      }
 
       motionRep.Update(getByID);
     }
@@ -110,22 +118,12 @@ namespace Fit.Service.Services
           dto.MuscleGroupName = entity.Muscle.MuscleGroup.Name;
         }
       }
-
       return dto;
     }
 
-    private Dictionary<long, string> GetPicsDic(PicType picType, MotionEntity entity)
+    public MotionDTO GetByID(long id)
     {
-      Dictionary<long, string> dic = new Dictionary<long, string>();
-
-      var detailPics = entity.MotionPics.Where(a => a.PicType == (int)picType)
-        .OrderBy(a => a.CreatedDateTime);
-      foreach (var pic in detailPics)
-      {
-        dic.Add(pic.ID, pic.Url);
-      }
-
-      return dic;
+      return ToDTO(motionRep.GetById(id));
     }
   }
 }

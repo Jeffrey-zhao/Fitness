@@ -221,5 +221,10 @@ namespace Fit.Service.Tests
       }
       return entities;
     }
+
+    public MotionDTO GetByID(long id)
+    {
+      throw new NotImplementedException();
+    }
   }
 }

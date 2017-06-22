@@ -20,5 +20,7 @@ namespace Fit.IService
     void Update(MotionDTO dto);
 
     void Delete(long id);
+
+    MotionDTO GetByID(long id);
   }
 }
