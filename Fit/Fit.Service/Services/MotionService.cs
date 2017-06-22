@@ -117,6 +117,11 @@ namespace Fit.Service.Services
           dto.MuscleGroupID = entity.Muscle.MuscleGroup.ID;
           dto.MuscleGroupName = entity.Muscle.MuscleGroup.Name;
         }
+        dto.Remark = string.Format("{0}/{1}",dto.MuscleGroupName,dto.MuscleName);
+      }
+      else
+      {
+        dto.Remark = Consts.TEXT_COMBINE;
       }
       return dto;
     }

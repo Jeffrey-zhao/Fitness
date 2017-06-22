@@ -40,6 +40,16 @@ namespace Fit.Service.Services
       motionPicRep.DeleteById(id);
     }
 
+    public void DeleteByMotionID(long id)
+    {
+      var entity = motionPicRep.GetAll().Where(a => a.MotionID.HasValue && a.MotionID == id).FirstOrDefault();
+      if (entity == null)
+      {
+        throw new Exception(ExceptionMsg.GetObjNullMsg("MotionPicEntity"));
+      }
+      motionPicRep.DeleteById(entity.ID);
+    }
+
     public void DeleteNoReference()
     {
       var entities = motionPicRep.GetAll().Where(a => a.Motion == null).ToList();
@@ -69,6 +79,7 @@ namespace Fit.Service.Services
     {
       var addedPics = motionPicRep.GetAll().Where(a => a.Motion == null).ToList();
       addedPics.ForEach(a => a.MotionID = motionID);
+      motionPicRep.Ctx.SaveChanges();
     }
 
     private MotionPicDTO ToDTO(MotionPicEntity entity)

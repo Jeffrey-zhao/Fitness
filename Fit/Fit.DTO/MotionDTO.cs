@@ -18,5 +18,6 @@ namespace Fit.DTO
     public string MuscleName { get; set; }
     public long MuscleGroupID { get; set; }
     public string MuscleGroupName { get; set; }
+    public string Remark { get; set; }
   }
 }

@@ -232,14 +232,14 @@
       });
     };
 
-    function onDelete(id) {
+    function onDelete(id,type) {
       if (confirm("确定要删除吗？")) {
         $.ajax({
           url: "/Motion/DeleteImg",
           type: "post", dataType: "json",
-          data: { id: id },
+          data: { id: id, type:type },
           success: function () {
-            loadImages();
+            loadImages(type);
           },
           error: function () {
             alert("删除时，网络请求失败");
@@ -285,7 +285,7 @@
     {{each imgs as img}}
     <div class="file-box">
       <div class="file">
-        <a href="javascript:void(0);" onclick='onDelete({{img.id}});return false'>
+        <a href="javascript:void(0);" onclick='onDelete({{img.id}},{{img.picType}});return false'>
           <div class="image">
             <img alt="image" class="img-responsive" src="{{img.url}}">
           </div>

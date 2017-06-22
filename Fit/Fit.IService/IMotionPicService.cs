@@ -18,5 +18,7 @@ namespace Fit.IService
     MotionPicDTO[] GetByMotionAndType(int picType,long motionID);
 
     void LinkPicToMotion(long motionID);
+
+    void DeleteByMotionID(long id);
   }
 }

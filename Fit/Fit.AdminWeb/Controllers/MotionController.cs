@@ -157,5 +157,13 @@ namespace Fit.AdminWeb.Controllers
       motionService.Update(dto);
       return MVCHelper.GetJsonResult(AjaxResultEnum.ok);
     }
+
+    [HttpPost]
+    public ActionResult Delete(long id)
+    {
+      motionService.Delete(id);
+      picService.DeleteByMotionID(id);
+      return MVCHelper.GetJsonResult(AjaxResultEnum.ok);
+    }
   }
 }
