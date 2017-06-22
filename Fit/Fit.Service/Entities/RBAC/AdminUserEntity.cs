@@ -19,6 +19,9 @@ namespace Fit.Service.Entities.RBAC
     public virtual ICollection<RoleEntity> Roles { get; set; }
       = new List<RoleEntity>();
 
+    public virtual ICollection<AdminLogEntity> AdminLogs { get; set; }
+      = new List<AdminLogEntity>();
+
     protected bool AreEqual(AdminUserEntity other)
     {
       bool isEqual = true;

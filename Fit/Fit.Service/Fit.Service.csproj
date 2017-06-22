@@ -50,6 +50,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Entities\AdminLogEntity.cs" />
     <Compile Include="Entities\BaseEntity.cs" />
     <Compile Include="Entities\MotionEntity.cs" />
     <Compile Include="Entities\MuscleEntity.cs" />
@@ -59,6 +60,7 @@
     <Compile Include="Entities\RBAC\PermissionEntity.cs" />
     <Compile Include="Entities\RBAC\RoleEntity.cs" />
     <Compile Include="FitDbContext.cs" />
+    <Compile Include="ModelConfigs\AdminLogConfig.cs" />
     <Compile Include="ModelConfigs\MotionConfig.cs" />
     <Compile Include="ModelConfigs\MotionPicConfig.cs" />
     <Compile Include="ModelConfigs\MuscleConfig.cs" />
@@ -66,8 +68,10 @@
     <Compile Include="ModelConfigs\RBAC\AdminUserConfig.cs" />
     <Compile Include="ModelConfigs\RBAC\PermissionConfig.cs" />
     <Compile Include="ModelConfigs\RBAC\RoleConfig.cs" />
+    <Compile Include="Repository\AdminLogRepository.cs" />
     <Compile Include="Repository\MotionPicRepository.cs" />
     <Compile Include="Repository\MotionRepository.cs" />
+    <Compile Include="Services\AdminLogService.cs" />
     <Compile Include="Services\MotionPicService.cs" />
     <Compile Include="Services\MotionService.cs" />
     <Compile Include="Services\MuscleGroupService.cs" />

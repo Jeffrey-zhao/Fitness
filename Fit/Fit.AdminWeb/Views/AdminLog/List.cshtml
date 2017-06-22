@@ -1,0 +1,66 @@
+﻿@{
+  ViewBag.Title = "AdminLog | List";
+  ViewBag.Name = "系统信息";
+}
+@model Fit.DTO.AdminLogDTO[]
+
+<div class="row wrapper border-bottom white-bg  page-heading">
+  <div class="col-sm-4">
+    <h2>操作记录</h2>
+    <ol class="breadcrumb">
+      <li>
+        <span>系统信息</span>
+      </li>
+      <li class="active">
+        <strong>操作记录</strong>
+      </li>
+    </ol>
+  </div>
+  <div class="col-sm-8">
+  </div>
+</div>
+<div class="wrapper wrapper-content animated fadeInRight">
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="ibox float-e-margins">
+        <div class="ibox-content">
+          <table class="footable table table-stripped toggle-arrow-tiny" data-page-size="8">
+            <thead>
+              <tr>
+                <th>管理员</th>
+                <th>记录</th>
+                <th>时间</th>
+              </tr>
+            </thead>
+            <tbody>
+              @foreach (var item in Model)
+              {
+                <tr>
+                  <td>@item.AdminName</td>
+                  <td>@item.Name</td>
+                  <td>@item.CreateDateTime</td>
+                </tr>
+              }
+            </tbody>
+            <tfoot>
+              <tr>
+                <td colspan="10" class="footable-visible">
+                  @{
+                    Fit.Common.PageHelper.TotalCount = ViewBag.TotalCount;
+                    Fit.Common.PageHelper.CurrentPage = ViewBag.PageIndex;
+                    Fit.Common.PageHelper.HrefStr = "/AdminLog/List?pageIndex=";
+                  }
+                  @Html.Raw(Fit.Common.PageHelper.GetHtmlPager())
+                  @{Fit.Common.PageHelper.Reset();}
+                </td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+

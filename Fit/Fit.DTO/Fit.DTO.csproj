@@ -40,6 +40,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AdminLogDTO.cs" />
     <Compile Include="MotionDTO.cs" />
     <Compile Include="MotionPicDTO.cs" />
     <Compile Include="MuscleDTO.cs" />

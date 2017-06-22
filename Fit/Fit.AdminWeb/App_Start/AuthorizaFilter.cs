@@ -1,4 +1,5 @@
 ﻿using Fit.Common;
+using Fit.DTO;
 using Fit.IService;
 using System;
 using System.Collections.Generic;
@@ -40,7 +41,18 @@ namespace Fit.AdminWeb.App_Start
         {
           filterContext.Result = new ContentResult { Content = "You don't have the permission of " + item.Permission };
         }
+        else
+        {
+          AddAdminLog(userId.Value, item.Permission);
+        }      
       }
+    }
+
+    private void AddAdminLog(long adminID, string name)
+    {
+      var adminLogService = DependencyResolver.Current.GetService<IAdminLogService>();
+      var dto = new AdminLogDTO { Name = name, AdminID = adminID };
+      adminLogService.Add(dto);
     }
   }
 }

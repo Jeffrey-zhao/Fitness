@@ -189,6 +189,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\PermissionAttribute.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\AdminLogController.cs" />
     <Compile Include="Controllers\AdminUserController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MotionController.cs" />
@@ -237,6 +238,7 @@
     <Content Include="Views\Motion\List.cshtml" />
     <Content Include="Views\Motion\Add.cshtml" />
     <Content Include="Views\Motion\Edit.cshtml" />
+    <Content Include="Views\AdminLog\List.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

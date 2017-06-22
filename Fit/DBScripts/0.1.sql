@@ -4,7 +4,7 @@ GO
 SET IDENTITY_INSERT [dbo].[TFit_MuscleGroups] ON
 INSERT [dbo].[TFit_MuscleGroups] ([ID], [Name], [Description], [IsDeleted], [CreatedDateTime]) VALUES (1, N'前臂', NULL, 0, CAST(0x0000A79100000000 AS DateTime))
 INSERT [dbo].[TFit_MuscleGroups] ([ID], [Name], [Description], [IsDeleted], [CreatedDateTime]) VALUES (2, N'上臂', NULL, 0, CAST(0x0000A79100000000 AS DateTime))
-INSERT [dbo].[TFit_MuscleGroups] ([ID], [Name], [Description], [IsDeleted], [CreatedDateTime]) VALUES (3, N'三角肌臂', NULL, 0, CAST(0x0000A79100000000 AS DateTime))
+INSERT [dbo].[TFit_MuscleGroups] ([ID], [Name], [Description], [IsDeleted], [CreatedDateTime]) VALUES (3, N'三角肌', NULL, 0, CAST(0x0000A79100000000 AS DateTime))
 INSERT [dbo].[TFit_MuscleGroups] ([ID], [Name], [Description], [IsDeleted], [CreatedDateTime]) VALUES (4, N'胸肌', NULL, 0, CAST(0x0000A79100000000 AS DateTime))
 INSERT [dbo].[TFit_MuscleGroups] ([ID], [Name], [Description], [IsDeleted], [CreatedDateTime]) VALUES (5, N'腹肌', NULL, 0, CAST(0x0000A79100000000 AS DateTime))
 INSERT [dbo].[TFit_MuscleGroups] ([ID], [Name], [Description], [IsDeleted], [CreatedDateTime]) VALUES (6, N'背部', NULL, 0, CAST(0x0000A79100000000 AS DateTime))
