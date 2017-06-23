@@ -31,9 +31,14 @@ namespace Fit.Service.Services
     public AdminLogDTO[] GetPagedData(int startIndex, int pageSize)
     {
       var entities = rep.GetAll().OrderByDescending(a => a.CreatedDateTime)
-        .OrderBy(a => a.Name).Skip(startIndex).Take(pageSize);
+        .OrderBy(a => a.Name).Skip(startIndex).Take(pageSize).ToList();
 
       return entities.Select(a => ToDTO(a)).ToArray();
+    }
+
+    public long GetTotalCount()
+    {
+      return rep.GetAll().Count();
     }
 
     public AdminLogDTO ToDTO(AdminLogEntity entity)

@@ -59,6 +59,7 @@
     <Compile Include="Entities\RBAC\AdminUserEntity.cs" />
     <Compile Include="Entities\RBAC\PermissionEntity.cs" />
     <Compile Include="Entities\RBAC\RoleEntity.cs" />
+    <Compile Include="Entities\UserEntity.cs" />
     <Compile Include="FitDbContext.cs" />
     <Compile Include="ModelConfigs\AdminLogConfig.cs" />
     <Compile Include="ModelConfigs\MotionConfig.cs" />
@@ -68,6 +69,7 @@
     <Compile Include="ModelConfigs\RBAC\AdminUserConfig.cs" />
     <Compile Include="ModelConfigs\RBAC\PermissionConfig.cs" />
     <Compile Include="ModelConfigs\RBAC\RoleConfig.cs" />
+    <Compile Include="ModelConfigs\UserConfig.cs" />
     <Compile Include="Repository\AdminLogRepository.cs" />
     <Compile Include="Repository\MotionPicRepository.cs" />
     <Compile Include="Repository\MotionRepository.cs" />

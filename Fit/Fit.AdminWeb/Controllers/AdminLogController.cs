@@ -19,6 +19,8 @@ namespace Fit.AdminWeb.Controllers
     public ActionResult List(int pageIndex = 1)
     {
       var dtos = service.GetPagedData((pageIndex - 1) * Consts.PAGE_SIZE_NUM, Consts.PAGE_SIZE_NUM);
+      ViewBag.TotalCount = service.GetTotalCount();
+      ViewBag.PageIndex = pageIndex;
       return View(dtos);
     }
   }

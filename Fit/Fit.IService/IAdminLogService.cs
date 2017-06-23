@@ -12,5 +12,7 @@ namespace Fit.IService
     void Add(AdminLogDTO dto);
 
     AdminLogDTO[] GetPagedData(int startIndex, int pageSize);
+
+    long GetTotalCount();
   }
 }

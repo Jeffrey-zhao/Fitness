@@ -1,4 +1,16 @@
-﻿USE [qds174986397_db]
+﻿DROP TABLE TFit_AdminUserRole
+DROP TABLE TFit_RolePermissions
+DROP TABLE TFit_AdminUsers
+DROP TABLE TFit_Roles
+DROP TABLE TFit_Permissions
+DROP TABLE TFit_MotionPics
+DROP TABLE TFit_Motions
+DROP TABLE TFit_Muscles
+DROP TABLE TFit_MuscleGroups
+DROP TABLE __MigrationHistory
+
+
+USE [qds174986397_db]
 GO
 /****** Object:  Table [dbo].[TFit_MuscleGroups]    Script Date: 06/15/2017 06:53:24 ******/
 SET IDENTITY_INSERT [dbo].[TFit_MuscleGroups] ON
