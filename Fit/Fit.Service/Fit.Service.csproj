@@ -73,6 +73,7 @@
     <Compile Include="Repository\AdminLogRepository.cs" />
     <Compile Include="Repository\MotionPicRepository.cs" />
     <Compile Include="Repository\MotionRepository.cs" />
+    <Compile Include="Repository\UserRepository.cs" />
     <Compile Include="Services\AdminLogService.cs" />
     <Compile Include="Services\MotionPicService.cs" />
     <Compile Include="Services\MotionService.cs" />
@@ -88,6 +89,7 @@
     <Compile Include="Services\RBAC\AdminUserService.cs" />
     <Compile Include="Services\RBAC\PermissionService.cs" />
     <Compile Include="Services\RBAC\RoleService.cs" />
+    <Compile Include="Services\UserService.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Fit.Common\Fit.Common.csproj">

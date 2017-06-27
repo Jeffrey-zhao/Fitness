@@ -198,6 +198,7 @@
     <Compile Include="Controllers\PermissionController.cs" />
     <Compile Include="Controllers\RoleController.cs" />
     <Compile Include="Controllers\UploadTestController.cs" />
+    <Compile Include="Controllers\UserInfoController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -239,6 +240,7 @@
     <Content Include="Views\Motion\Add.cshtml" />
     <Content Include="Views\Motion\Edit.cshtml" />
     <Content Include="Views\AdminLog\List.cshtml" />
+    <Content Include="Views\UserInfo\List.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
