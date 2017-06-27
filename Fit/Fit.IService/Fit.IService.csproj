@@ -42,6 +42,7 @@
   <ItemGroup>
     <Compile Include="IAdminLogService.cs" />
     <Compile Include="IAdminUserService.cs" />
+    <Compile Include="IKeyValueService.cs" />
     <Compile Include="IMotionPicService.cs" />
     <Compile Include="IMotionService.cs" />
     <Compile Include="IMuscleGroupService.cs" />
@@ -49,6 +50,7 @@
     <Compile Include="IPermissionService.cs" />
     <Compile Include="IRoleService.cs" />
     <Compile Include="IServiceSupport.cs" />
+    <Compile Include="ITest.cs" />
     <Compile Include="IUserService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

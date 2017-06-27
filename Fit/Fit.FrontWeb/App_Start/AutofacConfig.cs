@@ -1,6 +1,8 @@
 ﻿using Autofac;
 using Autofac.Integration.Mvc;
+using Fit.FrontWeb.Controllers;
 using Fit.IService;
+using Fit.Service.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,11 +25,9 @@ namespace Fit.FrontWeb.App_Start
 
       builder.RegisterAssemblyTypes(assemblies)
         .Where(a => !a.IsAbstract && a.Name.EndsWith("Repository")).AsImplementedInterfaces();
-      //builder.Register(typeof(AdminUserRepository)).As(typeof(IRepository<AdminUserEntity>));
+      //builder.Register(typeof(UserService)).As(typeof(IUserService));
 
-      //builder.Register(a => new AdminUserService(
-      //    (IRepository<AdminUserEntity>)a.Resolve(typeof(IRepository<AdminUserEntity>))
-      //    ));
+      //builder.Register(a => new UserController((IUserService)a.Resolve(typeof(IUserService))));
 
       var container = builder.Build();
       DependencyResolver.SetResolver(new AutofacDependencyResolver(container));

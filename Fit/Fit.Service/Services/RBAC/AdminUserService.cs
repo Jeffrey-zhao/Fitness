@@ -37,7 +37,7 @@ namespace Fit.Service.Services.RBAC
         PhoneNum = phoneNum,
         Email = email
       };
-      entity.PasswordSalt = CommonHelper.GenerateCaptchaCode(5);
+      entity.PasswordSalt = CommonHelper.GenerateCaptchaCode(Consts.CAPTCHA_LENGTH);
       entity.PasswordHash = CommonHelper.CalcMD5(entity.PasswordSalt + password);
 
       var id = repository.Add(entity);

@@ -22,10 +22,11 @@ namespace Fit.AdminWeb.App_Start
       Assembly[] assemblies = new Assembly[] { Assembly.Load("Fit.Service") };
       builder.RegisterAssemblyTypes(assemblies)
         .Where(a => !a.IsAbstract && typeof(IServiceSupport).IsAssignableFrom(a)
-        ).AsImplementedInterfaces();
+        ).AsImplementedInterfaces().PropertiesAutowired();
 
       builder.RegisterAssemblyTypes(assemblies)
         .Where(a => !a.IsAbstract && a.Name.EndsWith("Repository")).AsImplementedInterfaces();
+
       //builder.Register(typeof(AdminUserRepository)).As(typeof(IRepository<AdminUserEntity>));
 
       //builder.Register(a => new AdminUserService(

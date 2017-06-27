@@ -52,6 +52,7 @@
   <ItemGroup>
     <Compile Include="Entities\AdminLogEntity.cs" />
     <Compile Include="Entities\BaseEntity.cs" />
+    <Compile Include="Entities\KeyValueEntity.cs" />
     <Compile Include="Entities\MotionEntity.cs" />
     <Compile Include="Entities\MuscleEntity.cs" />
     <Compile Include="Entities\MuscleGroupEntity.cs" />
@@ -62,6 +63,7 @@
     <Compile Include="Entities\UserEntity.cs" />
     <Compile Include="FitDbContext.cs" />
     <Compile Include="ModelConfigs\AdminLogConfig.cs" />
+    <Compile Include="ModelConfigs\KeyValueConfig.cs" />
     <Compile Include="ModelConfigs\MotionConfig.cs" />
     <Compile Include="ModelConfigs\MotionPicConfig.cs" />
     <Compile Include="ModelConfigs\MuscleConfig.cs" />
@@ -71,10 +73,12 @@
     <Compile Include="ModelConfigs\RBAC\RoleConfig.cs" />
     <Compile Include="ModelConfigs\UserConfig.cs" />
     <Compile Include="Repository\AdminLogRepository.cs" />
+    <Compile Include="Repository\KeyValueRepository.cs" />
     <Compile Include="Repository\MotionPicRepository.cs" />
     <Compile Include="Repository\MotionRepository.cs" />
     <Compile Include="Repository\UserRepository.cs" />
     <Compile Include="Services\AdminLogService.cs" />
+    <Compile Include="Services\KeyValueService.cs" />
     <Compile Include="Services\MotionPicService.cs" />
     <Compile Include="Services\MotionService.cs" />
     <Compile Include="Services\MuscleGroupService.cs" />
@@ -89,6 +93,7 @@
     <Compile Include="Services\RBAC\AdminUserService.cs" />
     <Compile Include="Services\RBAC\PermissionService.cs" />
     <Compile Include="Services\RBAC\RoleService.cs" />
+    <Compile Include="Services\Test.cs" />
     <Compile Include="Services\UserService.cs" />
   </ItemGroup>
   <ItemGroup>

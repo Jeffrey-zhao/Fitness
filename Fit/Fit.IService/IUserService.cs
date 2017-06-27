@@ -12,6 +12,9 @@ namespace Fit.IService
     UserInfoDTO[] GetPagedData(int startIndex, int pageSize);
 
     long GetTotalCount();
-    
+
+    long Add(UserDTO dto);
+
+    void A();
   }
 }

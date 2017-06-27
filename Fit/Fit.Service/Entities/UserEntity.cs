@@ -15,7 +15,7 @@ namespace Fit.Service.Entities
     public string PasswordHash { get; set; }
     public int LoginErrorTimes { get; set; } = 0;
     public DateTime? LastLoginErrorDateTime { get; set; }
-    public int? OperateCode { get; set; }
+    public string OperateCode { get; set; }
     public bool IsActivated { get; set; } = false;
   }
 }

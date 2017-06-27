@@ -38,5 +38,6 @@ namespace Fit.Service
     public DbSet<MotionPicEntity> MotionPics { get; set; }
     public DbSet<AdminLogEntity> AdminLogs { get; set; }
     public DbSet<UserEntity> Users { get; set; }
+    public DbSet<KeyValueEntity> KeyValues { get; set; }
   }
 }

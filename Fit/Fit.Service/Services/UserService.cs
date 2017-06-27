@@ -20,6 +20,25 @@ namespace Fit.Service.Services
       this.userRep = userRep;
     }
 
+    public void A()
+    {
+      throw new NotImplementedException();
+    }
+
+    public long Add(UserDTO dto)//UserInfoDTO dto
+    {
+      var entity = new UserEntity
+      {
+        Name = dto.Name,
+        Email = dto.Email
+      };
+      entity.PasswordSalt = CommonHelper.GenerateCaptchaCode(Consts.CAPTCHA_LENGTH);
+      entity.PasswordHash = CommonHelper.CalcMD5(entity.PasswordSalt + dto.Password);
+      entity.OperateCode = CommonHelper.GenerateCaptchaCode(Consts.CAPTCHA_LENGTH);
+      //return 1;
+      return userRep.Add(entity);
+    }
+
     public UserInfoDTO[] GetPagedData(int startIndex, int pageSize)
     {
       var entities = userRep.GetAll().OrderByDescending(a => a.CreatedDateTime).Skip(startIndex).Take(pageSize).ToList();

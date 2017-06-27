@@ -17,5 +17,6 @@ namespace Fit.Common
     public const string TEXT_SELECT_MUSCLE = "请选择肌肉...";
     public const string CLOUD_DOMAIN = "http://orivq9ow0.bkt.clouddn.com/";
     public const string TEXT_COMBINE = "综合训练";
+    public const int CAPTCHA_LENGTH = 5;
   }
 }
