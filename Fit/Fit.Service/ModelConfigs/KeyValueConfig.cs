@@ -15,6 +15,7 @@ namespace Fit.Service.ModelConfigs
       this.ToTable("TFit_KeyValues");
       this.Property(a => a.Key).IsRequired().HasMaxLength(100).IsUnicode(true);
       this.Property(a => a.Value).IsRequired().HasMaxLength(1024).IsUnicode(true);
+      this.Property(a => a.Type).IsOptional().HasMaxLength(50);
     }
   }
 }

@@ -60,5 +60,12 @@ namespace Fit.Common
       return sbCode.ToString();
     }
     #endregion
+
+    #region email
+    public static void SendEmail()
+    {
+
+    }
+    #endregion
   }
 }

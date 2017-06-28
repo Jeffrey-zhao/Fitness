@@ -72,6 +72,7 @@
     <Compile Include="AjaxResult.cs" />
     <Compile Include="CommonHelper.cs" />
     <Compile Include="Consts.cs" />
+    <Compile Include="EmailHelper.cs" />
     <Compile Include="Enums.cs" />
     <Compile Include="ExceptionMsg.cs" />
     <Compile Include="DateTimeHelper.cs" />
@@ -83,6 +84,7 @@
     <Compile Include="SaveImgInCloud.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -15,11 +15,11 @@ namespace Fit.FrontWeb.Controllers
   public class UserController : Controller
   {
     IUserService userService;
-    IKeyValueService kyService;
+    IKeyValueService kvService;
     public UserController(IUserService userService, IKeyValueService kyService)
     {
       this.userService = userService;
-      this.kyService = kyService;
+      this.kvService = kyService;
     }
 
     [HttpGet]
@@ -54,7 +54,6 @@ namespace Fit.FrontWeb.Controllers
     [HttpGet]
     public ActionResult Register()
     {
-      var a = kyService.GetValue("a");
       return View();
     }
     [HttpPost]
@@ -72,9 +71,23 @@ namespace Fit.FrontWeb.Controllers
       };
       var resultDto = userService.Add(dto);
       TempData["email"] = model.Email;
-      //TempData["id"] = resultDto.ID;
-      //TempData["operateCode"] = resultDto.OperateCode;
+      SendActivateEmail(resultDto);
       return MVCHelper.GetJsonResult(AjaxResultEnum.ok);
+    }
+
+    private void SendActivateEmail(UserDTO dto)
+    {
+      EmailDTO emailDto = new EmailDTO()
+      {
+        Addresses = "zhixin9001@126.com",
+        From = kvService.GetValue(Consts.KEY_SMTP_EMAIL),
+        Subject="aa",
+        Body="aa",
+        SmtpPassword=kvService.GetValue(Consts.KEY_SMTP_PASSWORD),
+        SmtpUserName=kvService.GetValue(Consts.KEY_SMTP_USERNAME),
+        SmtpServer=kvService.GetValue(Consts.KEY_SMTP_SERVER)
+      };
+      EmailHelper.Send(emailDto);
     }
 
     public ActionResult CreateVerifyCode()

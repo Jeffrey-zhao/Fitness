@@ -18,5 +18,15 @@ namespace Fit.Common
     public const string CLOUD_DOMAIN = "http://orivq9ow0.bkt.clouddn.com/";
     public const string TEXT_COMBINE = "综合训练";
     public const int CAPTCHA_LENGTH = 5;
+    public const char SPLITER = ',';
+
+    #region Email
+    public const string KEY_ADDRESSES = "Addresses";
+    public const string KEY_SMTP_SERVER = "SmtpServer";
+    public const string KEY_SMTP_USERNAME = "SmtpUserName";
+    public const string KEY_SMTP_PASSWORD = "SmtpPassword";
+    public const string KEY_SMTP_EMAIL = "SmtpEmail";
+    public const string KEY_EMAIL_TEMPLATE = "EmailTemplate";
+    #endregion
   }
 }

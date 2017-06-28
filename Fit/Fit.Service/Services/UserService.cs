@@ -25,7 +25,7 @@ namespace Fit.Service.Services
       throw new NotImplementedException();
     }
 
-    public long Add(UserDTO dto)//UserInfoDTO dto
+    public UserDTO Add(UserDTO dto)//UserInfoDTO dto
     {
       var entity = new UserEntity
       {
@@ -35,8 +35,13 @@ namespace Fit.Service.Services
       entity.PasswordSalt = CommonHelper.GenerateCaptchaCode(Consts.CAPTCHA_LENGTH);
       entity.PasswordHash = CommonHelper.CalcMD5(entity.PasswordSalt + dto.Password);
       entity.OperateCode = CommonHelper.GenerateCaptchaCode(Consts.CAPTCHA_LENGTH);
-      //return 1;
-      return userRep.Add(entity);
+      var id = userRep.Add(entity);
+      var dtoResult = new UserDTO
+      {
+        ID = id,
+        OperateCode = entity.OperateCode
+      };
+      return dtoResult;
     }
 
     public UserInfoDTO[] GetPagedData(int startIndex, int pageSize)

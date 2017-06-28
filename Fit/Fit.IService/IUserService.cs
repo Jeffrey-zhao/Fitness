@@ -13,8 +13,6 @@ namespace Fit.IService
 
     long GetTotalCount();
 
-    long Add(UserDTO dto);
-
-    void A();
+    UserDTO Add(UserDTO dto);
   }
 }
