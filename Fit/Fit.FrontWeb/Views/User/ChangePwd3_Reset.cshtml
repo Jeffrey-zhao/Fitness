@@ -1,5 +1,5 @@
 ﻿@{
-  ViewBag.Title = "Login | Fit";
+  ViewBag.Title = "ChangePwd | Fit";
   Layout = null;
 }
 <!DOCTYPE html>
@@ -18,36 +18,16 @@
 <body class="gray-bg">
   <div class="middle-box text-center loginscreen animated fadeInDown">
     <div>
-      <div>
-        <h1 class="logo-name">Fit</h1>
-      </div>
-      <h3>Welcome to Fit</h3>
-      <form class="m-t" role="form" id="formLogin">
-        <div class="form-group">
-          <input type="email" class="form-control" name="email" placeholder="邮箱" required="" pattern=@Html.Raw("^([0-9a-zA-Z]+)@([0-9a-zA-Z])+.([0-9a-zA-Z])+") title="电子邮件地址">
-        </div>
+      <div>将要重置密码的账号：<span>@Model</span></div>
+      <form class="m-t" role="form" id="formPwd">
         <div class="form-group">
           <input type="password" class="form-control" name="password" placeholder="密码" required="" pattern="^.{6,}" title="密码必须大于等于6位">
         </div>
         <div class="form-group">
-          <div class="row">
-            <div class="col-sm-6">
-              <input class="form-control" name="VerifyCode" type="text" placeholder="验证码" required="" pattern="^[0-9a-zA-Z]+" title="请输入验证码" style="width:150px;">
-            </div>
-            <div class="col-sm-6">
-              <img src="/User/CreateVerifyCode" id="imgVerifyCode" alt="点击获取验证码">
-            </div>
-          </div>
+          <input type="password" class="form-control" name="passwordConfirm" placeholder="确认密码" required="" pattern="^.{6,}" title="密码必须大于等于6位">
         </div>
-        <input id="btnLogin" type="submit" class="btn btn-primary block full-width m-b" value="登录">
-        <div class="row">
-          <div class="col-sm-8">
-            <a class="btn btn-sm btn-white btn-block" href="/User/Register">注册</a>
-          </div>
-          <div class="col-sm-4">
-            <a href="/User/ChangePwd1_Captcha">忘记密码</a>
-          </div>
-        </div>
+        <input type="submit" class="btn btn-primary block full-width m-b" value="确认">
+        <div class="row" style="color:red" id="msg"></div>
       </form>
     </div>
   </div>
@@ -64,29 +44,24 @@
 
 <script type="text/javascript">
   $(function () {
-    $("#imgVerifyCode").click(function () {
-      $("#imgVerifyCode").attr("src", "/User/CreateVerifyCode?" + Math.random());
-    });
     var options = {
       success: function (response) {
         showResponse(response);
       },
-      url: "/User/Login",
+      url: "/User/ChangePwd3_Reset",
       type: "post"
     };
 
-    $("#formLogin").submit(function () {
-
+    $("#formPwd").submit(function () {
       $(this).ajaxSubmit(options);
       // 为了防止普通浏览器进行表单提交和产生页面导航（防止页面刷新？）返回false
       return false;
     });
     function showResponse(res) {
       if (res.status == "ok") {
-        location.href = "/Home/Index";
+        location.href = "/User/ChangePwd4_Succeed";
       } else {
-        $("#imgVerifyCode").click();
-        alert(res.msg);
+        $('#msg').text(res.msg);
       }
     }
   });

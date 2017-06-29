@@ -20,7 +20,7 @@ namespace Fit.Common
         }
         mailMessage.Subject = dto.Subject;
         mailMessage.From = new MailAddress(dto.From);
-        mailMessage.Body = mailMessage.Body;
+        mailMessage.Body = dto.Body;
         smtpClient.Credentials = new System.Net.NetworkCredential(dto.SmtpUserName,dto.SmtpPassword);
         smtpClient.Send(mailMessage);
       }

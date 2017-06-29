@@ -20,12 +20,23 @@ namespace Fit.Service.Services
       this.userRep = userRep;
     }
 
-    public void A()
+    public bool Activate(long id, string operateCode)
     {
-      throw new NotImplementedException();
+      var result = false;
+      var entity = userRep.GetById(id);
+      if (entity == null) return result;
+
+      if (operateCode.Equals(entity.OperateCode))
+      {
+        entity.IsActivated = true;
+        userRep.Update(entity);
+        result = true;
+      }
+
+      return result;
     }
 
-    public UserDTO Add(UserDTO dto)//UserInfoDTO dto
+    public UserDTO Add(UserDTO dto)
     {
       var entity = new UserEntity
       {
@@ -53,6 +64,35 @@ namespace Fit.Service.Services
     public long GetTotalCount()
     {
       return userRep.GetAll().Count();
+    }
+
+    public bool IsEmailExist(string email)
+    {
+      return !(GetByEmail(email) == null);
+    }
+
+    private UserEntity GetByEmail(string email)
+    {
+      return userRep.GetAll().FirstOrDefault(a => a.Email.Equals(email));
+    }
+
+    public void Update(UserDTO dto)
+    {
+      var entity = GetByEmail(dto.Email);
+      if (entity == null)
+      {
+        throw new ArgumentException(ExceptionMsg.GetObjNullMsg("UserEntity"));
+      }
+      if (!string.IsNullOrWhiteSpace(dto.Name))
+      {
+        entity.Name = dto.Name;
+      }
+      if (!string.IsNullOrWhiteSpace(dto.Password))
+      {
+        entity.PasswordHash = CommonHelper.CalcMD5(entity.PasswordSalt + dto.Password);
+      }
+
+      userRep.Update(entity);
     }
 
     private UserInfoDTO ToDTO(UserEntity entity)

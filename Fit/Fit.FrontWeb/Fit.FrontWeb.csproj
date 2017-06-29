@@ -181,6 +181,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\ChangePwdModel.cs" />
     <Compile Include="Models\LoginModel.cs" />
     <Compile Include="Models\RegisterModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -202,6 +203,10 @@
     <Content Include="Scripts\jquery-1.10.2.min.map" />
     <Content Include="Views\User\Register.cshtml" />
     <Content Include="Views\User\EmailPage.cshtml" />
+    <Content Include="Views\User\Activate.cshtml" />
+    <Content Include="Views\User\ChangePwd1_Captcha.cshtml" />
+    <Content Include="Views\User\ChangePwd2_Email.cshtml" />
+    <Content Include="Views\User\ChangePwd3_Reset.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

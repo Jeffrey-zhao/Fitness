@@ -9,5 +9,7 @@ namespace Fit.IService
   public interface IKeyValueService:IServiceSupport
   {
     string GetValue(string key);
+
+    int GetIntValue(string key);
   }
 }

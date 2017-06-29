@@ -13,6 +13,11 @@ namespace Fit.Service.Services
   {
     KeyValueRepository rep = new KeyValueRepository();
 
+    public int GetIntValue(string key)
+    {
+      return Convert.ToInt32(GetValue(key));
+    }
+
     public string GetValue(string key)
     {
       var entity = rep.GetByKey(key);

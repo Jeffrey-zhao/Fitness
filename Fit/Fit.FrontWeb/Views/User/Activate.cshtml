@@ -1,0 +1,46 @@
+﻿@{
+  ViewBag.Title = "Email | Fit";
+  Layout = null;
+}
+@model string
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.5">
+  <title>@ViewBag.Title</title>
+  <link href="~/Content/bootstrap.min.css" rel="stylesheet">
+  <link href="~/font-awesome/css/font-awesome.css" rel="stylesheet">
+
+  <link href="~/Content/animate.css" rel="stylesheet">
+  <link href="~/Content/style.css" rel="stylesheet">
+
+</head>
+<body class="gray-bg">
+  <div class="middle-box text-center loginscreen animated fadeInDown">
+    <div>
+      <div>
+        @Model
+      </div>
+      <br />
+      <a  href="/User/Login" class="btn btn-primary block full-width m-b">返回登录页</a>
+    </div>
+  </div>
+</body>
+</html>
+<!-- Mainly scripts -->
+<script src="~/Scripts/jquery-2.1.1.js"></script>
+<script src="~/Scripts/bootstrap.min.js"></script>
+<script src="~/Scripts/jquery.form.js"></script>
+<script src="~/Scripts/plugins/metisMenu/jquery.metisMenu.js"></script>
+<script src="~/Scripts/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+<!-- Custom and plugin javascript -->
+<script src="~/Scripts/inspinia.js"></script>
+
+
+
+
+
+
+

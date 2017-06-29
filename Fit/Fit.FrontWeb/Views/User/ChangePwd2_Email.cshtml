@@ -1,0 +1,71 @@
+﻿@{
+  ViewBag.Title = "ChangePwd | Fit";
+  Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.5">
+  <title>@ViewBag.Title</title>
+  <link href="~/Content/bootstrap.min.css" rel="stylesheet">
+  <link href="~/font-awesome/css/font-awesome.css" rel="stylesheet">
+
+  <link href="~/Content/animate.css" rel="stylesheet">
+  <link href="~/Content/style.css" rel="stylesheet">
+
+</head>
+<body class="gray-bg">
+  <div class="middle-box text-center loginscreen animated fadeInDown">
+    <div>
+      <div>已经向您账号为<span>@Model</span>的邮箱发送了确认邮件，请输入接收到的验证码</div>
+      <form class="m-t" role="form" id="formPwd">
+        <div class="form-group">
+          <input type="text" class="form-control" name="verifyCode" placeholder="邮箱验证码" required="" title="请输入邮箱验证码">
+        </div>
+        <input type="submit" class="btn btn-primary block full-width m-b" value="确认">
+        <div class="row" style="color:red" id="msg"></div>
+      </form>
+    </div>
+  </div>
+</body>
+</html>
+<!-- Mainly scripts -->
+<script src="~/Scripts/jquery-2.1.1.js"></script>
+<script src="~/Scripts/bootstrap.min.js"></script>
+<script src="~/Scripts/jquery.form.js"></script>
+<script src="~/Scripts/plugins/metisMenu/jquery.metisMenu.js"></script>
+<script src="~/Scripts/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+<!-- Custom and plugin javascript -->
+<script src="~/Scripts/inspinia.js"></script>
+
+<script type="text/javascript">
+  $(function () {
+    var options = {
+      success: function (response) {
+        showResponse(response);
+      },
+      url: "/User/ChangePwd2_Email",
+      type: "post"
+    };
+
+    $("#formPwd").submit(function () {
+      $(this).ajaxSubmit(options);
+      // 为了防止普通浏览器进行表单提交和产生页面导航（防止页面刷新？）返回false
+      return false;
+    });
+    function showResponse(res) {
+      if (res.status == "ok") {
+        location.href = "/User/ChangePwd3_Reset";
+      } else {
+        $('#msg').text(res.msg);
+      }
+    }
+  });
+</script>
+
+
+
+
+
+

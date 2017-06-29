@@ -14,5 +14,11 @@ namespace Fit.IService
     long GetTotalCount();
 
     UserDTO Add(UserDTO dto);
+
+    bool Activate(long id, string operateCode);
+
+    bool IsEmailExist(string email);
+
+    void Update(UserDTO dto);
   }
 }

@@ -35,7 +35,7 @@ namespace Fit.Service.Repository
 
     public UserEntity GetById(long id)
     {
-      throw new NotImplementedException();
+      return GetAll().FirstOrDefault(a => a.ID == id);
     }
 
     public void Update(UserEntity entity)
