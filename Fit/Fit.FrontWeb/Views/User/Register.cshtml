@@ -47,6 +47,7 @@
           </div>
         </div>
         <input id="btnLogin" type="submit" class="btn btn-primary block full-width m-b" value="注册">
+        <div class="row" style="color:red" id="msg"></div>
       </form>
     </div>
   </div>
@@ -84,7 +85,7 @@
         location.href = "/User/EmailPage";
       } else {
         $("#imgVerifyCode").click();
-        alert(res.msg);
+        $('#msg').text(res.msg);
       }
     }
   });

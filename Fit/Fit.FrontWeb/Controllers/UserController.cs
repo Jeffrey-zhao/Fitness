@@ -34,22 +34,21 @@ namespace Fit.FrontWeb.Controllers
       {
         return MVCHelper.GetJsonResult(AjaxResultEnum.error, MVCHelper.GetValidMsg(ModelState));
       }
-      if (TempData[Consts.VERIFY_CODE_KEY] == null
-        || !TempData[Consts.VERIFY_CODE_KEY].ToString().Equals(model.VerifyCode))
+      if (TempData[SessionKeys.VERIFYCODE] == null
+        || !TempData[SessionKeys.VERIFYCODE].ToString().Equals(model.VerifyCode))
       {
-        return MVCHelper.GetJsonResult(AjaxResultEnum.error, "Verify Code Error");
+        return MVCHelper.GetJsonResult(AjaxResultEnum.error, Consts.VERIFY_CODE_ERROR);
       }
-      //long? id = auService.CheckLogin(model.Email, model.Password);
-      //if (id.HasValue)
-      //{
-      //  MVCHelper.SetLoginInfoToSession(HttpContext, id.Value, model.Email);
-      //  return MVCHelper.GetJsonResult(AjaxResultEnum.ok);
-      //}
-      //else
-      //{
-      //  return MVCHelper.GetJsonResult(AjaxResultEnum.error, "Email or Password is wrong");
-      //}
-      return View();
+      long? id = userService.CheckLogin(model.Email, model.Password);
+      if (id.HasValue)
+      {
+        MVCHelper.SetLoginInfoToSession(HttpContext, id.Value, model.Email);
+        return MVCHelper.GetJsonResult(AjaxResultEnum.ok);
+      }
+      else
+      {
+        return MVCHelper.GetJsonResult(AjaxResultEnum.error, Consts.LOGIN_FAILED);
+      }
     }
     [HttpGet]
     public ActionResult Register()

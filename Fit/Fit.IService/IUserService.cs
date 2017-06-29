@@ -20,5 +20,10 @@ namespace Fit.IService
     bool IsEmailExist(string email);
 
     void Update(UserDTO dto);
+
+    /// <summary>
+    ///if login false, return null value, else return the admin Id
+    /// </summary>
+    long? CheckLogin(string email, string password);
   }
 }

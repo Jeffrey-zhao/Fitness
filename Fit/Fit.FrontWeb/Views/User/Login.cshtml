@@ -48,6 +48,7 @@
             <a href="/User/ChangePwd1_Captcha">忘记密码</a>
           </div>
         </div>
+        <div class="row" style="color:red" id="msg"></div>
       </form>
     </div>
   </div>
@@ -86,7 +87,7 @@
         location.href = "/Home/Index";
       } else {
         $("#imgVerifyCode").click();
-        alert(res.msg);
+        $('#msg').text(res.msg);
       }
     }
   });

@@ -113,5 +113,14 @@ namespace Fit.Service.Services
 
       return dto;
     }
+
+    public long? CheckLogin(string email, string password)
+    {
+      var entity = userRep.GetAll().Where(a => a.Email == email).FirstOrDefault();
+      if (entity == null) return (long?)null;
+
+      string hashForCheck = CommonHelper.CalcMD5(entity.PasswordSalt + password);
+      return hashForCheck.Equals(entity.PasswordHash) ? entity.ID : (long?)null;
+    }
   }
 }

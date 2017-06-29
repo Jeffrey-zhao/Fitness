@@ -24,11 +24,8 @@ namespace Fit.IService
     AdminUserDTO GetByEmail(string email);
 
     /// <summary>
-    ///
+    ///if login false, return null value, else return the admin Id
     /// </summary>
-    /// <param name="email"></param>
-    /// <param name="password"></param>
-    /// <returns>if login false, return null value, else return the admin Id</returns>
     long? CheckLogin(string email, string password);
 
     void MarkDeleted(long id);

@@ -23,6 +23,7 @@ namespace Fit.Common
     public const string EMAIL_NOT_REGISTER = "邮箱尚未注册";
     public const string EMAIL_HAD_REGISTER = "邮箱已被注册";
     public const string VERIFY_CODE_ERROR = "验证码错误";
+    public const string LOGIN_FAILED = "账户或密码错误";
 
     #region Common
     public const string ACTIVATE_SUCCEED = "激活成功";
