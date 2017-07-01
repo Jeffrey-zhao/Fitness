@@ -191,6 +191,13 @@ namespace Fit.FrontWeb.Controllers
       return View("Activate", (object)Consts.ACTIVATE_SUCCEED);
     }
 
+    [ChildActionOnly]
+    public ActionResult LoginEmail()
+    {
+      var email = MVCHelper.GetLoginEmailFromSession(HttpContext);
+      return PartialView("LoginEmail", email);
+    }
+
     private void SendActivateEmail(long id, string operateCode, string address)
     {
       string template = kvService.GetValue(DBKeys.EMAIL_EMAIL_TEMPLATE_ACTIVATE);

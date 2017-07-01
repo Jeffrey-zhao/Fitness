@@ -39,5 +39,7 @@ namespace Fit.Service
     public DbSet<AdminLogEntity> AdminLogs { get; set; }
     public DbSet<UserEntity> Users { get; set; }
     public DbSet<KeyValueEntity> KeyValues { get; set; }
+    public DbSet<PlanEntity> Plans { get; set; }
+    public DbSet<MotionsInPlanEntity> MotionsInPlans { get; set; }
   }
 }

@@ -29,6 +29,15 @@ namespace Fit.Common
     public const string ACTIVATE_SUCCEED = "激活成功";
     public const string ACTIVATE_FAILED = "激活失败";
     public const string PWD_CHANGED = "重置密码成功";
+
+    public const string PLAN_TEMPLATE_DAY = "第{0}天";
+    public const string PLAN_TEMPLATE_DETAIL1 = "{0}组，每组{1}次{2}";
+    public const string PLAN_TEMPLATE_DETAIL1_1 = "，负荷{0}kg";
+    /// <summary>
+    /// 30分钟，5公里
+    /// </summary>
+    public const string PLAN_TEMPLATE_DETAIL2 = "{0}{1}";
+    public const string PLAN_REST = "休息";
     #endregion
 
     public const string EMAIL_SUBJECT_ACTIVATE = "Fit账号激活";
@@ -52,6 +61,8 @@ namespace Fit.Common
   {
     #region Common
     public const string COM_VERIFYCODE_LENGTH = "VerifyCodeLength";
+    public const string COM_MAX_CYCLEDAYS = "MaxCycleDays";
+
     #endregion
 
     #region Email
@@ -63,6 +74,12 @@ namespace Fit.Common
     public const string EMAIL_EMAIL_TEMPLATE_ACTIVATE = "EmailTemplate_Activate";
     public const string EMAIL_EMAIL_TEMPLATE_CHANGE_PWD = "EmailTemplate_ChangePwd";
     #endregion
+
+    #region PLAN
+    public const string PLAN_REMARK_LENGTH = "PlanRemarkLength";
+    #endregion
+
+
 
   }
 }

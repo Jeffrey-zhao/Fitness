@@ -17,5 +17,6 @@ namespace Fit.Service.Entities
     public DateTime? LastLoginErrorDateTime { get; set; }
     public string OperateCode { get; set; }
     public bool IsActivated { get; set; } = false;
+    public ICollection<PlanEntity> Plans { get; set; }
   }
 }

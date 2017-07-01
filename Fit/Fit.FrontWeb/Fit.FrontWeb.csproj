@@ -177,11 +177,15 @@
     <Compile Include="App_Start\ExceptionFilter.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\MotionsInPlanController.cs" />
+    <Compile Include="Controllers\PlanController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\ChangePwdModel.cs" />
+    <Compile Include="Models\CycleDaysViewModel.cs" />
     <Compile Include="Models\LoginModel.cs" />
     <Compile Include="Models\RegisterModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -207,6 +211,14 @@
     <Content Include="Views\User\ChangePwd1_Captcha.cshtml" />
     <Content Include="Views\User\ChangePwd2_Email.cshtml" />
     <Content Include="Views\User\ChangePwd3_Reset.cshtml" />
+    <Content Include="Views\_ViewStart.cshtml" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Shared\LoginEmail.cshtml" />
+    <Content Include="Views\Plan\SetCycleDays.cshtml" />
+    <Content Include="Views\Plan\CycleDays.cshtml" />
+    <Content Include="Views\MotionsInPlan\List.cshtml" />
+    <Content Include="Views\MotionsInPlan\Add.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

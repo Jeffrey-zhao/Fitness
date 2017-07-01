@@ -1,0 +1,13 @@
+﻿@model string
+
+@{
+  if (string.IsNullOrEmpty(Model))
+  {
+    <a href="/User/Login">&nbsp;点击登录</a>
+  }
+  else
+  {
+    <span>@Model</span>
+  }
+}
+

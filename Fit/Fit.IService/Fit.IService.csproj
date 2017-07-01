@@ -45,12 +45,13 @@
     <Compile Include="IKeyValueService.cs" />
     <Compile Include="IMotionPicService.cs" />
     <Compile Include="IMotionService.cs" />
+    <Compile Include="IMotionsInPlanService.cs" />
     <Compile Include="IMuscleGroupService.cs" />
     <Compile Include="IMuscleService.cs" />
     <Compile Include="IPermissionService.cs" />
+    <Compile Include="IPlanService.cs" />
     <Compile Include="IRoleService.cs" />
     <Compile Include="IServiceSupport.cs" />
-    <Compile Include="ITest.cs" />
     <Compile Include="IUserService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
