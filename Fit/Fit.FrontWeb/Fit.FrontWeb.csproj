@@ -112,6 +112,14 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\plugins\awesome-bootstrap-checkbox\awesome-bootstrap-checkbox.css" />
+    <Content Include="Content\plugins\blueimp\css\blueimp-gallery.min.css" />
+    <Content Include="Content\plugins\blueimp\img\error.png" />
+    <Content Include="Content\plugins\blueimp\img\error.svg" />
+    <Content Include="Content\plugins\blueimp\img\loading.gif" />
+    <Content Include="Content\plugins\blueimp\img\play-pause.png" />
+    <Content Include="Content\plugins\blueimp\img\play-pause.svg" />
+    <Content Include="Content\plugins\blueimp\img\video-play.png" />
+    <Content Include="Content\plugins\blueimp\img\video-play.svg" />
     <Content Include="Content\plugins\dropzone\basic.css" />
     <Content Include="Content\plugins\dropzone\dropzone.css" />
     <Content Include="Content\plugins\footable\fonts\footable.svg" />
@@ -149,6 +157,7 @@
     <Content Include="Scripts\jquery-2.1.1.js" />
     <Content Include="Scripts\jquery.form.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
+    <Content Include="Scripts\plugins\blueimp\jquery.blueimp-gallery.min.js" />
     <Content Include="Scripts\plugins\chartJs\Chart.min.js" />
     <Content Include="Scripts\plugins\dropzone\dropzone.js" />
     <Content Include="Scripts\plugins\flot\curvedLines.js" />

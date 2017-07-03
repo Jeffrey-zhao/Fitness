@@ -4,6 +4,7 @@
 }
 
 @model List<Fit.DTO.MuscleGroupDTO>
+<link href="~/Content/plugins/blueimp/css/blueimp-gallery.min.css" rel="stylesheet">
 <div class="row">
   <div class="col-sm-12">
     <div class="ibox float-e-margins">
@@ -23,78 +24,111 @@
                 @{
                   foreach (var item in Model)
                   {
-                    <option value="@item.Id">@item.Name</option>
+                <option value="@item.Id">@item.Name</option>
                   }
                 }
               </select>
             </div>
             <div class="col-sm-4">
-              <select class="form-control m-b" name="muscle">
+              <select class="form-control m-b" name="muscle" onchange="muscleChanged()">
                 <option value="0">请选择肌肉...</option>
               </select>
             </div>
           </div>
           <div class="col-sm-4">
-            <select class="form-control m-b" name="muscle">
+            <select class="form-control m-b" name="motion" onchange="motionChanged()">
               <option value="0">请选择锻炼项目...</option>
             </select>
           </div>
         </div>
-        <div id="partialDash" class="hr-line-dashed"></div>
-        <div class="form-group">
-          <label>名称</label>
-          <input type="text" class="form-control" name="name" required="" title="请输入名称">
-        </div>
-        <div class="form-group">
-          <label>描述</label>
-          <input type="text" class="form-control" name="description">
-        </div>
-        <div class="hr-line-dashed"></div>
-        <div class="form-group">
-          <label>动作介绍</label>
-          <textarea class="form-control" name="motionDetail"></textarea>
-          <br />
-          <form id="formMotionDetail" enctype="multipart/form-data">
-            <label title="Upload image file" for="btnUploadMotionDetail" class="btn btn-white">
-              <input type="file" accept="image/*" name="imgMotionDetail" id="btnUploadMotionDetail" class="hide">
-              添加动作介绍图片
-            </label>
-          </form>
-          <div id="imgDiv1">
+
+        <form class="m-t" role="form" id="formAdd" name="1" action="a">
+          <div class="row">
+            <div class="col-sm-3">
+              <select class="form-control m-b" name="motion" onchange="motionChanged()">
+                <option value="0">请选择锻炼项目...</option>
+              </select>
+            </div>
+            <div class="col-sm-3">
+              <select class="form-control m-b" name="motion" onchange="motionChanged()">
+                <option value="0">请选择组数...</option>
+              </select>
+            </div>
+            <div class="col-sm-3">
+              <select class="form-control m-b" name="motion" onchange="motionChanged()">
+                <option value="0">请选择次数...</option>
+              </select>
+            </div>
+            <div class="col-sm-3">
+              <input id="btnSave" type="submit" class="btn btn-primary block full-width m-b" value="保存">
+            </div>
           </div>
-        </div>
-        <div class="hr-line-dashed"></div>
-        <div class="form-group">
-          <label>动作要点</label>
-          <textarea class="form-control" name="motionMainPoint"></textarea>
-          <br />
-          <form id="formMainPoint" method="post" action="/UploadTest/Upload/1" enctype="multipart/form-data">
-            <label title="Upload image file" for="btnUploadMainPoint" class="btn btn-white">
-              <input type="file" accept="image/*" name="imgMainPoint" id="btnUploadMainPoint" class="hide">
-              添加动作要点图片
-            </label>
-          </form>
-          <div id="imgDiv2">
+        </form>
+        <form class="m-t" role="form" id="formAdd1" name="11" action="b">
+          <div class="row">
+            <div class="col-sm-3">
+              <select class="form-control m-b" name="motion" onchange="motionChanged()">
+                <option value="0">请选择锻炼项目...</option>
+              </select>
+            </div>
+            <div class="col-sm-3">
+              <select class="form-control m-b" name="motion" onchange="motionChanged()">
+                <option value="0">请选择组数...</option>
+              </select>
+            </div>
+            <div class="col-sm-3">
+              <select class="form-control m-b" name="motion" onchange="motionChanged()">
+                <option value="1">请选择次数...</option>
+              </select>
+            </div>
+            <div class="col-sm-3">
+              <input id="btnSave1" type="submit" class="btn btn-primary block full-width m-b" value="保存">
+            </div>
           </div>
-        </div>
-        <div class="hr-line-dashed"></div>
-        <div class="form-group">
-          <label>注意事项</label>
-          <textarea class="form-control" name="motionAttention"></textarea>
-          <br />
-          <form id="formAttention" method="post" action="/UploadTest/Upload/1" enctype="multipart/form-data">
-            <label title="Upload image file" for="btnUploadAttention" class="btn btn-white">
-              <input type="file" accept="image/*" name="imgAttention" id="btnUploadAttention" class="hide">
-              添加注意事项图片
-            </label>
-          </form>
-          <div id="imgDiv3">
+        </form>
+        <div id="motionDetail">
+          <div id="partialDash" class="hr-line-dashed"></div>
+          <div class="form-group">
+            <label>名称</label>
+            <div id="name"></div>
           </div>
-        </div>
-        <div class="hr-line-dashed"></div>
-        <div class="form-group">
-          <div class="col-sm-1 pull-right">
-            <button class="btn btn-primary" onclick="onSave()">保存</button>
+          <div class="form-group">
+            <label>描述</label>
+            <div id="description"></div>
+          </div>
+          <div class="hr-line-dashed"></div>
+          <div class="form-group">
+            <label>动作介绍</label>
+            <div id="detail"></div>
+            <br />
+            <div id="imgDiv1">
+            </div>
+          </div>
+          <div class="hr-line-dashed"></div>
+          <div class="form-group">
+            <label>动作要点</label>
+            <div id="mainpoint"></div>
+            <br />
+            <div id="imgDiv2">
+            </div>
+          </div>
+          <div class="hr-line-dashed"></div>
+          <div class="form-group">
+            <label>注意事项</label>
+            <div id="attention"></div>
+            <br />
+            <div id="imgDiv3">
+            </div>
+          </div>
+          <!-- The Gallery as lightbox dialog, should be a child element of the document body -->
+          <div id="blueimp-gallery" class="blueimp-gallery">
+            <div class="slides"></div>
+            <h3 class="title"></h3>
+            <a class="prev">‹</a>
+            <a class="next">›</a>
+            <a class="close">×</a>
+            <a class="play-pause"></a>
+            <ol class="indicator"></ol>
           </div>
         </div>
       </div>
@@ -103,13 +137,39 @@
 </div>
 
 @section FooterScript{
+  <!-- blueimp gallery -->
+  <script src="~/Scripts/plugins/blueimp/jquery.blueimp-gallery.min.js"></script>
+
   <script type="text/javascript" src="~/Scripts/template.js"></script>
   <script>
+
+    $(document).ready(function () {
+      $('.i-checks').iCheck({
+        checkboxClass: 'icheckbox_square-green',
+        radioClass: 'iradio_square-green',
+      });
+      $("[name='motionType']").on("ifChecked", function (e) {
+        var motionType = $(e.target).val();
+        onMotionTypeChanged(motionType);
+      });
+      $("#radioPartial").iCheck("check");
+    });
+
+    function onMotionTypeChanged(motionType) {
+      if (motionType == 'partial') {
+        $("#partialDiv").show();
+        $("[name='muscle']").empty();
+        $("[name='motion']").empty();
+      } else if (motionType == 'combine') {
+        $("#partialDiv").hide();
+        loadMotionByMuscle(0);
+      }
+    };
 
     function muscleGroupChanged() {
       var muscleGroupId = $("[name='muscleGroup']").val();
       $.ajax({
-        url: "/Motion/LoadMuscle",
+        url: "/MotionsInPlan/LoadMuscle",
         type: "post", dataType: "json",
         data: { id: muscleGroupId },
         success: loadMuscles,
@@ -117,7 +177,7 @@
           alert('加载肌肉列表时出错');
         }
       });
-    }
+    };
 
     function loadMuscles(res) {
       if (res.status == "ok") {
@@ -128,106 +188,55 @@
             .appendTo("[name='muscle']");
         }
       }
-    }
+    };
 
-    function setVisibilityByMotionType(motionType) {
-      if (motionType == 'partial') {
-        $("#partialDiv").show();
-      } else if (motionType == 'combine') {
-        $("#partialDiv").hide();
-      }
-    }
-
-    function onSave() {
-      var motionType = $("[name='motionType']").val();
-      var muscleId = $("[name='muscle']").val();
-      var motionName = $("[name='name']").val();
-      var motionDescription = $("[name='description']").val();
-      var motionDetail = $("[name='motionDetail']").val();
-      var motionMainPoint = $("[name='motionMainPoint']").val();
-      var motionAttention = $("[name='motionAttention']").val();
-
-      if (motionName == null || motionName == undefined || motionName == '') {
-        $("[name='name']").focus();
-        return;
-      }
-
+    function loadMotionByMuscle(muscleId) {
       $.ajax({
-        url: "/Motion/Add",
-        type: "post",
-        data: {
-          motionType: motionType,
-          muscleId: muscleId,
-          name: motionName,
-          description: motionDescription,
-          detail: motionDetail,
-          mainPoint: motionMainPoint,
-          attention: motionAttention
-        },
-        success: function (res) {
-          if (res.status == 'ok') {
-            location.href = "/Motion/List"
-          } else if (res.status == 'error') {
-            alert(res.msg);
-          }
-        },
+        url: "/MotionsInPlan/LoadMotion",
+        type: "post", dataType: "json",
+        data: { id: muscleId },
+        success: loadMotions,
         error: function () {
-          alert("保存失败！");
+          alert('加载动作列表时出错');
         }
       });
-    }
+    };
 
-    var options = {
-      success: undefined,
-      error: function () {
-        alert('form error');
-      },
-      url: "/Motion/UploadImg",
-      type: "post",
-      data: {
-        type: undefined,
-        motionID: 0
+    function muscleChanged() {
+      var muscleId = $("[name='muscle']").val();
+      loadMotionByMuscle(muscleId);
+    };
+
+    function loadMotions(res) {
+      if (res.status == "ok") {
+        $("[name='motion']").empty();
+        for (var i = 0; i < res.data.length; i++) {
+          var item = res.data[i];
+          $(" <option value='" + item.id + "'>" + item.name + "</option>")
+            .appendTo("[name='motion']");
+        }
       }
     };
 
-    $("#formMotionDetail").submit(function () {
-      options.data.type = 1;
-      options.success = function (response) {
-        execResponse(response, 1);
-      },
-        $(this).ajaxSubmit(options);
-      return false;
-    });
-    $("#formMainPoint").submit(function () {
-      options.data.type = 2;
-      options.success = function (response) {
-        execResponse(response, 2);
-      },
-        $(this).ajaxSubmit(options);
-      return false;
-    });
-    $("#formAttention").submit(function () {
-      options.data.type = 3;
-      options.success = function (response) {
-        execResponse(response, 3);
-      },
-        $(this).ajaxSubmit(options);
-      return false;
-    });
-
-    function execResponse(res, type) {
-      if (res.status == "ok") {
-        loadImages(type);
-      } else {
-        alert(res.msg);
-      }
+    var motionId = 0;
+    function motionChanged() {
+      motionId = $("[name='motion']").val();
+      $.ajax({
+        url: "/MotionsInPlan/LoadMotionDetails",
+        type: "post", dataType: "json",
+        data: { id: motionId },
+        success: loadMotionDetails,
+        error: function () {
+          alert('加载动作详情时出错');
+        }
+      });
     };
 
     function loadImages(type) {
       $.ajax({
-        url: "/Motion/GetImgUrls",
+        url: "/MotionsInPlan/GetImgUrls",
         type: "post", dataType: "json",
-        data: { type: type },
+        data: { type: type, motionID: motionId },
         success: function (res) {
           var html = template("motionImg", { imgs: res.data });
           var id = "#imgDiv" + type;
@@ -240,55 +249,24 @@
       });
     };
 
-    function onDelete(id) {
-      if (confirm("确定要删除吗？")) {
-        $.ajax({
-          url: "/Motion/DeleteImg",
-          type: "post", dataType: "json",
-          data: { id: id },
-          success: function () {
-            loadImages();
-          },
-          error: function () {
-            alert("删除时，网络请求失败");
-          }
-        });
-      }
+    function loadMotionDetails(res) {
+      $("#name").text(res.data.name);
+      $("#description").text(res.data.description);
+      $("#detail").text(res.data.detail);
+      $("#mainpoint").text(res.data.mainPoint);
+      $("#attention").text(res.data.attention);
+      loadImages(1);
+      loadImages(2);
+      loadImages(3);
     };
-
-    $(document).ready(function () {
-      $('.i-checks').iCheck({
-        checkboxClass: 'icheckbox_square-green',
-        radioClass: 'iradio_square-green',
-      });
-      $("[name='motionType']").on("ifChecked", function (e) {
-        var motionType = $(e.target).val();
-        setVisibilityByMotionType(motionType);
-      });
-      $("#radioCombine").iCheck("check");
-      $("#btnUploadMotionDetail").change(function () {
-        $("#formMotionDetail").submit();
-      });
-      $("#btnUploadMainPoint").change(function () {
-        $("#formMainPoint").submit();
-      });
-      $("#btnUploadAttention").change(function () {
-        $("#formAttention").submit();
-      });
-    });
   </script>
   <script id="motionImg" type="text/html">
     {{each imgs as img}}
-    <div class="file-box">
+    <div class="file-box" style="width:160px;height:120px">
       <div class="file">
-        <a href="javascript:void(0);" onclick='onDelete({{img.id}});return false'>
-          <div class="image">
-            <img alt="image" class="img-responsive" src="{{img.url}}">
-          </div>
-          <div class="file-name">
-            <span>点击图片以删除</span>
-          </div>
-        </a>
+        <div class="image">
+          <a href="{{img.url}}" data-gallery=""> <img alt="image" class="img-responsive" src="{{img.url}}"></a>
+        </div>
       </div>
     </div>
     {{/each}}

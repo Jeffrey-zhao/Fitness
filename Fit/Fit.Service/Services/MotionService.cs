@@ -75,8 +75,16 @@ namespace Fit.Service.Services
 
     public MotionDTO[] GetByMuscleID(long id)
     {
-      var entities = motionRep.GetAll().Include(a => a.Muscle)
-        .Include(a => a.Muscle.MuscleGroup).Where(a => a.MuscleID == id);
+      ICollection<MotionEntity> entities;
+      if (id > 0)
+      {
+        entities = motionRep.GetAll().Include(a => a.Muscle)
+         .Include(a => a.Muscle.MuscleGroup).Where(a => a.MuscleID == id).ToList();
+      }
+      else
+      {
+        entities = motionRep.GetAll().Where(a => a.MuscleID == (long?)null).ToList();
+      }
 
       return entities.Select(a => ToDTO(a)).ToArray();
     }
@@ -117,7 +125,7 @@ namespace Fit.Service.Services
           dto.MuscleGroupID = entity.Muscle.MuscleGroup.ID;
           dto.MuscleGroupName = entity.Muscle.MuscleGroup.Name;
         }
-        dto.Remark = string.Format("{0}/{1}",dto.MuscleGroupName,dto.MuscleName);
+        dto.Remark = string.Format("{0}/{1}", dto.MuscleGroupName, dto.MuscleName);
       }
       else
       {
