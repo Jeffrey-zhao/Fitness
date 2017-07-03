@@ -14,6 +14,7 @@ namespace Fit.Service.Entities
     public string Detail { get; set; }
     public string MainPoint { get; set; }
     public string Attention { get; set; }
+    public string Measurement { get; set; }
     public virtual MuscleEntity Muscle { get; set; }
     public virtual ICollection<MotionPicEntity> MotionPics { get; set; }
     public virtual ICollection<MotionsInPlanEntity> MotionsInPlan { get; set; }

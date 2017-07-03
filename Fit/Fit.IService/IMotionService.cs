@@ -22,5 +22,7 @@ namespace Fit.IService
     void Delete(long id);
 
     MotionDTO GetByID(long id);
+
+    string GetMeasurement(long id);
   }
 }

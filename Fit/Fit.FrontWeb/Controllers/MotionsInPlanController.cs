@@ -16,11 +16,12 @@ namespace Fit.FrontWeb.Controllers
     IMuscleService muscleService;
     IMotionService motionService;
     IMotionPicService picService;
+    IKeyValueService kvService;
 
     long index, planCount, planID;
     public MotionsInPlanController(IMotionsInPlanService mipService, IPlanService planService
                       , IMuscleGroupService muscleGroupService, IMuscleService muscleService
-                      , IMotionService motionService, IMotionPicService picService)
+                      , IMotionService motionService, IMotionPicService picService, IKeyValueService kvService)
     {
       this.mipService = mipService;
       this.planService = planService;
@@ -28,6 +29,7 @@ namespace Fit.FrontWeb.Controllers
       this.muscleService = muscleService;
       this.motionService = motionService;
       this.picService = picService;
+      this.kvService = kvService;
     }
 
     public ActionResult List(long planId, long index, long planCount)
@@ -72,10 +74,33 @@ namespace Fit.FrontWeb.Controllers
       return MVCHelper.GetJsonResult(new AjaxResult { Data = dto, Status = AjaxResultEnum.ok.ToString() });
     }
 
+    [HttpPost]
     public ActionResult GetImgUrls(int type, int motionID)
     {
       var dtos = picService.GetByMotionAndType(type, motionID);
       return MVCHelper.GetJsonResult(new AjaxResult { Data = dtos, Status = AjaxResultEnum.ok.ToString() });
+    }
+
+    [HttpPost]
+    public ActionResult LoadGroups(long id)
+    {
+      var unit = motionService.GetMeasurement(id);
+      var max = kvService.GetIntValue(Consts.PLAN_MAX_GROUP);
+      var groupList = new List<string>();
+      groupList.Insert(0,Consts.TEXT_SELECT_GROUPS);
+      return View();
+    }
+
+    [HttpPost]
+    public ActionResult LoadTimes(long id)
+    {
+      return View();
+    }
+
+    [HttpPost]
+    public ActionResult LoadBurden(long id)
+    {
+      return View();
     }
   }
 }

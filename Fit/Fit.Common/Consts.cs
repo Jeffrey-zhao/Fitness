@@ -16,17 +16,20 @@ namespace Fit.Common
     public const string TEXT_SELECT_MUSCLE_GROUP = "请选择肌群...";
     public const string TEXT_SELECT_MUSCLE = "请选择肌肉...";
     public const string TEXT_SELECT_MOTION = "请选择锻炼项目...";
+    public const string TEXT_SELECT_GROUPS = "请选择组数...";
+    public const string MEASUREMENT_GROUPS = "组";
+    public const string TEXT_SELECT_TIMES = "请选择次数...";
+    public const string MEASUREMENT_TIMES = "次";
+    public const string TEXT_SELECT_BURDERN = "请选择负荷...";
+
     public const string CLOUD_DOMAIN = "http://orivq9ow0.bkt.clouddn.com/";
     public const string TEXT_COMBINE = "综合训练";
     public const int CAPTCHA_LENGTH = 5;
 
     public const char SPLITER = ',';
-    public const string EMAIL_NOT_REGISTER = "邮箱尚未注册";
-    public const string EMAIL_HAD_REGISTER = "邮箱已被注册";
     public const string VERIFY_CODE_ERROR = "验证码错误";
     public const string LOGIN_FAILED = "账户或密码错误";
 
-    #region Common
     public const string ACTIVATE_SUCCEED = "激活成功";
     public const string ACTIVATE_FAILED = "激活失败";
     public const string PWD_CHANGED = "重置密码成功";
@@ -39,8 +42,11 @@ namespace Fit.Common
     /// </summary>
     public const string PLAN_TEMPLATE_DETAIL2 = "{0}{1}";
     public const string PLAN_REST = "休息";
-    #endregion
+    public const string PLAN_MAX_GROUP = "MaxGroup";
+    public const string PLAN_MAX_TIME = "MaxTime";
 
+    public const string EMAIL_NOT_REGISTER = "邮箱尚未注册";
+    public const string EMAIL_HAD_REGISTER = "邮箱已被注册";
     public const string EMAIL_SUBJECT_ACTIVATE = "Fit账号激活";
     public const string EMAIL_SUBJECT_CHANGEPWD = "修改Fit账号密码";
   }

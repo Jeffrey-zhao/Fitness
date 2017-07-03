@@ -138,5 +138,12 @@ namespace Fit.Service.Services
     {
       return ToDTO(motionRep.GetById(id));
     }
+
+    public string GetMeasurement(long id)
+    {
+      var entity = motionRep.GetById(id);
+      if (entity == null) throw new ArgumentException(ExceptionMsg.GetObjNullMsg("MotionDTO"));
+      return entity.Measurement;
+    }
   }
 }

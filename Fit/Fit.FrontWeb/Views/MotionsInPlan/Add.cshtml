@@ -17,71 +17,64 @@
           </div>
         </div>
         <div class="hr-line-dashed"></div>
-        <div class="form-group">
-          <div id="partialDiv">
-            <div class="col-sm-4">
+        <form class="m-t" role="form" id="formPartial">
+          <div class="row">
+            <div class="col-sm-3">
               <select class="form-control m-b" name="muscleGroup" onchange="muscleGroupChanged()">
                 @{
                   foreach (var item in Model)
                   {
-                <option value="@item.Id">@item.Name</option>
+                    <option value="@item.Id">@item.Name</option>
                   }
                 }
               </select>
             </div>
-            <div class="col-sm-4">
-              <select class="form-control m-b" name="muscle" onchange="muscleChanged()">
-                <option value="0">请选择肌肉...</option>
+            <div class="col-sm-3">
+              <select class="form-control m-b" name="muscle" onchange="muscleChanged()" required="">
+                <option value="">请选择肌肉...</option>
               </select>
             </div>
           </div>
-          <div class="col-sm-4">
-            <select class="form-control m-b" name="motion" onchange="motionChanged()">
-              <option value="0">请选择锻炼项目...</option>
-            </select>
-          </div>
-        </div>
-
-        <form class="m-t" role="form" id="formAdd" name="1" action="a">
           <div class="row">
             <div class="col-sm-3">
-              <select class="form-control m-b" name="motion" onchange="motionChanged()">
-                <option value="0">请选择锻炼项目...</option>
+              <select class="form-control m-b" name="motionPartial" onchange="motionChanged('Partial')" required="">
+                <option value="">请选择锻炼项目...</option>
               </select>
             </div>
-            <div class="col-sm-3">
-              <select class="form-control m-b" name="motion" onchange="motionChanged()">
-                <option value="0">请选择组数...</option>
+            <div class="col-sm-2">
+              <select class="form-control m-b" name="groups" required="">
+                <option value="">请选择组数...</option>
               </select>
             </div>
-            <div class="col-sm-3">
-              <select class="form-control m-b" name="motion" onchange="motionChanged()">
-                <option value="0">请选择次数...</option>
+            <div class="col-sm-2">
+              <select class="form-control m-b" name="times" required="">
+                <option value="">请选择次数...</option>
               </select>
             </div>
-            <div class="col-sm-3">
+            <div class="col-sm-2">
+              <select class="form-control m-b" name="burder">
+                <option value="">请选择负荷...</option>
+              </select>
+            </div>
+            <div class="col-sm-2">
               <input id="btnSave" type="submit" class="btn btn-primary block full-width m-b" value="保存">
             </div>
           </div>
         </form>
-        <form class="m-t" role="form" id="formAdd1" name="11" action="b">
+
+        <form class="m-t" role="form" id="formCombine">
           <div class="row">
             <div class="col-sm-3">
-              <select class="form-control m-b" name="motion" onchange="motionChanged()">
+              <select class="form-control m-b" name="motionCombine" onchange="motionChanged('Combine')">
                 <option value="0">请选择锻炼项目...</option>
               </select>
             </div>
-            <div class="col-sm-3">
-              <select class="form-control m-b" name="motion" onchange="motionChanged()">
-                <option value="0">请选择组数...</option>
+            <div class="col-sm-2">
+              <select class="form-control m-b" name="motion4" onchange="motionChanged()">
+                <option value="1">请选择运动量</option>
               </select>
             </div>
-            <div class="col-sm-3">
-              <select class="form-control m-b" name="motion" onchange="motionChanged()">
-                <option value="1">请选择次数...</option>
-              </select>
-            </div>
-            <div class="col-sm-3">
+            <div class="col-sm-2">
               <input id="btnSave1" type="submit" class="btn btn-primary block full-width m-b" value="保存">
             </div>
           </div>
@@ -142,7 +135,6 @@
 
   <script type="text/javascript" src="~/Scripts/template.js"></script>
   <script>
-
     $(document).ready(function () {
       $('.i-checks').iCheck({
         checkboxClass: 'icheckbox_square-green',
@@ -157,11 +149,11 @@
 
     function onMotionTypeChanged(motionType) {
       if (motionType == 'partial') {
-        $("#partialDiv").show();
-        $("[name='muscle']").empty();
-        $("[name='motion']").empty();
+        $("#formPartial").show();
+        $("#formCombine").hide();
       } else if (motionType == 'combine') {
-        $("#partialDiv").hide();
+        $("#formPartial").hide();
+        $("#formCombine").show();
         loadMotionByMuscle(0);
       }
     };
@@ -190,46 +182,83 @@
       }
     };
 
+    function muscleChanged() {
+      var muscleId = $("[name='muscle']").val();
+      loadMotionByMuscle(muscleId);
+    };
+
     function loadMotionByMuscle(muscleId) {
       $.ajax({
         url: "/MotionsInPlan/LoadMotion",
         type: "post", dataType: "json",
         data: { id: muscleId },
-        success: loadMotions,
+        success: function (res) {
+          if (muscleId <= 0) {
+            loadMotionsCombine(res);
+          } else {
+            loadMotionsPartial(res);
+          }
+        },
         error: function () {
           alert('加载动作列表时出错');
         }
       });
     };
 
-    function muscleChanged() {
-      var muscleId = $("[name='muscle']").val();
-      loadMotionByMuscle(muscleId);
-    };
-
-    function loadMotions(res) {
+    function loadMotionsPartial(res) {
       if (res.status == "ok") {
-        $("[name='motion']").empty();
+        $("[name='motionPartial']").empty();
         for (var i = 0; i < res.data.length; i++) {
           var item = res.data[i];
           $(" <option value='" + item.id + "'>" + item.name + "</option>")
-            .appendTo("[name='motion']");
+            .appendTo("[name='motionPartial']");
+        }
+      }
+    };
+
+    function loadMotionsCombine(res) {
+      if (res.status == "ok") {
+        $("[name='motionCombine']").empty();
+        for (var i = 0; i < res.data.length; i++) {
+          var item = res.data[i];
+          $(" <option value='" + item.id + "'>" + item.name + "</option>")
+            .appendTo("[name='motionCombine']");
         }
       }
     };
 
     var motionId = 0;
-    function motionChanged() {
-      motionId = $("[name='motion']").val();
+    function motionChanged(type) {
+      var name = "[name='motion" + type + "']";
+      motionId = $(name).val();
+      if (motionId == undefined || motionId == null || motionId == '' || motionId <= 0) {
+        return;
+      }
+      loadMotionDetails();
+      loadGroups();
+      loadTimes();
+    };
+
+    function loadMotionDetails() {
       $.ajax({
         url: "/MotionsInPlan/LoadMotionDetails",
         type: "post", dataType: "json",
         data: { id: motionId },
-        success: loadMotionDetails,
+        success: showMotionDetails,
         error: function () {
           alert('加载动作详情时出错');
         }
       });
+    }
+    function showMotionDetails(res) {
+      $("#name").text(res.data.name);
+      $("#description").text(res.data.description);
+      $("#detail").text(res.data.detail);
+      $("#mainpoint").text(res.data.mainPoint);
+      $("#attention").text(res.data.attention);
+      loadImages(1);
+      loadImages(2);
+      loadImages(3);
     };
 
     function loadImages(type) {
@@ -249,16 +278,47 @@
       });
     };
 
-    function loadMotionDetails(res) {
-      $("#name").text(res.data.name);
-      $("#description").text(res.data.description);
-      $("#detail").text(res.data.detail);
-      $("#mainpoint").text(res.data.mainPoint);
-      $("#attention").text(res.data.attention);
-      loadImages(1);
-      loadImages(2);
-      loadImages(3);
-    };
+    function loadGroups() {
+      $.ajax({
+        url: "/MotionsInPlan/LoadGroups",
+        type: "post", dataType: "json",
+        data: { id: motionId },
+        success: showGroups,
+        error: function () {
+          alert('加载动作详情时出错');
+        }
+      });
+    }
+    function showGroups(res) {
+      $(" <option value=''>" + res.data[0].name + "</option>")
+        .appendTo("[name='groups']");
+      for (var i = 1; i < res.data.length; i++) {
+        var item = res.data[i];
+        $(" <option value='" + i + "'>" + res.data[i].name + "</option>")
+          .appendTo("[name='groups']");
+      }
+    }
+
+    function loadTimes() {
+      $.ajax({
+        url: "/MotionsInPlan/LoadTimes",
+        type: "post", dataType: "json",
+        data: { id: motionId },
+        success: showGroups,
+        error: function () {
+          alert('加载动作详情时出错');
+        }
+      });
+    }
+    function showTimes(res) {
+      $(" <option value=''>" + res.data[0].name + "</option>")
+        .appendTo("[name='times']");
+      for (var i = 1; i < res.data.length; i++) {
+        var item = res.data[i];
+        $(" <option value='" + i + "'>" + res.data[i].name + "</option>")
+          .appendTo("[name='times']");
+      }
+    }
   </script>
   <script id="motionImg" type="text/html">
     {{each imgs as img}}
