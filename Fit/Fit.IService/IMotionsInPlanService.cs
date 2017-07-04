@@ -9,6 +9,10 @@ namespace Fit.IService
 {
   public interface IMotionsInPlanService : IServiceSupport
   {
-    MotionsInPlanDTO[] GetByPlanID(long planID);
+    MotionsInPlanOutputDTO[] GetByPlanID(long planID);
+
+    void Add(MotionsInPlanInputDTO dto);
+
+    void Delete(long id);
   }
 }

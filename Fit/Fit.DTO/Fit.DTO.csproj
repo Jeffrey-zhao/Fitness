@@ -43,7 +43,8 @@
     <Compile Include="AdminLogDTO.cs" />
     <Compile Include="MotionDTO.cs" />
     <Compile Include="MotionPicDTO.cs" />
-    <Compile Include="MotionsInPlanDTO.cs" />
+    <Compile Include="MotionsInPlanInputDTO.cs" />
+    <Compile Include="MotionsInPlanOutputDTO.cs" />
     <Compile Include="MuscleDTO.cs" />
     <Compile Include="MuscleGroupDTO.cs" />
     <Compile Include="PlanDTO.cs" />

@@ -17,14 +17,18 @@
           </div>
         </div>
         <div class="hr-line-dashed"></div>
-        <form class="m-t" role="form" id="formPartial">
+        <form class="m-t" role="form" id="formPartial" method="post" action="/MotionsInPlan/AddPartial">
+          <input type="hidden" name="planId" value="@ViewBag.PlanId" />
+          <input type="hidden" name="index" value="@ViewBag.Index" />
+          <input type="hidden" name="planCount" value="@ViewBag.PlanCount" />
           <div class="row">
             <div class="col-sm-3">
-              <select class="form-control m-b" name="muscleGroup" onchange="muscleGroupChanged()">
+              <select class="form-control m-b" name="muscleGroup" onchange="muscleGroupChanged()" required>
                 @{
-                  foreach (var item in Model)
+                  <option value="">@Model[0].Name</option>
+                  for (int i = 1; i < Model.Count; i++)
                   {
-                    <option value="@item.Id">@item.Name</option>
+                    <option value="@Model[i].Id">@Model[i].Name</option>
                   }
                 }
               </select>
@@ -42,19 +46,16 @@
               </select>
             </div>
             <div class="col-sm-2">
-              <select class="form-control m-b" name="groups" required="">
-                <option value="">请选择组数...</option>
-              </select>
+              <select class="form-control m-b" name="groups" required=""></select>
             </div>
             <div class="col-sm-2">
-              <select class="form-control m-b" name="times" required="">
-                <option value="">请选择次数...</option>
-              </select>
+              <select class="form-control m-b" name="times" required=""></select>
             </div>
-            <div class="col-sm-2">
-              <select class="form-control m-b" name="burder">
-                <option value="">请选择负荷...</option>
-              </select>
+            <div class="col-sm-2 form-group">
+              <div class="input-group m-b">
+                <input type="text" class="form-control" name="number" placeholder="运动负荷" pattern='^[0-9]+([.]{1}[0-9])?$' title="只能是整数或一位小数">
+                <span class="input-group-addon" id="partialMeasurement">kg</span>
+              </div>
             </div>
             <div class="col-sm-2">
               <input id="btnSave" type="submit" class="btn btn-primary block full-width m-b" value="保存">
@@ -62,17 +63,21 @@
           </div>
         </form>
 
-        <form class="m-t" role="form" id="formCombine">
+        <form class="m-t" role="form" id="formCombine" method="post" action="/MotionsInPlan/AddCombine">
+          <input type="hidden" name="planId" value="@ViewBag.PlanId" />
+          <input type="hidden" name="index" value="@ViewBag.Index" />
+          <input type="hidden" name="planCount" value="@ViewBag.PlanCount" />
           <div class="row">
             <div class="col-sm-3">
-              <select class="form-control m-b" name="motionCombine" onchange="motionChanged('Combine')">
-                <option value="0">请选择锻炼项目...</option>
+              <select class="form-control m-b" name="motionCombine" onchange="motionChanged('Combine')" required>
+                <option value="">请选择锻炼项目...</option>
               </select>
             </div>
-            <div class="col-sm-2">
-              <select class="form-control m-b" name="motion4" onchange="motionChanged()">
-                <option value="1">请选择运动量</option>
-              </select>
+            <div class="col-sm-2 form-group">
+              <div class="input-group m-b">
+                <input type="text" class="form-control" name="number" required="" placeholder="运动量"  pattern='^[0-9]+([.]{1}[0-9])?$' title="只能是整数或一位小数">
+                <span class="input-group-addon" id="combineMeasurement"></span>
+              </div>
             </div>
             <div class="col-sm-2">
               <input id="btnSave1" type="submit" class="btn btn-primary block full-width m-b" value="保存">
@@ -80,33 +85,34 @@
           </div>
         </form>
         <div id="motionDetail">
-          <div id="partialDash" class="hr-line-dashed"></div>
-          <div class="form-group">
+          <div class="form-group" id="motionName">
+            <div class="hr-line-dashed"></div>
             <label>名称</label>
             <div id="name"></div>
           </div>
-          <div class="form-group">
+          <div class="form-group" id="motionDescription">
             <label>描述</label>
             <div id="description"></div>
           </div>
-          <div class="hr-line-dashed"></div>
-          <div class="form-group">
+
+          <div class="form-group" id="motionDetail">
+            <div class="hr-line-dashed"></div>
             <label>动作介绍</label>
             <div id="detail"></div>
             <br />
             <div id="imgDiv1">
             </div>
           </div>
-          <div class="hr-line-dashed"></div>
-          <div class="form-group">
+          <div class="form-group" id="motionMainPoint">
+            <div class="hr-line-dashed"></div>
             <label>动作要点</label>
             <div id="mainpoint"></div>
             <br />
             <div id="imgDiv2">
             </div>
           </div>
-          <div class="hr-line-dashed"></div>
-          <div class="form-group">
+          <div class="form-group" id="motionAttention">
+            <div class="hr-line-dashed"></div>
             <label>注意事项</label>
             <div id="attention"></div>
             <br />
@@ -144,10 +150,15 @@
         var motionType = $(e.target).val();
         onMotionTypeChanged(motionType);
       });
+      $("#radioCombine").iCheck("check");
       $("#radioPartial").iCheck("check");
+      loadGroupsAndTimes();
+      $("#motionDetail").hide();
     });
 
     function onMotionTypeChanged(motionType) {
+      $('#motionDetail').hide();
+      clearMotionDetail();
       if (motionType == 'partial') {
         $("#formPartial").show();
         $("#formCombine").hide();
@@ -160,6 +171,9 @@
 
     function muscleGroupChanged() {
       var muscleGroupId = $("[name='muscleGroup']").val();
+      if (muscleGroupId == null || muscleGroupId <= 0 || muscleGroupId == "") {
+        return;
+      }
       $.ajax({
         url: "/MotionsInPlan/LoadMuscle",
         type: "post", dataType: "json",
@@ -174,7 +188,9 @@
     function loadMuscles(res) {
       if (res.status == "ok") {
         $("[name='muscle']").empty();
-        for (var i = 0; i < res.data.length; i++) {
+        $(" <option value=''>" + res.data[0].name + "</option>")
+          .appendTo("[name='muscle']");
+        for (var i = 1; i < res.data.length; i++) {
           var item = res.data[i];
           $(" <option value='" + item.id + "'>" + item.name + "</option>")
             .appendTo("[name='muscle']");
@@ -182,8 +198,19 @@
       }
     };
 
+    function show() {
+      $('#motionName').show();
+    }
+    function show() {
+      $('#motionName').hide();
+    }
+
     function muscleChanged() {
       var muscleId = $("[name='muscle']").val();
+
+      if (muscleId == null || muscleId <= 0 || muscleId == "") {
+        return;
+      }
       loadMotionByMuscle(muscleId);
     };
 
@@ -208,7 +235,10 @@
     function loadMotionsPartial(res) {
       if (res.status == "ok") {
         $("[name='motionPartial']").empty();
-        for (var i = 0; i < res.data.length; i++) {
+
+        $(" <option value=''>" + res.data[0].name + "</option>")
+          .appendTo("[name='motionPartial']");
+        for (var i = 1; i < res.data.length; i++) {
           var item = res.data[i];
           $(" <option value='" + item.id + "'>" + item.name + "</option>")
             .appendTo("[name='motionPartial']");
@@ -219,7 +249,10 @@
     function loadMotionsCombine(res) {
       if (res.status == "ok") {
         $("[name='motionCombine']").empty();
-        for (var i = 0; i < res.data.length; i++) {
+
+        $(" <option value=''>" + res.data[0].name + "</option>")
+          .appendTo("[name='motionCombine']");
+        for (var i = 1; i < res.data.length; i++) {
           var item = res.data[i];
           $(" <option value='" + item.id + "'>" + item.name + "</option>")
             .appendTo("[name='motionCombine']");
@@ -231,12 +264,11 @@
     function motionChanged(type) {
       var name = "[name='motion" + type + "']";
       motionId = $(name).val();
-      if (motionId == undefined || motionId == null || motionId == '' || motionId <= 0) {
+      if (motionId == null || motionId == '' || motionId <= 0) {
         return;
       }
       loadMotionDetails();
-      loadGroups();
-      loadTimes();
+      loadMeasurement(type);
     };
 
     function loadMotionDetails() {
@@ -251,6 +283,9 @@
       });
     }
     function showMotionDetails(res) {
+      $('#motionDetail').show();
+      clearMotionDetail();
+
       $("#name").text(res.data.name);
       $("#description").text(res.data.description);
       $("#detail").text(res.data.detail);
@@ -260,6 +295,23 @@
       loadImages(2);
       loadImages(3);
     };
+    function clearMotionDetail() {
+      $("#name").text('');
+      $("#description").text('');
+      $("#detail").text('');
+      $("#mainpoint").text('');
+      $("#attention").text('');
+      $("#imgDiv1").empty();
+      $("#imgDiv2").empty();
+      $("#imgDiv3").empty();
+    };
+    function hideMotionDetail() {
+      $('#motionName').hide();
+      $('#motionDescription').hide();
+      $('#motionDetail').hide();
+      $('#motionMainPoint').hide();
+      $('#motionAttention').hide();
+    }
 
     function loadImages(type) {
       $.ajax({
@@ -278,23 +330,25 @@
       });
     };
 
-    function loadGroups() {
+    function loadGroupsAndTimes() {
       $.ajax({
         url: "/MotionsInPlan/LoadGroups",
         type: "post", dataType: "json",
         data: { id: motionId },
-        success: showGroups,
+        success: function (res) {
+          showGroups(res);
+          loadTimes();
+        },
         error: function () {
           alert('加载动作详情时出错');
         }
       });
     }
     function showGroups(res) {
-      $(" <option value=''>" + res.data[0].name + "</option>")
+      $(" <option value=''>" + res.data[0] + "</option>")
         .appendTo("[name='groups']");
       for (var i = 1; i < res.data.length; i++) {
-        var item = res.data[i];
-        $(" <option value='" + i + "'>" + res.data[i].name + "</option>")
+        $(" <option value='" + i + "'>" + res.data[i] + "</option>")
           .appendTo("[name='groups']");
       }
     }
@@ -304,21 +358,45 @@
         url: "/MotionsInPlan/LoadTimes",
         type: "post", dataType: "json",
         data: { id: motionId },
-        success: showGroups,
+        success: showTimes,
         error: function () {
           alert('加载动作详情时出错');
         }
       });
     }
     function showTimes(res) {
-      $(" <option value=''>" + res.data[0].name + "</option>")
+      $(" <option value=''>" + res.data[0] + "</option>")
         .appendTo("[name='times']");
       for (var i = 1; i < res.data.length; i++) {
         var item = res.data[i];
-        $(" <option value='" + i + "'>" + res.data[i].name + "</option>")
+        $(" <option value='" + i + "'>" + res.data[i] + "</option>")
           .appendTo("[name='times']");
       }
     }
+
+    function loadMeasurement(type) {
+      $.ajax({
+        url: "/MotionsInPlan/LoadMeasurement",
+        type: "post", dataType: "json",
+        data: { id: motionId },
+        success: function (res) {
+          if (type == 'Partial') {
+            $("#partialMeasurement").text(res.data);
+          } else if (type == 'Combine') {
+            $("#combineMeasurement").text(res.data);
+          } else {
+            alert("加载单位时出错");
+          }
+        },
+        error: function () {
+          alert('加载单位时ajax错误');
+        }
+      });
+    }
+    function showMeasurement(res) {
+
+    }
+
   </script>
   <script id="motionImg" type="text/html">
     {{each imgs as img}}

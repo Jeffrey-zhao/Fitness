@@ -1,4 +1,6 @@
 ﻿using Fit.Common;
+using Fit.DTO;
+using Fit.FrontWeb.Models;
 using Fit.IService;
 using System;
 using System.Collections.Generic;
@@ -18,7 +20,6 @@ namespace Fit.FrontWeb.Controllers
     IMotionPicService picService;
     IKeyValueService kvService;
 
-    long index, planCount, planID;
     public MotionsInPlanController(IMotionsInPlanService mipService, IPlanService planService
                       , IMuscleGroupService muscleGroupService, IMuscleService muscleService
                       , IMotionService motionService, IMotionPicService picService, IKeyValueService kvService)
@@ -34,21 +35,68 @@ namespace Fit.FrontWeb.Controllers
 
     public ActionResult List(long planId, long index, long planCount)
     {
-      ViewBag.Index = this.index = index;
-      ViewBag.PlanCount = this.planCount = planCount;
       ViewBag.PlanId = planId;
+      ViewBag.Index = index;
+      ViewBag.PlanCount = planCount;
       var dtos = mipService.GetByPlanID(planId);
       return View(dtos);
     }
 
     [HttpGet]
-    public ActionResult Add(long id)
+    public ActionResult Add(long planId, long index, long planCount)
     {
-      planID = id;
+      ViewBag.PlanId = planId;
+      ViewBag.Index = index;
+      ViewBag.PlanCount = planCount;
       var muscleGroupList = muscleGroupService.GetAll().ToList();
       muscleGroupList.Insert(0, new DTO.MuscleGroupDTO { Id = 0, Name = Consts.TEXT_SELECT_MUSCLE_GROUP });
 
       return View(muscleGroupList);
+    }
+
+    [HttpPost]
+    public ActionResult AddPartial(PartialMotionAddModel model)
+    {
+      if (!ModelState.IsValid)
+      {
+        return View("Error");
+      }
+      var dto = new MotionsInPlanInputDTO
+      {
+        PlanID = model.PlanId,
+        MotionID = model.MotionPartial,
+        Groups = model.Groups,
+        Times = model.Times
+      };
+      if (model.Number.HasValue)
+      {
+        dto.Number = model.Number.Value;
+      }
+      mipService.Add(dto);
+      return Redirect(string.Format("/MotionsInPlan/List?planId={0}&index={1}&planCount={2}",model.PlanId,model.Index,model.PlanCount));
+    }
+    [HttpPost]
+    public ActionResult AddCombine(CombineMotionAddModel model)
+    {
+      if (!ModelState.IsValid)
+      {
+        return View("Error");
+      }
+      var dto = new MotionsInPlanInputDTO
+      {
+        PlanID = model.PlanId,
+        MotionID=model.MotionCombine,
+        Number = model.Number
+      };
+      mipService.Add(dto);
+      return Redirect(string.Format("/MotionsInPlan/List?planId={0}&index={1}&planCount={2}", model.PlanId, model.Index, model.PlanCount));
+    }
+
+    [HttpPost]
+    public ActionResult Delete(long id)
+    {
+      mipService.Delete(id);
+      return MVCHelper.GetJsonResult(AjaxResultEnum.ok);
     }
 
     [HttpPost]
@@ -84,23 +132,34 @@ namespace Fit.FrontWeb.Controllers
     [HttpPost]
     public ActionResult LoadGroups(long id)
     {
-      var unit = motionService.GetMeasurement(id);
-      var max = kvService.GetIntValue(Consts.PLAN_MAX_GROUP);
-      var groupList = new List<string>();
-      groupList.Insert(0,Consts.TEXT_SELECT_GROUPS);
-      return View();
+      var list = new List<string>();
+      list.Insert(0, Consts.TEXT_SELECT_GROUPS);
+      var max = kvService.GetIntValue(DBKeys.PLAN_MAX_GROUP);
+      for (int i = 1; i <= max; i++)
+      {
+        list.Add(i + Consts.MEASUREMENT_GROUPS);
+      }
+      return MVCHelper.GetJsonResult(new AjaxResult { Data = list, Status = AjaxResultEnum.ok.ToString() });
     }
 
     [HttpPost]
     public ActionResult LoadTimes(long id)
     {
-      return View();
+      var list = new List<string>();
+      list.Insert(0, Consts.TEXT_SELECT_TIMES);
+      var max = kvService.GetIntValue(DBKeys.PLAN_MAX_TIME);
+      for (int i = 1; i <= max; i++)
+      {
+        list.Add(i + Consts.MEASUREMENT_TIMES);
+      }
+      return MVCHelper.GetJsonResult(new AjaxResult { Data = list, Status = AjaxResultEnum.ok.ToString() });
     }
 
     [HttpPost]
-    public ActionResult LoadBurden(long id)
+    public ActionResult LoadMeasurement(long id)
     {
-      return View();
+      var measurement = motionService.GetMeasurement(id);
+      return MVCHelper.GetJsonResult(new AjaxResult { Data = measurement, Status = AjaxResultEnum.ok.ToString() });
     }
   }
 }

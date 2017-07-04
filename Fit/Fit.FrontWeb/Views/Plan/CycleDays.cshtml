@@ -2,6 +2,8 @@
   ViewBag.Title = "CycleDays";
 }
 @model Fit.DTO.PlanDTO[]
+<!-- FooTable -->
+<link href="~/Content/plugins/footable/footable.core.css" rel="stylesheet">
 
 <div class="row wrapper border-bottom white-bg  page-heading">
   <div class="col-sm-4">
@@ -17,7 +19,9 @@
   </div>
   <div class="col-sm-8">
     <div class="title-action">
-      <a href="~/Plan/SetCycleDays" class="btn btn-primary">重置</a>
+      <a href="~/Plan/SetCycleDays" class="btn btn-primary">重置计划</a>
+      &nbsp;
+      <a href="~/Plan/CreateSechedule" class="btn btn-primary">生成日程</a>
     </div>
   </div>
 </div>
@@ -32,6 +36,7 @@
                 <th>天数</th>
                 <th>描述</th>
                 <th>操作</th>
+                <th data-hide="all">详情</th>
               </tr>
             </thead>
             <tbody>
@@ -43,10 +48,10 @@
                     <td>@plan.Day</td>
                     <td> @plan.Remark</td>
                     <td><a href="/MotionsInPlan/List?planId=@plan.ID&index=@i&planCount=@ViewBag.PlanCount">当天计划</a> </td>
+                    <td >@plan.Detail</td>
                   </tr>
                   i++;
                 }
-
               }
             </tbody>
           </table>
@@ -55,4 +60,14 @@
     </div>
   </div>
 </div>
+
+@section FooterScript{
+  <!-- FooTable -->
+  <script src="~/Scripts/plugins/footable/footable.all.min.js"></script>
+  <script>
+    $(document).ready(function () {
+      $('.footable').footable();
+    });
+  </script>
+}
 

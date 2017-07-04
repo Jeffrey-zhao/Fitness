@@ -226,5 +226,10 @@ namespace Fit.Service.Tests
     {
       throw new NotImplementedException();
     }
+
+    public string GetMeasurement(long id)
+    {
+      throw new NotImplementedException();
+    }
   }
 }

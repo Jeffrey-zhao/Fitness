@@ -29,7 +29,7 @@ namespace Fit.Service.Repository
 
     public IQueryable<PlanEntity> GetAll()
     {
-      return Ctx.Plans.Where(a => a.IsDeleted == false).OrderBy(a => a.CreatedDateTime);
+      return Ctx.Plans.Where(a => a.IsDeleted == false).OrderBy(a => a.ID).OrderBy(a => a.CreatedDateTime);
     }
 
     public PlanEntity GetById(long id)

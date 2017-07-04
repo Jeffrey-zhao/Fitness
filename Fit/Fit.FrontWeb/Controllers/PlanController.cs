@@ -53,13 +53,18 @@ namespace Fit.FrontWeb.Controllers
 
       return View(dtos);
     }
-
-    public ActionResult MotionsInPlan(long id)
+    [HttpGet]
+    public ActionResult Schedule()
     {
+      var loginID = MVCHelper.GetLoginIdFromSession(HttpContext).Value;
+      var dtos = planService.GetUserPlans(loginID);
+      ViewBag.PlanCount = planService.GetPlanCount(loginID);
+      if (dtos == null || dtos.Length <= 0)
+      {
+        return Redirect("/Plan/CycleDays");
+      }
 
-      return View();
+      return View(dtos);
     }
-
-
   }
 }

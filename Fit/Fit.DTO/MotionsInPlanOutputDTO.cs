@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Fit.DTO
 {
-  public class MotionsInPlanDTO
+  public class MotionsInPlanOutputDTO
   {
     public long ID { get; set; }
     public string MotionName { get; set; }

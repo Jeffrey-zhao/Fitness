@@ -1,7 +1,7 @@
 ﻿@{
   ViewBag.Title = "MotionsInPlan | Fit";
 }
-@model Fit.DTO.MotionsInPlanDTO[]
+@model Fit.DTO.MotionsInPlanOutputDTO[]
 
 <div class="row wrapper border-bottom white-bg  page-heading">
   <div class="col-sm-4">
@@ -17,7 +17,7 @@
   </div>
   <div class="col-sm-8">
     <div class="title-action">
-      <a href="~/MotionsInPlan/Add/@ViewBag.PlanId" class="btn btn-primary">添加</a>
+      <a href="~/MotionsInPlan/Add?planId=@ViewBag.PlanId&index=@ViewBag.Index&planCount=@ViewBag.PlanCount" class="btn btn-primary">添加</a>
     </div>
   </div>
 </div>
@@ -40,7 +40,11 @@
                 <tr>
                   <td>@item.MotionName</td>
                   <td> @item.ExcerciseDetail</td>
-                  <td> </td>
+                  <td>
+                    <a href="javascript:void(0);" onclick='onDelete(@item.ID);return false'>
+                      <i class="fa fa-times"></i>
+                    </a>
+                  </td>
                 </tr>
               }
             </tbody>
@@ -50,4 +54,26 @@
     </div>
   </div>
 </div>
+@section FooterScript{
+  <script>
+    function onDelete(id) {
+      if (confirm("确定要删除吗？")) {
+        deleteById(id);
+      }
+    };
+    function deleteById(id) {
+      $.ajax({
+        url: "/MotionsInPlan/Delete/" + id,
+        type: "post",
+        success: function (res) {
+          if (res.status == "ok") {
+            location.reload();
+          } else {
+            alert(res.msg);
+          }
+        }
+      });
+    };
+  </script>
+}
 

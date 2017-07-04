@@ -194,8 +194,10 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\ChangePwdModel.cs" />
+    <Compile Include="Models\CombineMotionAddModel.cs" />
     <Compile Include="Models\CycleDaysViewModel.cs" />
     <Compile Include="Models\LoginModel.cs" />
+    <Compile Include="Models\PartialMotionAddModel.cs" />
     <Compile Include="Models\RegisterModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -228,6 +230,7 @@
     <Content Include="Views\Plan\CycleDays.cshtml" />
     <Content Include="Views\MotionsInPlan\List.cshtml" />
     <Content Include="Views\MotionsInPlan\Add.cshtml" />
+    <Content Include="Views\Shared\Error.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

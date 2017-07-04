@@ -42,8 +42,6 @@ namespace Fit.Common
     /// </summary>
     public const string PLAN_TEMPLATE_DETAIL2 = "{0}{1}";
     public const string PLAN_REST = "休息";
-    public const string PLAN_MAX_GROUP = "MaxGroup";
-    public const string PLAN_MAX_TIME = "MaxTime";
 
     public const string EMAIL_NOT_REGISTER = "邮箱尚未注册";
     public const string EMAIL_HAD_REGISTER = "邮箱已被注册";
@@ -84,6 +82,8 @@ namespace Fit.Common
 
     #region PLAN
     public const string PLAN_REMARK_LENGTH = "PlanRemarkLength";
+    public const string PLAN_MAX_GROUP = "MaxGroup";
+    public const string PLAN_MAX_TIME = "MaxTime";
     #endregion
 
 
