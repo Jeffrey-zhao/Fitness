@@ -11,8 +11,8 @@ namespace Fit.AdminWeb.Controllers
   public class HomeController : Controller
   {
     private IAdminUserService auService;
-    private IUserService userService;
-    public HomeController(IAdminUserService auService, IUserService userService)
+    //private IUserService userService;
+    public HomeController(IAdminUserService auService/*, IUserService userService*/)
     {
       this.auService = auService;
     }

@@ -18,7 +18,9 @@ namespace Fit.Service.Repository
 
     public long Add(SecheduleDetailEntity entity)
     {
-      throw new NotImplementedException();
+      Ctx.SecheduleDetails.Add(entity);
+      Ctx.SaveChanges();
+      return entity.ID;
     }
 
     public void DeleteById(long id)

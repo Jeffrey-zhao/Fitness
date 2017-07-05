@@ -27,7 +27,7 @@ namespace Fit.FrontWeb.App_Start
         .Where(a => !a.IsAbstract && a.Name.EndsWith("Repository")).AsImplementedInterfaces();
       //builder.Register(typeof(UserService)).As(typeof(IUserService));
 
-      //builder.Register(a => new UserController((IUserService)a.Resolve(typeof(IUserService))));
+      //builder.Register(a => new PlanController((IPlanService)a.Resolve(typeof(IPlanService)), (ISecheduleService)a.Resolve(typeof(ISecheduleService)), (IKeyValueService)a.Resolve(typeof(IKeyValueService))));
 
       var container = builder.Build();
       DependencyResolver.SetResolver(new AutofacDependencyResolver(container));

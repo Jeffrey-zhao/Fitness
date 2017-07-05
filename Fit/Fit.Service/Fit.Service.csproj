@@ -107,6 +107,7 @@
     <Compile Include="Services\RBAC\AdminUserService.cs" />
     <Compile Include="Services\RBAC\PermissionService.cs" />
     <Compile Include="Services\RBAC\RoleService.cs" />
+    <Compile Include="Services\SecheduleService.cs" />
     <Compile Include="Services\UserService.cs" />
   </ItemGroup>
   <ItemGroup>

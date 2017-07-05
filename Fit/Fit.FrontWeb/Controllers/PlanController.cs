@@ -13,10 +13,12 @@ namespace Fit.FrontWeb.Controllers
   {
     IPlanService planService;
     IKeyValueService kvService;
+    ISecheduleService secheduleService;
 
-    public PlanController(IPlanService planService, IKeyValueService kvService)
+    public PlanController(IPlanService planService, ISecheduleService secheduleService, IKeyValueService kvService)
     {
       this.planService = planService;
+      this.secheduleService = secheduleService;
       this.kvService = kvService;
     }
 
@@ -53,18 +55,14 @@ namespace Fit.FrontWeb.Controllers
 
       return View(dtos);
     }
+
     [HttpGet]
-    public ActionResult Schedule()
+    public ActionResult CreateSechedule()
     {
       var loginID = MVCHelper.GetLoginIdFromSession(HttpContext).Value;
-      var dtos = planService.GetUserPlans(loginID);
-      ViewBag.PlanCount = planService.GetPlanCount(loginID);
-      if (dtos == null || dtos.Length <= 0)
-      {
-        return Redirect("/Plan/CycleDays");
-      }
-
-      return View(dtos);
+      var maxSecheduleDays = kvService.GetIntValue(DBKeys.PLAN_MAX_SECHEDULEDAYS);
+      secheduleService.CreateSechedule(loginID, maxSecheduleDays, DateTimeHelper.GetNow());
+      return View();
     }
   }
 }

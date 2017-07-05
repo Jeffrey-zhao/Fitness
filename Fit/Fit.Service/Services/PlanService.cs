@@ -74,6 +74,7 @@ namespace Fit.Service.Services
       StringBuilder strB = new StringBuilder();
       foreach (var item in entities)
       {
+        if (item.IsDeleted == true) continue;
         strB.Append(item.Motion.Name).Append(Consts.SPLITER);
       }
 

@@ -51,6 +51,7 @@
     <Compile Include="IPermissionService.cs" />
     <Compile Include="IPlanService.cs" />
     <Compile Include="IRoleService.cs" />
+    <Compile Include="ISecheduleService.cs" />
     <Compile Include="IServiceSupport.cs" />
     <Compile Include="IUserService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -84,6 +84,7 @@ namespace Fit.Common
     public const string PLAN_REMARK_LENGTH = "PlanRemarkLength";
     public const string PLAN_MAX_GROUP = "MaxGroup";
     public const string PLAN_MAX_TIME = "MaxTime";
+    public const string PLAN_MAX_SECHEDULEDAYS = "MaxSechaduleDays";
     #endregion
 
 
