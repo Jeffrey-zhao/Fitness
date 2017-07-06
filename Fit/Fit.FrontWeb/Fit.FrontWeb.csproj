@@ -124,6 +124,8 @@
     <Content Include="Content\plugins\dropzone\dropzone.css" />
     <Content Include="Content\plugins\footable\fonts\footable.svg" />
     <Content Include="Content\plugins\footable\footable.core.css" />
+    <Content Include="Content\plugins\fullcalendar\fullcalendar.css" />
+    <Content Include="Content\plugins\fullcalendar\fullcalendar.print.css" />
     <Content Include="Content\plugins\iCheck\custom.css" />
     <Content Include="Content\plugins\iCheck\green%402x.png" />
     <Content Include="Content\plugins\iCheck\green.png" />
@@ -150,6 +152,9 @@
     <Content Include="lib\Validform\5.3.2\Validform.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Scripts\jquery-ui.custom.min.js" />
+    <Content Include="Scripts\plugins\fullcalendar\fullcalendar.min.js" />
+    <Content Include="Scripts\plugins\fullcalendar\moment.min.js" />
     <Content Include="Scripts\inspinia.js" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
@@ -231,6 +236,8 @@
     <Content Include="Views\MotionsInPlan\List.cshtml" />
     <Content Include="Views\MotionsInPlan\Add.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
+    <Content Include="Views\Plan\Sechedule.cshtml" />
+    <Content Include="Views\Plan\Sechedule1.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

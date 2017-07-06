@@ -52,6 +52,7 @@
     <Compile Include="RBAC\AdminUserDTO.cs" />
     <Compile Include="RBAC\PermissionDTO.cs" />
     <Compile Include="RBAC\RoleDTO.cs" />
+    <Compile Include="SecheduleDTO.cs" />
     <Compile Include="UserDTO.cs" />
     <Compile Include="UserInfoDTO.cs" />
   </ItemGroup>

@@ -64,5 +64,24 @@ namespace Fit.FrontWeb.Controllers
       secheduleService.CreateSechedule(loginID, maxSecheduleDays, DateTimeHelper.GetNow());
       return View();
     }
+
+    
+    public ActionResult Sechedule(string start,string end)
+    {
+      var list = new List<Fit.DTO.SecheduleDTO>();
+      var dto = new Fit.DTO.SecheduleDTO
+      {
+        Title = "Json 1",
+        Start = "2017-07-06 01:00",
+        Color = "Green"
+      };
+      list.Add(dto);
+      return MVCHelper.GetJsonResult(new AjaxResult { Data = list });
+    }
+
+    public ActionResult Sechedule1()
+    {
+      return View();
+    }
   }
 }
