@@ -12,5 +12,11 @@ namespace Fit.Common
     {
       return DateTime.Now;
     }
+
+    public static DateTime GetToday()
+    {
+      return DateTime.Now.AddDays(1).Date;
+    }
+
   }
 }

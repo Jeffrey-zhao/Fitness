@@ -13,7 +13,7 @@ namespace Fit.FrontWeb.App_Start
     {
       collection.Add(new JsonNetActionFilter());
       collection.Add(new ExceptionFilter());
-      //collection.Add(new AuthorizaFilter());
+      collection.Add(new LoginFilter());
     }
   }
 }

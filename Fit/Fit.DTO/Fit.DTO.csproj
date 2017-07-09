@@ -41,6 +41,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AdminLogDTO.cs" />
+    <Compile Include="CurrentItemDTO.cs" />
     <Compile Include="MotionDTO.cs" />
     <Compile Include="MotionPicDTO.cs" />
     <Compile Include="MotionsInPlanInputDTO.cs" />

@@ -47,6 +47,10 @@ namespace Fit.Common
     public const string EMAIL_HAD_REGISTER = "邮箱已被注册";
     public const string EMAIL_SUBJECT_ACTIVATE = "Fit账号激活";
     public const string EMAIL_SUBJECT_CHANGEPWD = "修改Fit账号密码";
+
+    public const string COLOR_UNFINISHED = "#1AB394";
+    public const string COLOR_FINISHED = "#BEBEBE";
+    public const string COLOR_TODAY = "# CDAD00";
   }
 
   public class SessionKeys

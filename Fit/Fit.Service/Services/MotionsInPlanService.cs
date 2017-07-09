@@ -45,7 +45,7 @@ namespace Fit.Service.Services
       var entities = mipRep.GetAll().Where(a => a.PlanID == planID).Include(a => a.Motion).AsNoTracking().ToList();
       return entities.Select(a => ToDTO(a)).ToArray();
     }
-
+    
     private MotionsInPlanOutputDTO ToDTO(MotionsInPlanEntity entity)
     {
       if (entity == null) throw new ArgumentException(ExceptionMsg.GetObjNullMsg("MotionsInPlanEntity"));

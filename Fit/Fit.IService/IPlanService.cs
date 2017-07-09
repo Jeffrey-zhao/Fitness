@@ -14,5 +14,7 @@ namespace Fit.IService
     PlanDTO[] GetUserPlans(long userID);
 
     long GetPlanCount(long userId);
+
+    SecheduleDTO[] GetSechedule(long userId,string startDateStr, string endDateStr);
   }
 }

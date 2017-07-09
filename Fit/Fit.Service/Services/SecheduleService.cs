@@ -7,20 +7,37 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Fit.DTO;
 
 namespace Fit.Service.Services
 {
-  public class SecheduleService:ISecheduleService
+  public class SecheduleService : ISecheduleService
   {
     IRepository<PlanEntity> planRep;
     IRepository<SecheduleEntity> secheduleRep;
     IRepository<SecheduleDetailEntity> secheduleDetailRep;
+    IRepository<MotionsInPlanEntity> mipRep;
 
-    public SecheduleService(IRepository<PlanEntity> planRep, IRepository<SecheduleEntity> secheuleRep, IRepository<SecheduleDetailEntity> secheuleDetailRep)
+    public SecheduleService(IRepository<PlanEntity> planRep, IRepository<SecheduleEntity> secheuleRep
+      , IRepository<SecheduleDetailEntity> secheuleDetailRep, IRepository<MotionsInPlanEntity> mipRep)
     {
       this.planRep = planRep;
       this.secheduleRep = secheuleRep;
       this.secheduleDetailRep = secheuleDetailRep;
+      this.mipRep = mipRep;
+    }
+
+    public void CompleteItems(string itemIDs)
+    {
+      var arr = itemIDs.Split(new char[] { Consts.SPLITER }, StringSplitOptions.RemoveEmptyEntries);
+      long temp = 0;
+      foreach (var item in arr)
+      {
+        if (!Int64.TryParse(item, out temp)) continue;
+        var detail = secheduleDetailRep.GetById(temp);
+        detail.IsFinished = true;
+        secheduleDetailRep.Ctx.SaveChanges();
+      }
     }
 
     /// <summary>
@@ -30,7 +47,7 @@ namespace Fit.Service.Services
     public void CreateSechedule(long userID, int days, DateTime startDate)
     {
       startDate = new DateTime(startDate.Year, startDate.Month, startDate.Day);
-      var plans = planRep.GetAll().Where(a => a.UserID == userID).OrderBy(a => a.ID).ToList();
+      var plans = GetPlansByUserID(userID);
       if (plans == null || plans.Count() <= 0) return;
       var planIDs = plans.Select(a => a.ID).ToArray();
       var sechedules = secheduleRep.GetAll().Where(a => planIDs.Contains(a.PlanID)).OrderByDescending(a => a.ActDate).ToList();
@@ -61,8 +78,42 @@ namespace Fit.Service.Services
           index++;
           if (item.ID == nextID) break;
         }
-        AddSechedulesAndDetails(index, days-count, startDate.AddDays(count), plans);
+        AddSechedulesAndDetails(index, days - count, startDate.AddDays(count), plans);
       }
+    }
+
+    public bool FinishSechedule(long userID)
+    {
+      var sechedule = GetCurrentDaySecheduleByUserID(userID);
+      if (sechedule == null) return false;
+      var secheduleDetails = GetSecheduleDetailsBySecheduleID(sechedule.ID);
+      if (secheduleDetails == null || secheduleDetails.Count() <= 0) return false;
+
+      sechedule.IsFinished = true;
+      secheduleDetails.ForEach(a => a.IsFinished = true);
+      secheduleRep.Ctx.SaveChanges();
+      secheduleDetailRep.Ctx.SaveChanges();
+      return true;
+    }
+
+    public CurrentItemDTO[] GetCurrentItems(long userID)
+    {
+      var sechedule = GetCurrentDaySecheduleByUserID(userID);
+      if (sechedule == null) return null;
+      var secheduleDetails = GetSecheduleDetailsBySecheduleID(sechedule.ID);
+      return secheduleDetails.Select(a => ToCurrentItemDTO(a)).ToArray();
+    }
+
+    public long GetPersistDays(long userID)
+    {
+      var planIDs = planRep.GetAll().Where(a => a.UserID == userID).ToList().Select(a => a.ID).ToArray();
+      return secheduleRep.GetAll()
+        .Where(a => a.IsFinished == true && planIDs.Contains(a.PlanID)).Count();
+    }
+    
+    public bool IsSecheduleFinished(long userID)
+    {
+      return GetCurrentDaySecheduleByUserID(userID).IsFinished;
     }
 
     private void AddSechedulesAndDetails(int index, int days, DateTime startDate, List<PlanEntity> plans)
@@ -90,6 +141,56 @@ namespace Fit.Service.Services
           secheduleDetailRep.Add(secheduleDetail);
         }
       }
+    }
+
+    private List<PlanEntity> GetPlansByUserID(long userID)
+    {
+      return planRep.GetAll().Where(a => a.UserID == userID).OrderBy(a => a.ID).ToList();
+    }
+
+    private SecheduleEntity GetCurrentDaySecheduleByUserID(long userID)
+    {
+      var planIDs = GetPlansByUserID(userID).Select(a => a.ID).ToArray();
+      var date = DateTimeHelper.GetToday();
+      return secheduleRep.GetAll()
+          .Where(a => a.ActDate == date && planIDs.Contains(a.PlanID)).FirstOrDefault();
+    }
+
+    private List<SecheduleDetailEntity> GetSecheduleDetailsBySecheduleID(long secheduleID)
+    {
+      return secheduleDetailRep.GetAll()
+            .Where(a => a.SecheduleID == secheduleID).ToList();
+    }
+
+    private CurrentItemDTO ToCurrentItemDTO(SecheduleDetailEntity entity)
+    {
+      if (entity == null) throw new ArgumentException(ExceptionMsg.GetObjNullMsg("SecheduleDetailEntity"));
+      var mip = mipRep.GetById(entity.MotionsInPlanID);
+      var dto = new CurrentItemDTO
+      {
+        SecheduleDetailID = entity.ID,
+        IsFinished = entity.IsFinished,
+        ItemName = mip.Motion.Name
+      };
+      if (mip.Groups <= 0)  //综合训练
+      {
+        dto.ItemBurden = string.Format(Consts.PLAN_TEMPLATE_DETAIL2, mip.Number, mip.Motion.Measurement);
+      }
+      else  //局部训练
+      {
+        if (mip.Number <= 0)  //无负重
+        {
+          dto.ItemBurden = string.Format(Consts.PLAN_TEMPLATE_DETAIL1
+            , mip.Groups, mip.Times, string.Empty);
+        }
+        else  //负重
+        {
+          dto.ItemBurden = string.Format(Consts.PLAN_TEMPLATE_DETAIL1
+            , mip.Groups, mip.Times
+            , string.Format(Consts.PLAN_TEMPLATE_DETAIL1_1, mip.Number));
+        }
+      }
+      return dto;
     }
   }
 }

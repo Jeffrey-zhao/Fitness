@@ -17,9 +17,6 @@
   <link href="~/Content/style.css" rel="stylesheet">
   <!-- FooTable -->
   <link href="~/Content/plugins/footable/footable.core.css" rel="stylesheet">
-  <!--iCheck-->
-  <link href="~/Content/plugins/iCheck/custom.css" rel="stylesheet">
-  <link href="~/Content/plugins/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css" rel="stylesheet">
   @RenderSection("HeaderScript", false)
 
 
@@ -47,54 +44,24 @@
 
             </div>
           </li>
-          <li class="active">
+          <li id="li1">
+            <a href="/Home/Index"><i class="fa fa-home"></i> <span class="nav-label">首页</span></a>
+          </li>
+          <li id="li2">
             <a>
               <i class="fa fa-table"></i>
               <span class="nav-label">健身计划</span>
               <span class="fa arrow"></span>
             </a>
-            <ul class="nav nav-second-level collapse">
+            <ul class="nav nav-second-level ">
               <li>
-                <a href="/Plan/CycleDays">健身日程</a>
+                <a href="/Plan/Sechedule">健身日程</a>
               </li>
               <li>
                 <a href="/Plan/CycleDays">我的计划</a>
               </li>
               <li>
                 <a href="/Plan/SetCycleDays">定制计划</a>
-              </li>
-            </ul>
-          </li>
-          <li>
-            <a>
-              <i class="fa fa-diamond"></i>
-              <span class="nav-label">健身管理</span>
-              <span class="fa arrow"></span>
-            </a>
-            <ul class="nav nav-second-level collapse">
-              <li>
-                <a href="/MuscleGroup/List?pageIndex=1">肌群信息</a>
-              </li>
-              <li>
-                <a href="/Muscle/List?pageIndex=1">肌肉信息</a>
-              </li>
-              <li>
-                <a href="/Motion/List?pageIndex=1">动作管理</a>
-              </li>
-            </ul>
-          </li>
-          <li>
-            <a href="mailbox.html">
-              <i class="fa fa-diamond"></i>
-              <span class="nav-label">系统信息</span>
-              <span class="fa arrow"></span>
-            </a>
-            <ul class="nav nav-second-level collapse">
-              <li>
-                <a href="/UserInfo/List?pageIndex=1">用户信息</a>
-              </li>
-              <li>
-                <a href="/AdminLog/List?pageIndex=1">操作记录</a>
               </li>
             </ul>
           </li>

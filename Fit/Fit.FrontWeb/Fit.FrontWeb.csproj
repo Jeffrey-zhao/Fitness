@@ -190,6 +190,8 @@
     <Compile Include="App_Start\AutofacConfig.cs" />
     <Compile Include="App_Start\ExceptionFilter.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
+    <Compile Include="App_Start\LoginAttribute.cs" />
+    <Compile Include="App_Start\LoginFilter.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MotionsInPlanController.cs" />
@@ -201,6 +203,7 @@
     <Compile Include="Models\ChangePwdModel.cs" />
     <Compile Include="Models\CombineMotionAddModel.cs" />
     <Compile Include="Models\CycleDaysViewModel.cs" />
+    <Compile Include="Models\HomeIndexModel.cs" />
     <Compile Include="Models\LoginModel.cs" />
     <Compile Include="Models\PartialMotionAddModel.cs" />
     <Compile Include="Models\RegisterModel.cs" />
@@ -237,7 +240,6 @@
     <Content Include="Views\MotionsInPlan\Add.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Plan\Sechedule.cshtml" />
-    <Content Include="Views\Plan\Sechedule1.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

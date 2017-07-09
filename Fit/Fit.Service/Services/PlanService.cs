@@ -15,9 +15,18 @@ namespace Fit.Service.Services
   public class PlanService : IPlanService
   {
     IRepository<PlanEntity> planRep;
-    public PlanService(IRepository<PlanEntity> planRep)
+    IRepository<SecheduleEntity> secheduleRep;
+    IRepository<SecheduleDetailEntity> secheduleDetailRep;
+    IRepository<UserEntity> userRep;
+
+    public PlanService(IRepository<PlanEntity> planRep, IRepository<SecheduleEntity> secheduleRep
+                                    , IRepository<SecheduleDetailEntity> secheduleDetailRep
+                                    , IRepository<UserEntity> userRep)
     {
       this.planRep = planRep;
+      this.secheduleRep = secheduleRep;
+      this.secheduleDetailRep = secheduleDetailRep;
+      this.userRep = userRep;
     }
 
     public void ReAddPlan(long userID, int cycleDays)
@@ -63,7 +72,7 @@ namespace Fit.Service.Services
 
       return list.ToArray();
     }
-    
+
     public long GetPlanCount(long userId)
     {
       return planRep.GetAll().Where(a => a.UserID == userId).Count();
@@ -100,6 +109,42 @@ namespace Fit.Service.Services
       {
         ID = entity.ID
       };
+      return dto;
+    }
+
+    public SecheduleDTO[] GetSechedule(long userId, string startDateStr, string endDateStr)
+    {
+      var startDate = new DateTime();
+      var endDate = new DateTime();
+      var temp1 = DateTime.TryParse(startDateStr, out startDate);
+      var temp2 = DateTime.TryParse(endDateStr, out endDate);
+      if (!temp1 && temp2)
+      {
+        throw new ArgumentException();
+      }
+
+      var planIDs = planRep.GetAll().Where(a => a.UserID == userId).ToList().Select(a => a.ID).ToArray();
+      var sechedules = secheduleRep.GetAll()
+        .Where(a => a.ActDate >= startDate && a.ActDate <= endDate && planIDs.Contains(a.PlanID)).ToList();
+
+      if (sechedules == null) return null;
+      return sechedules.Select(a => ToSecheduleDTO(a)).ToArray();
+    }
+
+    public SecheduleDTO ToSecheduleDTO(SecheduleEntity entity)
+    {
+      if (entity == null) throw new ArgumentException(ExceptionMsg.GetObjNullMsg("SecheduleEntity"));
+
+      var dto = new SecheduleDTO
+      {
+        Title = string.Empty,
+        Start = entity.ActDate.ToShortDateString(),
+        Color = entity.IsFinished ? Consts.COLOR_FINISHED : Consts.COLOR_UNFINISHED
+      };
+      if (entity.ActDate.Equals(DateTimeHelper.GetToday()))
+      {
+        dto.Color = Consts.COLOR_TODAY;
+      }
       return dto;
     }
   }

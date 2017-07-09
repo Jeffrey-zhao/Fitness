@@ -1,14 +1,197 @@
 ﻿@{
   ViewBag.Title = "Home Page";
 }
+@model Fit.DTO.CurrentItemDTO[]
+<!--iCheck-->
+<link href="~/Content/plugins/iCheck/custom.css" rel="stylesheet">
+<link href="~/Content/plugins/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css" rel="stylesheet">
+
 <div class="wrapper wrapper-content animated fadeInRight">
-  <div class="row">
-    <div class="col-lg-12">
-      <div class="ibox float-e-margins">
-        <div class="ibox-content">
-          <div style="height:800px"></div>
+  <div class="ibox float-e-margins">
+    <div class="ibox-content">
+      <div class="row">
+        @{
+          if (ViewBag.IsSecheduleFinished)
+          {
+            <div class="col-lg-2">
+              <div class="widget style1 navy-bg">
+                <div class="row">
+                  <div class="col-xs-4">
+                    <i class="fa fa-check-square-o fa-5x"></i>
+                  </div>
+                  <div class="col-xs-8 text-right">
+                    <span>已打卡 </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          }
+          else
+          {
+            <div class="col-lg-2">
+              <a onclick="onFinish()">
+                <div class="widget style1 navy-bg">
+                  <div class="row">
+                    <div class="col-xs-4">
+                      <i class="fa fa-square-o fa-5x"></i>
+                    </div>
+                    <div class="col-xs-8 text-right">
+                      <span>点击打卡 </span>
+                    </div>
+                  </div>
+                </div>
+              </a>
+            </div>
+          }
+        }
+
+        <div class="col-lg-5">
+          <div class="widget style1 blue-bg">
+            <div class="row">
+              <div class="col-xs-4">
+                <i class="fa fa-yelp fa-5x"></i>
+              </div>
+              <div class="col-xs-8 text-right">
+                <span>今日 </span>
+                <h2 class="font-bold">
+                  <span>
+                    @{
+                      if (Model == null || Model.Count() <= 0)
+                      {
+                        <span>休息</span>
+                      }
+                      else
+                      {
+                        <span>@Model.Count()</span><span>项</span>
+                      }
+                    }
+                  </span>
+                </h2>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-5">
+          <div class="widget style1 yellow-bg">
+            <div class="row">
+              <div class="col-xs-4">
+                <i class="fa fa-trophy fa-5x"></i>
+              </div>
+              <div class="col-xs-8 text-right">
+                <span> 已经坚持 </span>
+                <h2 class="font-bold"><span>@ViewBag.PersistDays</span>天</h2>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <br />
+      <div class="row">
+        <div class="col-sm-12">
+          <div class="ibox-content">
+            @{
+              if (Model != null && Model.Count() > 0)
+              {
+                <h2>训练项目</h2>
+
+                var isAllItemFinished = true;
+                foreach (var item in Model)
+                {
+                  isAllItemFinished &= item.IsFinished;
+                }
+                if (!isAllItemFinished)
+                {
+                  <a onclick="onSave()" class="btn btn-outline btn-primary">保存</a>
+                }
+
+                <ul class="todo-list m-t">
+                  @foreach (var item in Model)
+                  {
+                    <li>
+                      @if (item.IsFinished)
+                      {
+                        <input type="checkbox" value="@item.SecheduleDetailID" id="@item.SecheduleDetailID" class="i-checks" checked disabled />
+                      }
+                      else
+                      {
+                        <input type="checkbox" value="@item.SecheduleDetailID" id="@item.SecheduleDetailID" class="i-checks" />
+                      }
+                      <span class="m-l-xs">@item.ItemName</span>
+                      <small class="label label-primary"><i class="fa fa-refresh"></i> @item.ItemBurden</small>
+                    </li>
+                  }
+                </ul>
+              }
+            }
+          </div>
         </div>
       </div>
     </div>
   </div>
 </div>
+
+@section FooterScript{
+  <!-- iCheck -->
+  <script src="~/Scripts/plugins/iCheck/icheck.min.js"></script>
+  <script>
+    $('.i-checks').iCheck({
+      checkboxClass: 'icheckbox_square-green',
+      radioClass: 'iradio_square-green'
+    });
+
+    function onSave() {
+      getCheckedIDs();
+      if (!confirm('保存后，已经完成项目的状态无法更改。是否确认？')) {
+        return;
+      }
+      $.ajax({
+        type: 'post',
+        url: '/Home/CompleteItems',
+        data: { itemIDs: checkedID },
+        success: function (res) {
+          if (res.status == 'ok') {
+            location.reload();
+          }
+        },
+        error: function () {
+          alert('ajax请求失败(001)');
+        }
+      });
+    }
+
+    function onFinish() {
+      getCheckedIDs();
+      if (unCheckedID != '') {
+        alert('无法打卡，因为尚未完成今天的全部项目。如果某个项目已经完成，请及时打勾并保存。');
+        return;
+      }
+
+      $.ajax({
+        type: 'post',
+        url: '/Home/FinishSechedule',
+        success: function (res) {
+          if (res.status == 'ok') {
+            location.reload();
+          }
+        },
+        error: function () {
+          alert('ajax请求失败(002)');
+        }
+      });
+    }
+
+    var checkedID = '';
+    var unCheckedID = '';
+    function getCheckedIDs() {
+      checkedID = '';
+      unCheckedID = '';
+      $("input[type=checkbox]").each(function () {
+        if (true == $(this).is(':checked')) {
+          checkedID = checkedID + $(this).val() + ',';
+        } else {
+          unCheckedID = unCheckedID + $(this).val() + ',';
+        }
+      })
+    }
+  </script>
+}

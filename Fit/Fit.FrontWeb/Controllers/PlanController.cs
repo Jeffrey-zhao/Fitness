@@ -3,6 +3,7 @@ using Fit.FrontWeb.Models;
 using Fit.IService;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -65,23 +66,18 @@ namespace Fit.FrontWeb.Controllers
       return View();
     }
 
-    
-    public ActionResult Sechedule(string start,string end)
-    {
-      var list = new List<Fit.DTO.SecheduleDTO>();
-      var dto = new Fit.DTO.SecheduleDTO
-      {
-        Title = "Json 1",
-        Start = "2017-07-06 01:00",
-        Color = "Green"
-      };
-      list.Add(dto);
-      return MVCHelper.GetJsonResult(new AjaxResult { Data = list });
-    }
-
-    public ActionResult Sechedule1()
+    public ActionResult Sechedule()
     {
       return View();
     }
+
+    [HttpPost]
+    public ActionResult GetSechedule(string start, string end)
+    {
+      var loginID = MVCHelper.GetLoginIdFromSession(HttpContext).Value;
+      var dtos = planService.GetSechedule(loginID, start, end);
+      return MVCHelper.GetJsonResult(new AjaxResult { Data = dtos });
+    }
+
   }
 }
