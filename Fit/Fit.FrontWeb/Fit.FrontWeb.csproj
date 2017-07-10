@@ -193,6 +193,7 @@
     <Compile Include="App_Start\LoginAttribute.cs" />
     <Compile Include="App_Start\LoginFilter.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\BodyCircumferenceController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MotionsInPlanController.cs" />
     <Compile Include="Controllers\PlanController.cs" />
@@ -200,6 +201,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\BodyCircumferenceModel.cs" />
     <Compile Include="Models\ChangePwdModel.cs" />
     <Compile Include="Models\CombineMotionAddModel.cs" />
     <Compile Include="Models\CycleDaysViewModel.cs" />
@@ -240,6 +242,8 @@
     <Content Include="Views\MotionsInPlan\Add.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Plan\Sechedule.cshtml" />
+    <Content Include="Views\BodyCircumference\AddRecord.cshtml" />
+    <Content Include="Views\BodyCircumference\EditRecord.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

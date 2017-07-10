@@ -43,5 +43,6 @@ namespace Fit.Service
     public DbSet<MotionsInPlanEntity> MotionsInPlans { get; set; }
     public DbSet<SecheduleEntity> Sechedules { get; set; }
     public DbSet<SecheduleDetailEntity> SecheduleDetails { get; set; }
+    public DbSet<BodyCircumferenceEntity> BodyCircumferences { get; set; }
   }
 }

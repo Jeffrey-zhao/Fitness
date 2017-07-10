@@ -50,7 +50,8 @@ namespace Fit.Service.Services
       var plans = GetPlansByUserID(userID);
       if (plans == null || plans.Count() <= 0) return;
       var planIDs = plans.Select(a => a.ID).ToArray();
-      var sechedules = secheduleRep.GetAll().Where(a => planIDs.Contains(a.PlanID)).OrderByDescending(a => a.ActDate).ToList();
+      var sechedules = secheduleRep.GetAll().Where(a => planIDs.Contains(a.PlanID) && a.ActDate >= startDate)
+        .OrderByDescending(a => a.ActDate).ToList();
       var count = 0;
       if (sechedules != null && sechedules.Count() > 0)
       {
@@ -110,7 +111,7 @@ namespace Fit.Service.Services
       return secheduleRep.GetAll()
         .Where(a => a.IsFinished == true && planIDs.Contains(a.PlanID)).Count();
     }
-    
+
     public bool IsSecheduleFinished(long userID)
     {
       return GetCurrentDaySecheduleByUserID(userID).IsFinished;
@@ -123,7 +124,9 @@ namespace Fit.Service.Services
         if (index > plans.Count() - 1) index = 0;  //if index reaches upper of the collection, return 0
         var plan = plans[index];  //get one with the index
         index++;  //index plus one, for next step using
-        if (plan.MotionsInPlans == null || plan.MotionsInPlans.Count <= 0) continue;  //if it's a rest day, continue
+        if (plan.MotionsInPlans == null || plan.MotionsInPlans.Count <= 0
+          ||plan.MotionsInPlans.Where(a=>a.IsDeleted==false)==null
+          ||!plan.MotionsInPlans.Where(a=>a.IsDeleted==false).Any()) continue;  //if it's a rest day, continue
         var sechedule = new SecheduleEntity
         {
           ActDate = startDate.AddDays(i - 1),
@@ -133,6 +136,7 @@ namespace Fit.Service.Services
         //add SecheduleDetail with the addID
         foreach (var item in plan.MotionsInPlans)
         {
+          if (item.IsDeleted == true) continue;
           var secheduleDetail = new SecheduleDetailEntity
           {
             MotionsInPlanID = item.ID,

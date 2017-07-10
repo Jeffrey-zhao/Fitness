@@ -15,7 +15,7 @@ namespace Fit.Common
 
     public static DateTime GetToday()
     {
-      return DateTime.Now.AddDays(1).Date;
+      return DateTime.Now.AddDays(0).Date;
     }
 
   }

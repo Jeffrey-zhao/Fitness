@@ -52,6 +52,7 @@
   <ItemGroup>
     <Compile Include="Entities\AdminLogEntity.cs" />
     <Compile Include="Entities\BaseEntity.cs" />
+    <Compile Include="Entities\BodyCircumferenceEntity.cs" />
     <Compile Include="Entities\KeyValueEntity.cs" />
     <Compile Include="Entities\MotionEntity.cs" />
     <Compile Include="Entities\MotionsInPlanEntity.cs" />
@@ -67,6 +68,7 @@
     <Compile Include="Entities\UserEntity.cs" />
     <Compile Include="FitDbContext.cs" />
     <Compile Include="ModelConfigs\AdminLogConfig.cs" />
+    <Compile Include="ModelConfigs\BodyCircumferenceConfig.cs" />
     <Compile Include="ModelConfigs\KeyValueConfig.cs" />
     <Compile Include="ModelConfigs\MotionConfig.cs" />
     <Compile Include="ModelConfigs\MotionPicConfig.cs" />
@@ -81,6 +83,7 @@
     <Compile Include="ModelConfigs\SecheduleDetailConfig.cs" />
     <Compile Include="ModelConfigs\UserConfig.cs" />
     <Compile Include="Repository\AdminLogRepository.cs" />
+    <Compile Include="Repository\BodyCircumferenceRepository.cs" />
     <Compile Include="Repository\KeyValueRepository.cs" />
     <Compile Include="Repository\MotionPicRepository.cs" />
     <Compile Include="Repository\MotionRepository.cs" />
@@ -90,6 +93,7 @@
     <Compile Include="Repository\SecheduleRepository.cs" />
     <Compile Include="Repository\UserRepository.cs" />
     <Compile Include="Services\AdminLogService.cs" />
+    <Compile Include="Services\BodyCircumferenceService.cs" />
     <Compile Include="Services\KeyValueService.cs" />
     <Compile Include="Services\MotionPicService.cs" />
     <Compile Include="Services\MotionService.cs" />

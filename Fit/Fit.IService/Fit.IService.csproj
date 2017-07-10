@@ -42,6 +42,7 @@
   <ItemGroup>
     <Compile Include="IAdminLogService.cs" />
     <Compile Include="IAdminUserService.cs" />
+    <Compile Include="IBodyCircumferenceService.cs" />
     <Compile Include="IKeyValueService.cs" />
     <Compile Include="IMotionPicService.cs" />
     <Compile Include="IMotionService.cs" />
