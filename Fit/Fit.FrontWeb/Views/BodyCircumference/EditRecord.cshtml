@@ -15,7 +15,14 @@
             <div class="col-sm-8 form-group">
               <label>体重</label>
               <div class="input-group m-b">
-                <input type="text" class="form-control" name="weight" value="@Model.Weight" pattern='^[0-9]+([.]{1}[0-9])?$' title="只能是整数或一位小数">
+                @if (Model.Weight > 0)
+                {
+                  <input type="text" class="form-control" name="weight" value="@Model.Weight" pattern='^[0-9]+([.]{1}[0-9])?$' title="只能是整数或一位小数">
+                }
+                else
+                {
+                  <input type="text" class="form-control" name="weight" pattern='^[0-9]+([.]{1}[0-9])?$' title="只能是整数或一位小数">
+                }
                 <span class="input-group-addon" id="partialMeasurement">kg</span>
               </div>
             </div>
@@ -24,7 +31,14 @@
             <div class="col-sm-8 form-group">
               <label>上臂围</label>
               <div class="input-group m-b">
-                <input type="text" class="form-control" name="upperArm" value="@Model.UpperArm" pattern='^[0-9]+([.]{1}[0-9])?$' title="只能是整数或一位小数">
+                @if (Model.UpperArm > 0)
+                {
+                  <input type="text" class="form-control" name="upperArm" value="@Model.UpperArm" pattern='^[0-9]+([.]{1}[0-9])?$' title="只能是整数或一位小数">
+                }
+                else
+                {
+                  <input type="text" class="form-control" name="upperArm" pattern='^[0-9]+([.]{1}[0-9])?$' title="只能是整数或一位小数">
+                }
                 <span class="input-group-addon" id="partialMeasurement">cm</span>
               </div>
             </div>
@@ -33,7 +47,14 @@
             <div class="col-sm-8 form-group">
               <label>小臂围</label>
               <div class="input-group m-b">
-                <input type="text" class="form-control" name="lowerArm" value="@Model.LowerArm" pattern='^[0-9]+([.]{1}[0-9])?$' title="只能是整数或一位小数">
+                @if (Model.LowerArm > 0)
+                {
+                  <input type="text" class="form-control" name="lowerArm" value="@Model.LowerArm" pattern='^[0-9]+([.]{1}[0-9])?$' title="只能是整数或一位小数">
+                }
+                else
+                {
+                  <input type="text" class="form-control" name="lowerArm" pattern='^[0-9]+([.]{1}[0-9])?$' title="只能是整数或一位小数">
+                }
                 <span class="input-group-addon" id="partialMeasurement">cm</span>
               </div>
             </div>
@@ -42,7 +63,14 @@
             <div class="col-sm-8 form-group">
               <label>胸围</label>
               <div class="input-group m-b">
-                <input type="text" class="form-control" name="chest" value="@Model.Chest" pattern='^[0-9]+([.]{1}[0-9])?$' title="只能是整数或一位小数">
+                @if (Model.Chest > 0)
+                {
+                  <input type="text" class="form-control" name="lowerArm" value="@Model.Chest" pattern='^[0-9]+([.]{1}[0-9])?$' title="只能是整数或一位小数">
+                }
+                else
+                {
+                  <input type="text" class="form-control" name="lowerArm" pattern='^[0-9]+([.]{1}[0-9])?$' title="只能是整数或一位小数">
+                }
                 <span class="input-group-addon" id="partialMeasurement">cm</span>
               </div>
             </div>
@@ -51,7 +79,14 @@
             <div class="col-sm-8 form-group">
               <label>腰围</label>
               <div class="input-group m-b">
-                <input type="text" class="form-control" name="waist" value="@Model.Waist" pattern='^[0-9]+([.]{1}[0-9])?$' title="只能是整数或一位小数">
+                @if (Model.LowerArm > 0)
+                {
+                  <input type="text" class="form-control" name="waist" value="@Model.Waist" pattern='^[0-9]+([.]{1}[0-9])?$' title="只能是整数或一位小数">
+                }
+                else
+                {
+                  <input type="text" class="form-control" name="waist" pattern='^[0-9]+([.]{1}[0-9])?$' title="只能是整数或一位小数">
+                }
                 <span class="input-group-addon" id="partialMeasurement">cm</span>
               </div>
             </div>
@@ -60,7 +95,14 @@
             <div class="col-sm-8 form-group">
               <label>臀围</label>
               <div class="input-group m-b">
-                <input type="text" class="form-control" name="hip" value="@Model.Hip" pattern='^[0-9]+([.]{1}[0-9])?$' title="只能是整数或一位小数">
+                @if (Model.LowerArm > 0)
+                {
+                  <input type="text" class="form-control" name="hip" value="@Model.Hip" pattern='^[0-9]+([.]{1}[0-9])?$' title="只能是整数或一位小数">
+                }
+                else
+                {
+                  <input type="text" class="form-control" name="hip" pattern='^[0-9]+([.]{1}[0-9])?$' title="只能是整数或一位小数">
+                }
                 <span class="input-group-addon" id="partialMeasurement">cm</span>
               </div>
             </div>
@@ -69,7 +111,14 @@
             <div class="col-sm-8 form-group">
               <label>大腿围</label>
               <div class="input-group m-b">
-                <input type="text" class="form-control" name="upperLeg" value="@Model.UpperLeg" pattern='^[0-9]+([.]{1}[0-9])?$' title="只能是整数或一位小数">
+                @if (Model.LowerArm > 0)
+                {
+                  <input type="text" class="form-control" name="upperLeg" value="@Model.UpperLeg" pattern='^[0-9]+([.]{1}[0-9])?$' title="只能是整数或一位小数">
+                }
+                else
+                {
+                  <input type="text" class="form-control" name="upperLeg" pattern='^[0-9]+([.]{1}[0-9])?$' title="只能是整数或一位小数">
+                }
                 <span class="input-group-addon" id="partialMeasurement">cm</span>
               </div>
             </div>
@@ -78,7 +127,14 @@
             <div class="col-sm-8 form-group">
               <label>小腿围</label>
               <div class="input-group m-b">
-                <input type="text" class="form-control" name="lowerLeg" value="@Model.LowerLeg" pattern='^[0-9]+([.]{1}[0-9])?$' title="只能是整数或一位小数">
+                @if (Model.LowerArm > 0)
+                {
+                  <input type="text" class="form-control" name="lowerLeg" value="@Model.LowerLeg" pattern='^[0-9]+([.]{1}[0-9])?$' title="只能是整数或一位小数">
+                }
+                else
+                {
+                  <input type="text" class="form-control" name="lowerLeg" pattern='^[0-9]+([.]{1}[0-9])?$' title="只能是整数或一位小数">
+                }
                 <span class="input-group-addon" id="partialMeasurement">cm</span>
               </div>
             </div>
@@ -93,4 +149,3 @@
     </div>
   </div>
 </div>
-

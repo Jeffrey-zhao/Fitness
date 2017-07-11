@@ -47,18 +47,23 @@ namespace Fit.FrontWeb.Controllers
       {
         ID = model.ID,
         UserID = model.UserID,
-        Weight = model.Weight.Value,
-        UpperArm = model.UpperArm,
-        LowerArm = model.LowerArm,
-        Chest = model.Chest,
-        Waist = model.Waist,
-        Hip = model.Hip,
-        UpperLeg = model.UpperLeg,
-        LowerLeg = model.LowerLeg
+        Weight = model.Weight ?? 0,
+        UpperArm = model.UpperArm ?? 0,
+        LowerArm = model.LowerArm ?? 0,
+        Chest = model.Chest ?? 0,
+        Waist = model.Waist ?? 0,
+        Hip = model.Hip ?? 0,
+        UpperLeg = model.UpperLeg ?? 0,
+        LowerLeg = model.LowerLeg ?? 0
       };
 
       circumService.AddOrUpdate(dto);
       return Redirect("/Home/Index");
+    }
+
+    public ActionResult Chart()
+    {
+      return View();
     }
   }
 }

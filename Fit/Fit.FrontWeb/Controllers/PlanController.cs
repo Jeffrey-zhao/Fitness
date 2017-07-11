@@ -1,4 +1,5 @@
 ﻿using Fit.Common;
+using Fit.FrontWeb.App_Start;
 using Fit.FrontWeb.Models;
 using Fit.IService;
 using System;
@@ -23,12 +24,14 @@ namespace Fit.FrontWeb.Controllers
       this.kvService = kvService;
     }
 
+    [Login]
     [HttpGet]
     public ActionResult SetCycleDays()
     {
       var maxCycleDays = kvService.GetIntValue(DBKeys.COM_MAX_CYCLEDAYS);
       return View(maxCycleDays);
     }
+    [Login]
     [HttpPost]
     public ActionResult SetCycleDays(int cycleDays)
     {
@@ -43,6 +46,7 @@ namespace Fit.FrontWeb.Controllers
       planService.ReAddPlan(loginID.Value, cycleDays);
       return Redirect("/Plan/CycleDays");
     }
+    [Login]
     [HttpGet]
     public ActionResult CycleDays()
     {
@@ -57,6 +61,7 @@ namespace Fit.FrontWeb.Controllers
       return View(dtos);
     }
 
+    [Login]
     [HttpGet]
     public ActionResult CreateSechedule()
     {
@@ -66,11 +71,13 @@ namespace Fit.FrontWeb.Controllers
       return View();
     }
 
+    [Login]
     public ActionResult Sechedule()
     {
       return View();
     }
 
+    [Login]
     [HttpPost]
     public ActionResult GetSechedule(string start, string end)
     {
