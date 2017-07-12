@@ -80,6 +80,150 @@ namespace Fit.Service.Services
       }
     }
 
+    public ChartDataDTO[] GetChestHistory(long userID)
+    {
+      var entities = circumRep.GetAll().Where(a => a.UserID == userID);
+      if (entities == null || entities.Count() <= 0) return null;
+
+      var list = new List<ChartDataDTO>();
+      foreach (var item in entities)
+      {
+        var dto = new ChartDataDTO
+        {
+          Ticks = item.CreatedDateTime.Ticks,
+          Value = item.Chest
+        };
+        list.Add(dto);
+      }
+      return list.ToArray();
+    }
+
+    public ChartDataDTO[] GetHipHistory(long userID)
+    {
+      var entities = circumRep.GetAll().Where(a => a.UserID == userID);
+      if (entities == null || entities.Count() <= 0) return null;
+
+      var list = new List<ChartDataDTO>();
+      foreach (var item in entities)
+      {
+        var dto = new ChartDataDTO
+        {
+          Ticks = item.CreatedDateTime.Ticks,
+          Value = item.Hip
+        };
+        list.Add(dto);
+      }
+      return list.ToArray();
+    }
+
+    public ChartDataDTO[] GetLowerArmHistory(long userID)
+    {
+      var entities = circumRep.GetAll().Where(a => a.UserID == userID);
+      if (entities == null || entities.Count() <= 0) return null;
+
+      var list = new List<ChartDataDTO>();
+      foreach (var item in entities)
+      {
+        var dto = new ChartDataDTO
+        {
+          Ticks = item.CreatedDateTime.Ticks,
+          Value = item.LowerArm
+        };
+        list.Add(dto);
+      }
+      return list.ToArray();
+    }
+
+    public ChartDataDTO[] GetLowerLegHistory(long userID)
+    {
+      var entities = circumRep.GetAll().Where(a => a.UserID == userID);
+      if (entities == null || entities.Count() <= 0) return null;
+
+      var list = new List<ChartDataDTO>();
+      foreach (var item in entities)
+      {
+        var dto = new ChartDataDTO
+        {
+          Ticks = item.CreatedDateTime.Ticks,
+          Value = item.LowerLeg
+        };
+        list.Add(dto);
+      }
+      return list.ToArray();
+    }
+
+    public ChartDataDTO[] GetUpperArmHistory(long userID)
+    {
+      var entities = circumRep.GetAll().Where(a => a.UserID == userID);
+      if (entities == null || entities.Count() <= 0) return null;
+
+      var list = new List<ChartDataDTO>();
+      foreach (var item in entities)
+      {
+        var dto = new ChartDataDTO
+        {
+          Ticks = item.CreatedDateTime.Ticks,
+          Value = item.UpperArm
+        };
+        list.Add(dto);
+      }
+      return list.ToArray();
+    }
+
+    public ChartDataDTO[] GetUpperLegHistory(long userID)
+    {
+      var entities = circumRep.GetAll().Where(a => a.UserID == userID);
+      if (entities == null || entities.Count() <= 0) return null;
+
+      var list = new List<ChartDataDTO>();
+      foreach (var item in entities)
+      {
+        var dto = new ChartDataDTO
+        {
+          Ticks = item.CreatedDateTime.Ticks,
+          Value = item.UpperLeg
+        };
+        list.Add(dto);
+      }
+      return list.ToArray();
+    }
+
+    public ChartDataDTO[] GetWaistHistory(long userID)
+    {
+      var entities = circumRep.GetAll().Where(a => a.UserID == userID);
+      if (entities == null || entities.Count() <= 0) return null;
+
+      var list = new List<ChartDataDTO>();
+      foreach (var item in entities)
+      {
+        var dto = new ChartDataDTO
+        {
+          Ticks = item.CreatedDateTime.Ticks,
+          Value = item.Waist
+        };
+        list.Add(dto);
+      }
+      return list.ToArray();
+    }
+
+    public ChartDataDTO[] GetWeightHistory(long userID)
+    {
+      var entities = circumRep.GetAll().Where(a => a.UserID == userID);
+      if (entities == null || entities.Count() <= 0) return null;
+
+      var list = new List<ChartDataDTO>();
+      foreach (var item in entities)
+      {
+        var dto = new ChartDataDTO
+        {
+          Ticks = item.CreatedDateTime.Ticks,
+          Value = item.Weight
+        };
+        list.Add(dto);
+      }
+      return list.ToArray();
+    }
+
     private bool IsToday(DateTime date)
     {
       var today = DateTimeHelper.GetToday();

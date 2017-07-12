@@ -16,5 +16,21 @@ namespace Fit.IService
     BodyCircumferenceDTO GetByID(long id);
 
     BodyCircumferenceDTO GetCurrentByUserID(long userID);
+
+    ChartDataDTO[] GetWeightHistory(long userID);
+
+    ChartDataDTO[] GetUpperArmHistory(long userID);
+
+    ChartDataDTO[] GetLowerArmHistory(long userID);
+
+    ChartDataDTO[] GetChestHistory(long userID);
+
+    ChartDataDTO[] GetWaistHistory(long userID);
+
+    ChartDataDTO[] GetHipHistory(long userID);
+
+    ChartDataDTO[] GetUpperLegHistory(long userID);
+
+    ChartDataDTO[] GetLowerLegHistory(long userID);
   }
 }

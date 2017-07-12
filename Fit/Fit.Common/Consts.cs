@@ -51,6 +51,15 @@ namespace Fit.Common
     public const string COLOR_UNFINISHED = "#1AB394";
     public const string COLOR_FINISHED = "#BEBEBE";
     public const string COLOR_TODAY = "# CDAD00";
+
+    public const string BODY_WEIGHT = "体重";
+    public const string BODY_UPPER_ARM= "上臂围";
+    public const string BODY_LOWER_ARM = "小臂围";
+    public const string BODY_CHEST = "胸围";
+    public const string BODY_WAIST = "腰围";
+    public const string BODY_HIP = "臀围";
+    public const string BODY_UPPER_LEG = "大腿围";
+    public const string BODY_LOWER_LEG = "小腿围";
   }
 
   public class SessionKeys

@@ -50,6 +50,7 @@
     <Compile Include="MuscleDTO.cs" />
     <Compile Include="MuscleGroupDTO.cs" />
     <Compile Include="PlanDTO.cs" />
+    <Compile Include="ChartDataDTO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RBAC\AdminUserDTO.cs" />
     <Compile Include="RBAC\PermissionDTO.cs" />

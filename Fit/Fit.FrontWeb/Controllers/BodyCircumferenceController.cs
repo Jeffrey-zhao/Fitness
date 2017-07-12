@@ -19,8 +19,8 @@ namespace Fit.FrontWeb.Controllers
       this.circumService = circumService;
     }
 
-    [HttpGet]
     [Login]
+    [HttpGet]
     public ActionResult Record()
     {
       var userID = MVCHelper.GetLoginIdFromSession(HttpContext).Value;
@@ -35,8 +35,8 @@ namespace Fit.FrontWeb.Controllers
       }
     }
 
-    [HttpPost]
     [Login]
+    [HttpPost]
     public ActionResult Record(BodyCircumferenceModel model)
     {
       if (!ModelState.IsValid)
@@ -64,6 +64,86 @@ namespace Fit.FrontWeb.Controllers
     public ActionResult Chart()
     {
       return View();
+    }
+
+    [Login]
+    [HttpPost]
+    public ActionResult LoadWeightData()
+    {
+      var userID = MVCHelper.GetLoginIdFromSession(HttpContext).Value;
+      var dtos = circumService.GetWeightHistory(userID);
+      var model = new ChartDataModel { Data = dtos, Legend = Consts.BODY_WEIGHT };
+      return MVCHelper.GetJsonResult(new AjaxResult { Data = model });
+    }
+
+    [Login]
+    [HttpPost]
+    public ActionResult LoadUpperArmData()
+    {
+      var userID = MVCHelper.GetLoginIdFromSession(HttpContext).Value;
+      var dtos = circumService.GetUpperArmHistory(userID);
+      var model = new ChartDataModel { Data = dtos, Legend = Consts.BODY_UPPER_ARM };
+      return MVCHelper.GetJsonResult(new AjaxResult { Data = model });
+    }
+
+    [Login]
+    [HttpPost]
+    public ActionResult LoadLowerArmData()
+    {
+      var userID = MVCHelper.GetLoginIdFromSession(HttpContext).Value;
+      var dtos = circumService.GetLowerArmHistory(userID);
+      var model = new ChartDataModel { Data = dtos, Legend = Consts.BODY_LOWER_ARM };
+      return MVCHelper.GetJsonResult(new AjaxResult { Data = model });
+    }
+
+    [Login]
+    [HttpPost]
+    public ActionResult LoadChestData()
+    {
+      var userID = MVCHelper.GetLoginIdFromSession(HttpContext).Value;
+      var dtos = circumService.GetChestHistory(userID);
+      var model = new ChartDataModel { Data = dtos, Legend = Consts.BODY_CHEST };
+      return MVCHelper.GetJsonResult(new AjaxResult { Data = model });
+    }
+
+    [Login]
+    [HttpPost]
+    public ActionResult LoadWaistData()
+    {
+      var userID = MVCHelper.GetLoginIdFromSession(HttpContext).Value;
+      var dtos = circumService.GetWaistHistory(userID);
+      var model = new ChartDataModel { Data = dtos, Legend = Consts.BODY_WAIST };
+      return MVCHelper.GetJsonResult(new AjaxResult { Data = model });
+    }
+
+    [Login]
+    [HttpPost]
+    public ActionResult LoadHipData()
+    {
+      var userID = MVCHelper.GetLoginIdFromSession(HttpContext).Value;
+      var dtos = circumService.GetHipHistory(userID);
+      var model = new ChartDataModel { Data = dtos, Legend = Consts.BODY_HIP };
+      return MVCHelper.GetJsonResult(new AjaxResult { Data = model });
+    }
+
+    [Login]
+    [HttpPost]
+    public ActionResult LoadUpperLegData()
+    {
+      var userID = MVCHelper.GetLoginIdFromSession(HttpContext).Value;
+      var dtos = circumService.GetUpperLegHistory(userID);
+      var model = new ChartDataModel { Data = dtos, Legend = Consts.BODY_UPPER_LEG };
+      return MVCHelper.GetJsonResult(new AjaxResult { Data = model });
+    }
+
+    [Login]
+    [HttpPost]
+    public ActionResult LoadLowerLegData()
+    {
+      var userID = MVCHelper.GetLoginIdFromSession(HttpContext).Value;
+      var dtos = circumService.GetLowerLegHistory(userID);
+      var model = new ChartDataModel { Data = dtos, Legend = Consts.BODY_LOWER_LEG };
+      return MVCHelper.GetJsonResult(new AjaxResult { Data = model });
     }
   }
 }

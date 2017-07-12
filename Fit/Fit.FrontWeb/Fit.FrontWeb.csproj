@@ -203,6 +203,7 @@
     </Compile>
     <Compile Include="Models\BodyCircumferenceModel.cs" />
     <Compile Include="Models\ChangePwdModel.cs" />
+    <Compile Include="Models\ChartDataModel.cs" />
     <Compile Include="Models\CombineMotionAddModel.cs" />
     <Compile Include="Models\CycleDaysViewModel.cs" />
     <Compile Include="Models\HomeIndexModel.cs" />
