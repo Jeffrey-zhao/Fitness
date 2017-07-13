@@ -1,0 +1,110 @@
+﻿
+@{
+  ViewBag.Title = "AnalyzePlan";
+}
+
+<div class="ibox-content">
+  <div class="flot-chart">
+    <div class="flot-chart-pie-content" id="flot-pie-chart"></div>
+  </div>
+</div>
+
+@section FooterScript{
+  <!-- Flot -->
+  <script src="~/Scripts/plugins/flot/jquery.flot.js"></script>
+  <script src="~/Scripts/plugins/flot/jquery.flot.tooltip.min.js"></script>
+  <script src="~/Scripts/plugins/flot/jquery.flot.resize.js"></script>
+  <script src="~/Scripts/plugins/flot/jquery.flot.pie.js"></script>
+  <script src="~/Scripts/plugins/flot/jquery.flot.time.js"></script>
+
+  <script type="text/javascript">
+    //Flot Pie Chart
+    $(function () {
+      loadChart();
+      var data = [{
+        label: "Sales 1",
+        data: 21,
+        color: "#d3d3d3",
+      }, {
+        label: "Sales 2",
+        data: 21,
+        color: "#bababa",
+      }, {
+        label: "Sales 3",
+        data: 15,
+        color: "#79d2c0",
+      }, {
+        label: "Sales 4",
+        data: 21,
+        color: "#1ab394",
+      }, {
+        label: "Sales 1",
+        data: 21,
+        color: "#B4EEB4",
+      }, {
+        label: "Sales 3",
+        data: 15,
+        color: "#54FF9F",
+      }, {
+        label: "Sales 4",
+        data: 21.9,
+        color: "#548B54",
+      }];
+
+
+
+      //var plotObj = $.plot($("#flot-pie-chart"), data, pieOptions);
+
+    });
+    var pieOptions = {
+      series: {
+        pie: {
+          show: true
+        }
+      },
+      grid: {
+        hoverable: true
+      },
+      tooltip: true,
+      tooltipOpts: {
+        content: "%p.0%, %s", // show percentages, rounding to 2 decimal places
+        shifts: {
+          x: 20,
+          y: 0
+        },
+        defaultTheme: false
+      }
+    }
+
+    function loadChart() {
+      $.ajax({
+        type: 'post',
+        dataType: 'json',
+        url: '/Plan/ComparePartialAndCombine',
+        success: function (res) {
+          setChart(res);
+        },
+        error: function () {
+          alert(type + ' ajax请求失败');
+        }
+      });
+    }
+
+    function setChart(res) {
+      var array = [];
+
+
+      for (var i = 0; i < res.data.length; i++) {
+        var unit = {
+          label: res.data[i].label,
+          data: res.data[i].value,
+          color: res.data[i].color
+        };
+        array.push(unit);
+      }
+
+      var plotObj = $.plot($("#flot-pie-chart"), array, pieOptions);
+    }
+  </script>
+}
+

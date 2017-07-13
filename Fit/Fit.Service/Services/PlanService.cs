@@ -147,5 +147,47 @@ namespace Fit.Service.Services
       }
       return dto;
     }
+
+    public PieChartDTO[] CompareCombineAndPartial(long userID)
+    {
+      var entities = planRep.GetAll().Where(a => a.UserID == userID).Include(a => a.MotionsInPlans).ToList();
+      int combineCount = 0, partialCount = 0;
+      foreach (var plan in entities)
+      {
+        if (plan.MotionsInPlans == null || !plan.MotionsInPlans.Any()) continue;
+        foreach (var mip in plan.MotionsInPlans)
+        {
+          if (mip.IsDeleted == true) continue;
+          if (mip.Motion.MuscleID.HasValue)
+          {
+            partialCount++;
+          }
+          else
+          {
+            combineCount++;
+          }
+        }
+      }
+
+      var dtos = new PieChartDTO[2];
+      var dto = new PieChartDTO
+      {
+        Label = Consts.TEXT_COMBINE,
+        Value = combineCount
+      };
+      dtos[0] = dto;
+      dto = new PieChartDTO
+      {
+        Label = Consts.TEXT_PARTIAL,
+        Value = partialCount
+      };
+      dtos[1] = dto;
+      return dtos;
+    }
+
+    public PieChartDTO[] CompareMuscleGroups(long userID)
+    {
+      throw new NotImplementedException();
+    }
   }
 }

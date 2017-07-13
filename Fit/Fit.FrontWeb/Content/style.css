@@ -1520,8 +1520,8 @@ a.list-group-item.active:focus {
   height: 100%;
 }
 .flot-chart-pie-content {
-  width: 200px;
-  height: 200px;
+  width: 400px;
+  height: 400px;
   margin: auto;
 }
 .jqstooltip {

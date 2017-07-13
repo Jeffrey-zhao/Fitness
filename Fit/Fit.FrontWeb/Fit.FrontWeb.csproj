@@ -246,6 +246,7 @@
     <Content Include="Views\BodyCircumference\AddRecord.cshtml" />
     <Content Include="Views\BodyCircumference\EditRecord.cshtml" />
     <Content Include="Views\BodyCircumference\Chart.cshtml" />
+    <Content Include="Views\BodyCircumference\AnalyzePlan.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

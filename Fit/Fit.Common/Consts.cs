@@ -24,6 +24,7 @@ namespace Fit.Common
 
     public const string CLOUD_DOMAIN = "http://orivq9ow0.bkt.clouddn.com/";
     public const string TEXT_COMBINE = "综合训练";
+    public const string TEXT_PARTIAL = "局部训练";
     public const int CAPTCHA_LENGTH = 5;
 
     public const char SPLITER = ',';
@@ -53,7 +54,7 @@ namespace Fit.Common
     public const string COLOR_TODAY = "# CDAD00";
 
     public const string BODY_WEIGHT = "体重";
-    public const string BODY_UPPER_ARM= "上臂围";
+    public const string BODY_UPPER_ARM = "上臂围";
     public const string BODY_LOWER_ARM = "小臂围";
     public const string BODY_CHEST = "胸围";
     public const string BODY_WAIST = "腰围";
@@ -100,7 +101,9 @@ namespace Fit.Common
     public const string PLAN_MAX_SECHEDULEDAYS = "MaxSechaduleDays";
     #endregion
 
-
-
+    #region Color
+    public const string COLOR_FOR_7 = "ColorFor7";
+    public const string COLOR_FOR_2 = "ColorFor2";
+    #endregion
   }
 }

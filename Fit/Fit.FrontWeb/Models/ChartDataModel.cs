@@ -8,7 +8,7 @@ namespace Fit.FrontWeb.Models
 {
   public class ChartDataModel
   {
-    public ChartDataDTO[] Data { get; set; }
+    public LineChartDTO[] Data { get; set; }
     public string Legend { get; set; }
   }
 }

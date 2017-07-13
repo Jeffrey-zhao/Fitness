@@ -86,5 +86,27 @@ namespace Fit.FrontWeb.Controllers
       return MVCHelper.GetJsonResult(new AjaxResult { Data = dtos });
     }
 
+    [Login]
+    [HttpPost]
+    public ActionResult ComparePartialAndCombine()
+    {
+      var loginID = MVCHelper.GetLoginIdFromSession(HttpContext).Value;
+      var dtos = planService.CompareCombineAndPartial(loginID);
+      var colorStr = kvService.GetValue(DBKeys.COLOR_FOR_2);
+      var colorArr = colorStr.Split(Consts.SPLITER);
+      for (int i = 0; i < dtos.Length; i++)
+      {
+        dtos[i].Color = colorArr[i];
+      }
+      return MVCHelper.GetJsonResult(new AjaxResult { Data = dtos });
+    }
+
+    [Login]
+    [HttpPost]
+    public ActionResult CompareMuscleGroups()
+    {
+      return View();
+    }
+
   }
 }

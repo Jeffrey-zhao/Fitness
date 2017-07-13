@@ -18,5 +18,12 @@ namespace Fit.Common
       return DateTime.Now.AddDays(0).Date;
     }
 
+    public static long GetTicks(DateTime current)
+    {
+      var baseDate = new DateTime(1970, 1, 1);
+      var span = current - baseDate;
+      return (long)span.TotalMilliseconds;
+    }
+
   }
 }
