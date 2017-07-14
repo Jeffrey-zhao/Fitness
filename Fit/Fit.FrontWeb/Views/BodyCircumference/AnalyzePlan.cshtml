@@ -2,12 +2,37 @@
 @{
   ViewBag.Title = "AnalyzePlan";
 }
-
-<div class="ibox-content">
-  <div class="flot-chart">
-    <div class="flot-chart-pie-content" id="flot-pie-chart"></div>
+<div class="row">
+  <div class="col-lg-12">
+    <div class="tabs-container">
+      <ul class="nav nav-tabs">
+        <li class="active" onclick="loadChart('ComparePartialAndCombine')"><a data-toggle="tab" href="#tab-1">综合vs局部</a></li>
+        <li class="" onclick="loadChart('CompareMuscleGroups')"><a data-toggle="tab" href="#tab-2">肌群</a></li>
+      </ul>
+      <div class="tab-content">
+        <div id="tab-1" class="tab-pane active">
+          <div class="panel-body">
+            <div class="ibox-content">
+              <div class="flot-chart">
+                <div class="flot-chart-pie-content" id="ComparePartialAndCombine"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div id="tab-2" class="tab-pane">
+          <div class="panel-body">
+            <div class="ibox-content">
+              <div class="flot-chart">
+                <div class="flot-chart-pie-content" id="CompareMuscleGroups"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
+
 
 @section FooterScript{
   <!-- Flot -->
@@ -20,7 +45,8 @@
   <script type="text/javascript">
     //Flot Pie Chart
     $(function () {
-      loadChart();
+      loadChart('ComparePartialAndCombine');
+      //loadChart('CompareMuscleGroups');
       var data = [{
         label: "Sales 1",
         data: 21,
@@ -76,13 +102,13 @@
       }
     }
 
-    function loadChart() {
+    function loadChart(type) {
       $.ajax({
         type: 'post',
         dataType: 'json',
-        url: '/Plan/ComparePartialAndCombine',
+        url: '/Plan/' + type,
         success: function (res) {
-          setChart(res);
+          setChart(res, type);
         },
         error: function () {
           alert(type + ' ajax请求失败');
@@ -90,10 +116,8 @@
       });
     }
 
-    function setChart(res) {
+    function setChart(res, type) {
       var array = [];
-
-
       for (var i = 0; i < res.data.length; i++) {
         var unit = {
           label: res.data[i].label,
@@ -103,7 +127,7 @@
         array.push(unit);
       }
 
-      var plotObj = $.plot($("#flot-pie-chart"), array, pieOptions);
+      var plotObj = $.plot($("#" + type), array, pieOptions);
     }
   </script>
 }

@@ -105,7 +105,15 @@ namespace Fit.FrontWeb.Controllers
     [HttpPost]
     public ActionResult CompareMuscleGroups()
     {
-      return View();
+      var loginID = MVCHelper.GetLoginIdFromSession(HttpContext).Value;
+      var dtos = planService.CompareMuscleGroups(loginID);
+      var colorStr = kvService.GetValue(DBKeys.COLOR_FOR_8);
+      var colorArr = colorStr.Split(Consts.SPLITER);
+      for(int i= 0;i<dtos.Length;i++)
+      {
+        dtos[i].Color = colorArr[i];
+      }
+      return MVCHelper.GetJsonResult(new AjaxResult { Data = dtos });
     }
 
   }

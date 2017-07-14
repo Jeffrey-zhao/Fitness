@@ -102,7 +102,7 @@ namespace Fit.Common
     #endregion
 
     #region Color
-    public const string COLOR_FOR_7 = "ColorFor7";
+    public const string COLOR_FOR_8 = "ColorFor8";
     public const string COLOR_FOR_2 = "ColorFor2";
     #endregion
   }

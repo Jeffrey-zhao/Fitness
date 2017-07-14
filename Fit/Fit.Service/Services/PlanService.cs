@@ -187,7 +187,33 @@ namespace Fit.Service.Services
 
     public PieChartDTO[] CompareMuscleGroups(long userID)
     {
-      throw new NotImplementedException();
+      var plans = planRep.GetAll().Where(a => a.UserID == userID).Include(a => a.MotionsInPlans).ToList();
+      int count = 0;
+      var muscleGroups = planRep.Ctx.MuscleGroups.Where(a => a.IsDeleted == false).ToList();
+      var dtoList = new List<PieChartDTO>();
+      foreach (var item in muscleGroups)
+      {
+        foreach (var plan in plans)
+        {
+          if (plan.MotionsInPlans == null || !plan.MotionsInPlans.Any()) continue;
+          foreach (var mip in plan.MotionsInPlans)
+          {
+            if (mip.IsDeleted == true) continue;
+            var motion = planRep.Ctx.Motions.Where(a => a.IsDeleted == false&&a.ID==mip.MotionID).Include(a => a.Muscle).Include(a => a.Muscle.MuscleGroup).FirstOrDefault();
+            if (motion.Muscle == null) continue;
+            if (motion.Muscle.MuscleGroupID != item.ID) continue;
+            count++;
+          }
+        }
+        var dto = new PieChartDTO
+        {
+          Label = item.Name,
+          Value = count
+        };
+        count = 0;
+        dtoList.Add(dto);
+      }
+      return dtoList.ToArray();
     }
   }
 }
