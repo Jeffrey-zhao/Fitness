@@ -52,5 +52,12 @@ namespace Fit.FrontWeb.Controllers
       return result ? MVCHelper.GetJsonResult(AjaxResultEnum.ok)
                               : MVCHelper.GetJsonResult(AjaxResultEnum.error);
     }
+
+    public ActionResult Introduce()
+    {
+      var urlsStr = kvService.GetValue(DBKeys.INTRODUCE_IMAGE_URLS);
+      var urlsArr = urlsStr.Split(Consts.SPLITER);
+      return View(urlsArr);
+    }
   }
 }

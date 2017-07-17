@@ -1,0 +1,39 @@
+﻿
+@{
+  ViewBag.Title = "Introduce | Fit";
+}
+@model string[]
+
+<link href="~/Content/plugins/blueimp/css/blueimp-gallery.min.css" rel="stylesheet">
+<div class="row">
+  <div class="col-sm-12">
+    <div class="ibox float-e-margins">
+      @if (Model != null && Model.Length > 0)
+      {
+        foreach (var url in Model)
+        {
+          <img src="" />
+        }
+      }
+    </div>
+  </div>
+</div>
+
+@section FooterScript{
+  <!-- blueimp gallery -->
+  <script src="~/Scripts/plugins/blueimp/jquery.blueimp-gallery.min.js"></script>
+
+  <script type="text/javascript" src="~/Scripts/template.js"></script>
+  <script id="motionImg" type="text/html">
+    {{each imgs as img}}
+    <div class="file-box" style="width:160px;height:120px">
+      <div class="file">
+        <div class="image">
+          <a href="{{img.url}}" data-gallery=""> <img alt="image" class="img-responsive" src="{{img.url}}"></a>
+        </div>
+      </div>
+    </div>
+    {{/each}}
+  </script>
+}
+

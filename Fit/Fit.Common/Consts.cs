@@ -105,5 +105,9 @@ namespace Fit.Common
     public const string COLOR_FOR_8 = "ColorFor8";
     public const string COLOR_FOR_2 = "ColorFor2";
     #endregion
+
+    #region Introduce
+    public const string INTRODUCE_IMAGE_URLS = "IntroduceImageUrls";
+    #endregion
   }
 }
