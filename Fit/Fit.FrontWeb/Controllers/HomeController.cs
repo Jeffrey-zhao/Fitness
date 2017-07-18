@@ -57,6 +57,10 @@ namespace Fit.FrontWeb.Controllers
     {
       var urlsStr = kvService.GetValue(DBKeys.INTRODUCE_IMAGE_URLS);
       var urlsArr = urlsStr.Split(Consts.SPLITER);
+      for (int i = 0; i < urlsArr.Length; i++)
+      {
+        urlsArr[i] = Consts.CLOUD_DOMAIN+"/"+ urlsArr[i];
+      }
       return View(urlsArr);
     }
   }
