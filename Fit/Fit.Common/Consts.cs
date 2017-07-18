@@ -28,6 +28,7 @@ namespace Fit.Common
     public const int CAPTCHA_LENGTH = 5;
 
     public const char SPLITER = ',';
+    public const char SPLITER_DASH = '-';
     public const string VERIFY_CODE_ERROR = "验证码错误";
     public const string LOGIN_FAILED = "账户或密码错误";
 

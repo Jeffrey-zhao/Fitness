@@ -1,5 +1,6 @@
 ﻿using Fit.Common;
 using Fit.FrontWeb.App_Start;
+using Fit.FrontWeb.Models;
 using Fit.IService;
 using System;
 using System.Collections.Generic;
@@ -55,13 +56,21 @@ namespace Fit.FrontWeb.Controllers
 
     public ActionResult Introduce()
     {
-      var urlsStr = kvService.GetValue(DBKeys.INTRODUCE_IMAGE_URLS);
-      var urlsArr = urlsStr.Split(Consts.SPLITER);
-      for (int i = 0; i < urlsArr.Length; i++)
+      var introduces = kvService.GetValue(DBKeys.INTRODUCE_IMAGE_URLS);
+      var introduceArr = introduces.Split(Consts.SPLITER);
+      var models =new List<IntroduceModel>();
+      for (int i = 0; i < introduceArr.Length; i++)
       {
-        urlsArr[i] = Consts.CLOUD_DOMAIN+"/"+ urlsArr[i];
+        var detalModelArr = introduceArr[i].Split(Consts.SPLITER_DASH);
+        var introduceModel = new IntroduceModel
+        {
+          Title = detalModelArr[0],
+          Introduce = detalModelArr[1],
+          Url =Consts.CLOUD_DOMAIN+"/"+ detalModelArr[2],
+        };
+        models.Add(introduceModel);
       }
-      return View(urlsArr);
+      return View(models);
     }
   }
 }
