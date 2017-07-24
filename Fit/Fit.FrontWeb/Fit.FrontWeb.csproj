@@ -156,6 +156,7 @@
     <Content Include="Scripts\plugins\fullcalendar\fullcalendar.min.js" />
     <Content Include="Scripts\plugins\fullcalendar\moment.min.js" />
     <Content Include="Scripts\inspinia.js" />
+    <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />

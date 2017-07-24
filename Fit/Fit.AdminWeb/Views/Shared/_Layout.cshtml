@@ -214,6 +214,7 @@
       @RenderBody()
       <!--Footer-->
       <footer>
+        @RenderSection("FooterScript", false)
         <div class="footer">
           <div class="pull-right">
             &copy; @DateTime.Now.Year - Fit，你的健身助手
@@ -237,4 +238,3 @@
   <script src="~/Scripts/plugins/iCheck/icheck.min.js"></script>
 </body>
 </html>
-@RenderSection("FooterScript", false)

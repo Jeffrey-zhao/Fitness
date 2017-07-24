@@ -1,4 +1,5 @@
-﻿using Fit.AdminWeb.Models;
+﻿using Fit.AdminWeb.App_Start;
+using Fit.AdminWeb.Models;
 using Fit.Common;
 using Fit.DTO;
 using Fit.IService;
@@ -26,7 +27,7 @@ namespace Fit.AdminWeb.Controllers
       this.motionService = motionService;
       this.picService = picService;
     }
-
+    [Permission("Motion.List")]
     public ActionResult List(int pageIndex = 1)
     {
       var dtos = motionService.GetPagedData((pageIndex - 1) * Consts.PAGE_SIZE_NUM, Consts.PAGE_SIZE_NUM);
@@ -36,6 +37,7 @@ namespace Fit.AdminWeb.Controllers
     }
 
     [HttpGet]
+    [Permission("Motion.Add")]
     public ActionResult Add()
     {
       var muscleGroupList = muscleGroupService.GetAll().ToList();
@@ -44,6 +46,7 @@ namespace Fit.AdminWeb.Controllers
       return View(muscleGroupList);
     }
     [HttpPost]
+    [Permission("Motion.Add")]
     public ActionResult Add(MotionModel model)
     {
       if (!ModelState.IsValid)
@@ -69,6 +72,7 @@ namespace Fit.AdminWeb.Controllers
     }
 
     [HttpPost]
+    [Permission("Motion.LoadMuscle")]
     public ActionResult LoadMuscle(long id)
     {
       var muscleList = muscleService.GetByMuscleGroupID(id).ToList();
@@ -77,6 +81,7 @@ namespace Fit.AdminWeb.Controllers
     }
 
     [HttpPost]
+    [Permission("Motion.UploadImg")]
     public ActionResult UploadImg(int type, int motionID = 0)
     {
       HttpPostedFileBase file;
@@ -90,12 +95,13 @@ namespace Fit.AdminWeb.Controllers
       return MVCHelper.GetJsonResult(AjaxResultEnum.ok);
     }
     [HttpPost]
+    [Permission("Motion.DeleteImg")]
     public ActionResult DeleteImg(long id)
     {
       picService.Delete(id);
       return MVCHelper.GetJsonResult(AjaxResultEnum.ok);
     }
-
+    [Permission("Motion.SaveImgUrlInDB")]
     private void SaveImgUrlInDB(PicType type, string url, int motionID)
     {
       var dto = new MotionPicDTO
@@ -107,7 +113,7 @@ namespace Fit.AdminWeb.Controllers
       var id = picService.Add(dto);
       if (id <= 0) throw new Exception("adding failed");
     }
-
+    [Permission("Motion.GetImgUrls")]
     public ActionResult GetImgUrls(int type, int motionID = 0)
     {
       var dtos = picService.GetByMotionAndType(type, motionID);
@@ -115,6 +121,7 @@ namespace Fit.AdminWeb.Controllers
     }
 
     [HttpGet]
+    [Permission("Motion.Edit")]
     public ActionResult Edit(long id)
     {
       var motionDto = motionService.GetByID(id);
@@ -135,6 +142,7 @@ namespace Fit.AdminWeb.Controllers
       return View(model);
     }
     [HttpPost]
+    [Permission("Motion.Edit")]
     public ActionResult Edit(MotionModel model)
     {
       if (!ModelState.IsValid)
@@ -159,6 +167,7 @@ namespace Fit.AdminWeb.Controllers
     }
 
     [HttpPost]
+    [Permission("Motion.Delete")]
     public ActionResult Delete(long id)
     {
       motionService.Delete(id);

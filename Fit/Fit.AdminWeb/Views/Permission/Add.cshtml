@@ -26,25 +26,28 @@
 @section FooterScript{
   <script type="text/javascript" src="~/Scripts/jquery-1.10.2.min.js"></script>
   <script type="text/javascript">
-    var options = {
-      success: function (response) {
-        execResponse(response);
-      },
-      url: "/Permission/Add",
-      type: "post"
-    };
+    $(function () {
+      var options = {
+        success: function (response) {
+          execResponse(response);
+        },
+        url: "/Permission/Add",
+        type: "post"
+      };
 
-    $("#formAdd").submit(function () {
-      $(this).ajaxSubmit(options);
-      return false;
-    });
+      $("#formAdd").submit(function () {
+        $(this).ajaxSubmit(options);
+        return false;
+      });
 
-    function execResponse(res) {
-      if (res.status == "ok") {
-        location.href = "/Permission/List";
-      } else {
-        alert(res.msg);
+      function execResponse(res) {
+        if (res.status == "ok") {
+          location.href = "/Permission/List";
+        } else {
+          alert(res.msg);
+        }
       }
-    }
+    })
+
   </script>
 }
