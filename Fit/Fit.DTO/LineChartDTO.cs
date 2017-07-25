@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Fit.DTO
 {
-  public class ChartDataDTO
+  public class LineChartDTO
   {
     public long Ticks { get; set; }
     public double Value { get; set; }

@@ -80,17 +80,17 @@ namespace Fit.Service.Services
       }
     }
 
-    public ChartDataDTO[] GetChestHistory(long userID)
+    public LineChartDTO[] GetChestHistory(long userID)
     {
       var entities = circumRep.GetAll().Where(a => a.UserID == userID);
       if (entities == null || entities.Count() <= 0) return null;
 
-      var list = new List<ChartDataDTO>();
+      var list = new List<LineChartDTO>();
       foreach (var item in entities)
       {
-        var dto = new ChartDataDTO
+        var dto = new LineChartDTO
         {
-          Ticks = item.CreatedDateTime.Ticks,
+          Ticks = DateTimeHelper.GetTicks(item.CreatedDateTime),
           Value = item.Chest
         };
         list.Add(dto);
@@ -98,17 +98,17 @@ namespace Fit.Service.Services
       return list.ToArray();
     }
 
-    public ChartDataDTO[] GetHipHistory(long userID)
+    public LineChartDTO[] GetHipHistory(long userID)
     {
       var entities = circumRep.GetAll().Where(a => a.UserID == userID);
       if (entities == null || entities.Count() <= 0) return null;
 
-      var list = new List<ChartDataDTO>();
+      var list = new List<LineChartDTO>();
       foreach (var item in entities)
       {
-        var dto = new ChartDataDTO
+        var dto = new LineChartDTO
         {
-          Ticks = item.CreatedDateTime.Ticks,
+          Ticks = DateTimeHelper.GetTicks(item.CreatedDateTime),
           Value = item.Hip
         };
         list.Add(dto);
@@ -116,17 +116,17 @@ namespace Fit.Service.Services
       return list.ToArray();
     }
 
-    public ChartDataDTO[] GetLowerArmHistory(long userID)
+    public LineChartDTO[] GetLowerArmHistory(long userID)
     {
       var entities = circumRep.GetAll().Where(a => a.UserID == userID);
       if (entities == null || entities.Count() <= 0) return null;
 
-      var list = new List<ChartDataDTO>();
+      var list = new List<LineChartDTO>();
       foreach (var item in entities)
       {
-        var dto = new ChartDataDTO
+        var dto = new LineChartDTO
         {
-          Ticks = item.CreatedDateTime.Ticks,
+          Ticks = DateTimeHelper.GetTicks(item.CreatedDateTime),
           Value = item.LowerArm
         };
         list.Add(dto);
@@ -134,17 +134,17 @@ namespace Fit.Service.Services
       return list.ToArray();
     }
 
-    public ChartDataDTO[] GetLowerLegHistory(long userID)
+    public LineChartDTO[] GetLowerLegHistory(long userID)
     {
       var entities = circumRep.GetAll().Where(a => a.UserID == userID);
       if (entities == null || entities.Count() <= 0) return null;
 
-      var list = new List<ChartDataDTO>();
+      var list = new List<LineChartDTO>();
       foreach (var item in entities)
       {
-        var dto = new ChartDataDTO
+        var dto = new LineChartDTO
         {
-          Ticks = item.CreatedDateTime.Ticks,
+          Ticks = DateTimeHelper.GetTicks(item.CreatedDateTime),
           Value = item.LowerLeg
         };
         list.Add(dto);
@@ -152,17 +152,17 @@ namespace Fit.Service.Services
       return list.ToArray();
     }
 
-    public ChartDataDTO[] GetUpperArmHistory(long userID)
+    public LineChartDTO[] GetUpperArmHistory(long userID)
     {
       var entities = circumRep.GetAll().Where(a => a.UserID == userID);
       if (entities == null || entities.Count() <= 0) return null;
 
-      var list = new List<ChartDataDTO>();
+      var list = new List<LineChartDTO>();
       foreach (var item in entities)
       {
-        var dto = new ChartDataDTO
+        var dto = new LineChartDTO
         {
-          Ticks = item.CreatedDateTime.Ticks,
+          Ticks = DateTimeHelper.GetTicks(item.CreatedDateTime),
           Value = item.UpperArm
         };
         list.Add(dto);
@@ -170,17 +170,17 @@ namespace Fit.Service.Services
       return list.ToArray();
     }
 
-    public ChartDataDTO[] GetUpperLegHistory(long userID)
+    public LineChartDTO[] GetUpperLegHistory(long userID)
     {
       var entities = circumRep.GetAll().Where(a => a.UserID == userID);
       if (entities == null || entities.Count() <= 0) return null;
 
-      var list = new List<ChartDataDTO>();
+      var list = new List<LineChartDTO>();
       foreach (var item in entities)
       {
-        var dto = new ChartDataDTO
+        var dto = new LineChartDTO
         {
-          Ticks = item.CreatedDateTime.Ticks,
+          Ticks = DateTimeHelper.GetTicks(item.CreatedDateTime),
           Value = item.UpperLeg
         };
         list.Add(dto);
@@ -188,17 +188,17 @@ namespace Fit.Service.Services
       return list.ToArray();
     }
 
-    public ChartDataDTO[] GetWaistHistory(long userID)
+    public LineChartDTO[] GetWaistHistory(long userID)
     {
       var entities = circumRep.GetAll().Where(a => a.UserID == userID);
       if (entities == null || entities.Count() <= 0) return null;
 
-      var list = new List<ChartDataDTO>();
+      var list = new List<LineChartDTO>();
       foreach (var item in entities)
       {
-        var dto = new ChartDataDTO
+        var dto = new LineChartDTO
         {
-          Ticks = item.CreatedDateTime.Ticks,
+          Ticks = DateTimeHelper.GetTicks(item.CreatedDateTime),
           Value = item.Waist
         };
         list.Add(dto);
@@ -206,17 +206,17 @@ namespace Fit.Service.Services
       return list.ToArray();
     }
 
-    public ChartDataDTO[] GetWeightHistory(long userID)
+    public LineChartDTO[] GetWeightHistory(long userID)
     {
       var entities = circumRep.GetAll().Where(a => a.UserID == userID);
       if (entities == null || entities.Count() <= 0) return null;
 
-      var list = new List<ChartDataDTO>();
+      var list = new List<LineChartDTO>();
       foreach (var item in entities)
       {
-        var dto = new ChartDataDTO
+        var dto = new LineChartDTO
         {
-          Ticks = item.CreatedDateTime.Ticks,
+          Ticks = DateTimeHelper.GetTicks(item.CreatedDateTime),
           Value = item.Weight
         };
         list.Add(dto);

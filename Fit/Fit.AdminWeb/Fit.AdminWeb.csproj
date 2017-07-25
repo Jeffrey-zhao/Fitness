@@ -197,7 +197,6 @@
     <Compile Include="Controllers\MuscleGroupController.cs" />
     <Compile Include="Controllers\PermissionController.cs" />
     <Compile Include="Controllers\RoleController.cs" />
-    <Compile Include="Controllers\UploadTestController.cs" />
     <Compile Include="Controllers\UserInfoController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>

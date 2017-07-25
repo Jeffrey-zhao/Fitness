@@ -1,0 +1,134 @@
+﻿
+@{
+  ViewBag.Title = "AnalyzePlan";
+}
+<div class="row">
+  <div class="col-lg-12">
+    <div class="tabs-container">
+      <ul class="nav nav-tabs">
+        <li class="active" onclick="loadChart('ComparePartialAndCombine')"><a data-toggle="tab" href="#tab-1">综合vs局部</a></li>
+        <li class="" onclick="loadChart('CompareMuscleGroups')"><a data-toggle="tab" href="#tab-2">肌群</a></li>
+      </ul>
+      <div class="tab-content">
+        <div id="tab-1" class="tab-pane active">
+          <div class="panel-body">
+            <div class="ibox-content">
+              <div class="flot-chart">
+                <div class="flot-chart-pie-content" id="ComparePartialAndCombine"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div id="tab-2" class="tab-pane">
+          <div class="panel-body">
+            <div class="ibox-content">
+              <div class="flot-chart">
+                <div class="flot-chart-pie-content" id="CompareMuscleGroups"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+@section FooterScript{
+  <!-- Flot -->
+  <script src="~/Scripts/plugins/flot/jquery.flot.js"></script>
+  <script src="~/Scripts/plugins/flot/jquery.flot.tooltip.min.js"></script>
+  <script src="~/Scripts/plugins/flot/jquery.flot.resize.js"></script>
+  <script src="~/Scripts/plugins/flot/jquery.flot.pie.js"></script>
+  <script src="~/Scripts/plugins/flot/jquery.flot.time.js"></script>
+
+  <script type="text/javascript">
+    //Flot Pie Chart
+    $(function () {
+      loadChart('ComparePartialAndCombine');
+      //loadChart('CompareMuscleGroups');
+      var data = [{
+        label: "Sales 1",
+        data: 21,
+        color: "#d3d3d3",
+      }, {
+        label: "Sales 2",
+        data: 21,
+        color: "#bababa",
+      }, {
+        label: "Sales 3",
+        data: 15,
+        color: "#79d2c0",
+      }, {
+        label: "Sales 4",
+        data: 21,
+        color: "#1ab394",
+      }, {
+        label: "Sales 1",
+        data: 21,
+        color: "#B4EEB4",
+      }, {
+        label: "Sales 3",
+        data: 15,
+        color: "#54FF9F",
+      }, {
+        label: "Sales 4",
+        data: 21.9,
+        color: "#548B54",
+      }];
+
+
+
+      //var plotObj = $.plot($("#flot-pie-chart"), data, pieOptions);
+
+    });
+    var pieOptions = {
+      series: {
+        pie: {
+          show: true
+        }
+      },
+      grid: {
+        hoverable: true
+      },
+      tooltip: true,
+      tooltipOpts: {
+        content: "%p.0%, %s", // show percentages, rounding to 2 decimal places
+        shifts: {
+          x: 20,
+          y: 0
+        },
+        defaultTheme: false
+      }
+    }
+
+    function loadChart(type) {
+      $.ajax({
+        type: 'post',
+        dataType: 'json',
+        url: '/Plan/' + type,
+        success: function (res) {
+          setChart(res, type);
+        },
+        error: function () {
+          alert(type + ' ajax请求失败');
+        }
+      });
+    }
+
+    function setChart(res, type) {
+      var array = [];
+      for (var i = 0; i < res.data.length; i++) {
+        var unit = {
+          label: res.data[i].label,
+          data: res.data[i].value,
+          color: res.data[i].color
+        };
+        array.push(unit);
+      }
+
+      var plotObj = $.plot($("#" + type), array, pieOptions);
+    }
+  </script>
+}
+

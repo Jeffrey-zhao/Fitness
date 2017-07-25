@@ -1,5 +1,6 @@
 ﻿using Fit.Common;
 using Fit.FrontWeb.App_Start;
+using Fit.FrontWeb.Models;
 using Fit.IService;
 using System;
 using System.Collections.Generic;
@@ -51,6 +52,25 @@ namespace Fit.FrontWeb.Controllers
       var result = secheduleService.FinishSechedule(loginID);
       return result ? MVCHelper.GetJsonResult(AjaxResultEnum.ok)
                               : MVCHelper.GetJsonResult(AjaxResultEnum.error);
+    }
+
+    public ActionResult Introduce()
+    {
+      var introduces = kvService.GetValue(DBKeys.INTRODUCE_IMAGE_URLS);
+      var introduceArr = introduces.Split(Consts.SPLITER);
+      var models =new List<IntroduceModel>();
+      for (int i = 0; i < introduceArr.Length; i++)
+      {
+        var detalModelArr = introduceArr[i].Split(Consts.SPLITER_DASH);
+        var introduceModel = new IntroduceModel
+        {
+          Title = detalModelArr[0],
+          Introduce = detalModelArr[1],
+          Url =Consts.CLOUD_DOMAIN+"/"+ detalModelArr[2],
+        };
+        models.Add(introduceModel);
+      }
+      return View(models);
     }
   }
 }

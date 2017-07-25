@@ -16,5 +16,9 @@ namespace Fit.IService
     long GetPlanCount(long userId);
 
     SecheduleDTO[] GetSechedule(long userId,string startDateStr, string endDateStr);
+
+    PieChartDTO[] CompareCombineAndPartial(long userID);
+
+    PieChartDTO[] CompareMuscleGroups(long userID);
   }
 }

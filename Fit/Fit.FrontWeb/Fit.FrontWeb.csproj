@@ -208,6 +208,7 @@
     <Compile Include="Models\CombineMotionAddModel.cs" />
     <Compile Include="Models\CycleDaysViewModel.cs" />
     <Compile Include="Models\HomeIndexModel.cs" />
+    <Compile Include="Models\IntroduceModel.cs" />
     <Compile Include="Models\LoginModel.cs" />
     <Compile Include="Models\PartialMotionAddModel.cs" />
     <Compile Include="Models\RegisterModel.cs" />
@@ -247,6 +248,8 @@
     <Content Include="Views\BodyCircumference\AddRecord.cshtml" />
     <Content Include="Views\BodyCircumference\EditRecord.cshtml" />
     <Content Include="Views\BodyCircumference\Chart.cshtml" />
+    <Content Include="Views\BodyCircumference\AnalyzePlan.cshtml" />
+    <Content Include="Views\Home\Introduce.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -286,7 +289,7 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>True</UseIIS>
+          <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>64555</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>

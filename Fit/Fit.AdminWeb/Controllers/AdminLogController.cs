@@ -1,4 +1,5 @@
-﻿using Fit.Common;
+﻿using Fit.AdminWeb.App_Start;
+using Fit.Common;
 using Fit.IService;
 using System;
 using System.Collections.Generic;
@@ -15,7 +16,7 @@ namespace Fit.AdminWeb.Controllers
     {
       this.service = service;
     }
-    // GET: AdminLog
+    [Permission("AdminLog.List")]
     public ActionResult List(int pageIndex = 1)
     {
       var dtos = service.GetPagedData((pageIndex - 1) * Consts.PAGE_SIZE_NUM, Consts.PAGE_SIZE_NUM);

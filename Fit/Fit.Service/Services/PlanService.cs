@@ -147,5 +147,73 @@ namespace Fit.Service.Services
       }
       return dto;
     }
+
+    public PieChartDTO[] CompareCombineAndPartial(long userID)
+    {
+      var entities = planRep.GetAll().Where(a => a.UserID == userID).Include(a => a.MotionsInPlans).ToList();
+      int combineCount = 0, partialCount = 0;
+      foreach (var plan in entities)
+      {
+        if (plan.MotionsInPlans == null || !plan.MotionsInPlans.Any()) continue;
+        foreach (var mip in plan.MotionsInPlans)
+        {
+          if (mip.IsDeleted == true) continue;
+          if (mip.Motion.MuscleID.HasValue)
+          {
+            partialCount++;
+          }
+          else
+          {
+            combineCount++;
+          }
+        }
+      }
+
+      var dtos = new PieChartDTO[2];
+      var dto = new PieChartDTO
+      {
+        Label = Consts.TEXT_COMBINE,
+        Value = combineCount
+      };
+      dtos[0] = dto;
+      dto = new PieChartDTO
+      {
+        Label = Consts.TEXT_PARTIAL,
+        Value = partialCount
+      };
+      dtos[1] = dto;
+      return dtos;
+    }
+
+    public PieChartDTO[] CompareMuscleGroups(long userID)
+    {
+      var plans = planRep.GetAll().Where(a => a.UserID == userID).Include(a => a.MotionsInPlans).ToList();
+      int count = 0;
+      var muscleGroups = planRep.Ctx.MuscleGroups.Where(a => a.IsDeleted == false).ToList();
+      var dtoList = new List<PieChartDTO>();
+      foreach (var item in muscleGroups)
+      {
+        foreach (var plan in plans)
+        {
+          if (plan.MotionsInPlans == null || !plan.MotionsInPlans.Any()) continue;
+          foreach (var mip in plan.MotionsInPlans)
+          {
+            if (mip.IsDeleted == true) continue;
+            var motion = planRep.Ctx.Motions.Where(a => a.IsDeleted == false&&a.ID==mip.MotionID).Include(a => a.Muscle).Include(a => a.Muscle.MuscleGroup).FirstOrDefault();
+            if (motion.Muscle == null) continue;
+            if (motion.Muscle.MuscleGroupID != item.ID) continue;
+            count++;
+          }
+        }
+        var dto = new PieChartDTO
+        {
+          Label = item.Name,
+          Value = count
+        };
+        count = 0;
+        dtoList.Add(dto);
+      }
+      return dtoList.ToArray();
+    }
   }
 }

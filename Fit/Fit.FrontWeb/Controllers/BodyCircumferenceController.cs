@@ -61,6 +61,7 @@ namespace Fit.FrontWeb.Controllers
       return Redirect("/Home/Index");
     }
 
+    [Login]
     public ActionResult Chart()
     {
       return View();
@@ -144,6 +145,12 @@ namespace Fit.FrontWeb.Controllers
       var dtos = circumService.GetLowerLegHistory(userID);
       var model = new ChartDataModel { Data = dtos, Legend = Consts.BODY_LOWER_LEG };
       return MVCHelper.GetJsonResult(new AjaxResult { Data = model });
+    }
+
+    [Login]
+    public ActionResult AnalyzePlan()
+    {
+      return View();
     }
   }
 }
