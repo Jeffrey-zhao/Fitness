@@ -40,10 +40,12 @@
                 }
                 for (int i = 1; i <= Model.Length; i++)
                 {
-                  <label class="checkbox-inline i-checks col-sm-3">
-                    <input type="checkbox" name="RoleIDs" value="@Model[i-1].Id">
-                    <span>&nbsp;</span><strong>@Model[i - 1].Name</strong>
-                  </label>
+                  <div class="col-sm-4">
+                    <label class="checkbox-inline i-checks">
+                      <input type="checkbox" name="RoleIDs" value="@Model[i-1].Id">
+                      <span>&nbsp;</span><strong>@Model[i - 1].Name</strong>
+                    </label>
+                  </div>
                   if (i % 3 == 0)
                   {
                     @Html.Raw(@"</div><br /><div class='row'>");
@@ -62,6 +64,13 @@
 @section FooterScript{
   <script type="text/javascript" src="~/Scripts/jquery-1.10.2.min.js"></script>
   <script type="text/javascript">
+    $(document).ready(function () {
+      $('.i-checks').iCheck({
+        checkboxClass: 'icheckbox_square-green',
+        radioClass: 'iradio_square-green',
+      });
+    });
+
     var options = {
       success: function (response) {
         execResponse(response);

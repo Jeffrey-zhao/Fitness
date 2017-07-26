@@ -29,22 +29,18 @@
                 }
                 for (int i = 1; i <= Model.AllPermissions.Length; i++)
                 {
-                  <label class="checkbox-inline i-checks col-sm-3">
-                    <input type="checkbox" name="PermissionIDs" value="@Model.AllPermissions[i - 1].Id"
-                    @{
-                      if (Model.PermissionIDs.Length > 0 && Model.PermissionIDs.Contains(Model.AllPermissions[i - 1].Id))
-                      {
-                        @Html.Raw("checked='true'");
+                  <div class="col-sm-4">
+                    <label class="checkbox-inline i-checks">
+                      <input type="checkbox" name="PermissionIDs" value="@Model.AllPermissions[i - 1].Id"
+                             @{ if (Model.PermissionIDs.Length > 0 && Model.PermissionIDs.Contains(Model.AllPermissions[i - 1].Id)) { @Html.Raw("checked='true'")  ; } }>
+                      <span>&nbsp;</span><strong>@Model.AllPermissions[i - 1].Name</strong>
+                    </label>
+                  </div>
+                  if (i % 3 == 0)
+                  {
+                    @Html.Raw(@"</div><br /><div class='row'>");
                     }
-                    }
-                    >
-                    <span>&nbsp;</span><strong>@Model.AllPermissions[i - 1].Name</strong>
-                  </label>
-                      if (i % 3 == 0)
-                      {
-                        @Html.Raw(@"</div><br /><div class='row'>");
-                        }
-                      }
+                  }
               }
             </div>
           </div>
@@ -58,6 +54,12 @@
 @section FooterScript{
   <script type="text/javascript" src="~/Scripts/jquery-1.10.2.min.js"></script>
   <script type="text/javascript">
+    $(document).ready(function () {
+      $('.i-checks').iCheck({
+        checkboxClass: 'icheckbox_square-green',
+        radioClass: 'iradio_square-green',
+      });
+    });
     var options = {
       success: function (response) {
         execResponse(response);

@@ -97,8 +97,15 @@
 </div>
 
 @section FooterScript{
+  <script src="~/Scripts/jquery-2.1.1.js"></script>
   <script type="text/javascript" src="~/Scripts/template.js"></script>
   <script>
+    $(document).ready(function () {
+      $('.i-checks').iCheck({
+        checkboxClass: 'icheckbox_square-green',
+        radioClass: 'iradio_square-green',
+      });
+    });
 
     function muscleGroupChanged() {
       var muscleGroupId = $("[name='muscleGroup']").val();
