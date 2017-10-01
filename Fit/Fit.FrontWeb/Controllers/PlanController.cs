@@ -68,7 +68,7 @@ namespace Fit.FrontWeb.Controllers
       var loginID = MVCHelper.GetLoginIdFromSession(HttpContext).Value;
       var maxSecheduleDays = kvService.GetIntValue(DBKeys.PLAN_MAX_SECHEDULEDAYS);
       secheduleService.CreateSechedule(loginID, maxSecheduleDays, DateTimeHelper.GetNow());
-      return View();
+      return Redirect("/Plan/Sechedule");
     }
 
     [Login]
